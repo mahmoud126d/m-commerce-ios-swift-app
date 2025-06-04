@@ -13,6 +13,7 @@ struct Empty: Codable {}
 protocol APIClientType {
     static func getProducts(completion: @escaping (Result<ProductResponse, NetworkError>) -> Void)
     static func getProductsByIds(ids: [String], completion: @escaping (Result<ProductResponse, NetworkError>) -> Void)
+    //add yours and implement it
    
 }
 

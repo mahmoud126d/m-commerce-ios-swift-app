@@ -11,22 +11,14 @@ import Alamofire
 
 enum APIRouter: URLRequestConvertible {
 
+    //1
     case getProducts
     case getProductsByIds(ids: [String])
-    case getCollections
-    case getPriceRules
-    case getDiscountCodes(ruleId: String)
-    case deleteProduct(productId: String)
-    case deleteCollection(collectionId: String)
-    case deletePriceRule(ruleId: String)
-    case deleteDiscountCodes(ruleId: String, codeId: String)
 
     var method: HTTPMethod {
         switch self {
-        case .getProducts, .getProductsByIds, .getCollections, .getPriceRules, .getDiscountCodes:
+        case .getProducts, .getProductsByIds:
             return .get
-        case .deleteProduct, .deletePriceRule, .deleteCollection, .deleteDiscountCodes:
-            return .delete
         }
     }
 
@@ -48,7 +40,7 @@ enum APIRouter: URLRequestConvertible {
     var path: String {
         switch self {
         case .getProducts, .getProductsByIds:
-            return ShopifyResource.products.endpoint
+            return "\(Support.apiVersion)\(ShopifyResource.products.endpoint)"
         default:
             return ""
         }
@@ -56,21 +48,29 @@ enum APIRouter: URLRequestConvertible {
 
     var authorizationHeader: HTTPHeaderField? {
         switch self {
-        case .getProducts, .getProductsByIds, .getCollections, .getPriceRules, .getDiscountCodes, .deleteProduct, .deleteCollection, .deletePriceRule, .deleteDiscountCodes:
+        case .getProducts, .getProductsByIds:
             return .authorization
         }
     }
 
     var authorizationType: AuthorizationType {
         switch self {
-        case .getProducts, .getProductsByIds, .getCollections, .getPriceRules, .getDiscountCodes, .deleteProduct, .deleteCollection, .deletePriceRule, .deleteDiscountCodes:
+        case .getProducts, .getProductsByIds:
             return .basic
         }
     }
 
     func asURLRequest() throws -> URLRequest {
-        let url = try Constants.baseUrl.asURL()
-        var urlRequest = URLRequest(url: url.appendingPathComponent(path + ".json"))
+        var url = try Constants.baseUrl.asURL()
+        
+        switch self {
+        case .getProductsByIds:
+            url.appendPathComponent(ShopifyResource.products.endpoint)
+        default:
+            url.appendPathComponent(path + ".json")
+        }
+
+        var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = method.rawValue
         urlRequest.setValue(ContentType.json.rawValue, forHTTPHeaderField: HTTPHeaderField.contentType.rawValue)
 
@@ -80,6 +80,7 @@ enum APIRouter: URLRequestConvertible {
 
         return try encoding.encode(urlRequest, with: parameters)
     }
+
 }
 
 

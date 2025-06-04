@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+protocol ProductRepository {
+    func getProductById(_ id: String, completion: @escaping (Result<ProductModel, Error>) -> Void)
+    func getAllProducts(completion: @escaping (Result<[ProductModel], Error>) -> Void)
+}
