@@ -6,30 +6,27 @@
 //
 
 import SwiftUI
-import CoreData
+
+import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var viewModel = ProductViewModel()
-
+    @State private var hasSeenSplash = false
+    @State private var hasCompletedOnboarding = false
+    
     var body: some View {
-        NavigationView {
-            List(viewModel.allProducts, id: \.id) { product in
-                NavigationLink(destination: ProductDetailsView(product: product)) {
-                    VStack(alignment: .leading) {
-                        Text(product.title ?? "")
-                            .font(.headline)
-                        Text("ID: \(product.id ?? 0)")
-                            .font(.subheadline)
-                    }
-                }
-            }
-            .navigationTitle("Products")
-            .onAppear {
-                viewModel.fetchAllProducts()
-            }
+        currentView
+    }
+
+    @ViewBuilder
+    private var currentView: some View {
+        if !hasSeenSplash {
+            SplashScreen(hasSeenSplash: $hasSeenSplash)
+        } else if !hasCompletedOnboarding {
+            OnboardingScreen()
         }
     }
 }
+
 
 #Preview {
     ContentView()
