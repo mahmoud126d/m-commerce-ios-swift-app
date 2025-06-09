@@ -37,6 +37,7 @@
 		22FE27282DF45CD100442B9D /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FE27272DF45CD100442B9D /* Font.swift */; };
 		22FE272A2DF45CE600442B9D /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FE27292DF45CE600442B9D /* AppTheme.swift */; };
 		22FE272E2DF4693700442B9D /* AllProductTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FE272D2DF4693700442B9D /* AllProductTest.swift */; };
+		752D7AC82DF7168E00B5AF40 /* Support.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752D7AC72DF7168E00B5AF40 /* Support.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,6 +101,7 @@
 		22FE27272DF45CD100442B9D /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		22FE27292DF45CE600442B9D /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		22FE272D2DF4693700442B9D /* AllProductTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllProductTest.swift; sourceTree = "<group>"; };
+		752D7AC72DF7168E00B5AF40 /* Support.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Support.swift; path = ../../../../../../Downloads/Support.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +156,7 @@
 		227383982DF07FCC007C4B1C /* Shoplet */ = {
 			isa = PBXGroup;
 			children = (
+				752D7AC92DF7186300B5AF40 /* Features */,
 				22FE271B2DF45B5200442B9D /* Presentation */,
 				227383F02DF0DFEF007C4B1C /* Core */,
 				227383EB2DF0DCA9007C4B1C /* Data */,
@@ -273,6 +276,7 @@
 		227383F12DF0E00D007C4B1C /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				752D7AC72DF7168E00B5AF40 /* Support.swift */,
 				227383CE2DF09057007C4B1C /* APIRouter.swift */,
 				227383CC2DF08C54007C4B1C /* NetworkError.swift */,
 				227383D82DF0D448007C4B1C /* APIClient.swift */,
@@ -315,6 +319,109 @@
 				22FE27292DF45CE600442B9D /* AppTheme.swift */,
 			);
 			path = "Color+Theme";
+			sourceTree = "<group>";
+		};
+		752D7AC92DF7186300B5AF40 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				752D7ACE2DF718D100B5AF40 /* Cart */,
+				752D7ACD2DF718BB00B5AF40 /* Catgories */,
+				752D7ACC2DF7189500B5AF40 /* Favorites */,
+				752D7ACB2DF7188600B5AF40 /* Me */,
+				752D7ACA2DF7187C00B5AF40 /* Home */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		752D7ACA2DF7187C00B5AF40 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				752D7AD02DF71BC400B5AF40 /* View */,
+				752D7ACF2DF71BB400B5AF40 /* ViewModel */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		752D7ACB2DF7188600B5AF40 /* Me */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Me;
+			sourceTree = "<group>";
+		};
+		752D7ACC2DF7189500B5AF40 /* Favorites */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Favorites;
+			sourceTree = "<group>";
+		};
+		752D7ACD2DF718BB00B5AF40 /* Catgories */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Catgories;
+			sourceTree = "<group>";
+		};
+		752D7ACE2DF718D100B5AF40 /* Cart */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Cart;
+			sourceTree = "<group>";
+		};
+		752D7ACF2DF71BB400B5AF40 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				752D7AD32DF71C0B00B5AF40 /* BrandViewModel */,
+				752D7AD22DF71BF100B5AF40 /* HomeViewModel */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		752D7AD02DF71BC400B5AF40 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				752D7AD52DF71C4B00B5AF40 /* ImageCarouselView */,
+				752D7AD42DF71C2500B5AF40 /* BrandView */,
+				752D7AD12DF71BD900B5AF40 /* HomeView */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		752D7AD12DF71BD900B5AF40 /* HomeView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = HomeView;
+			sourceTree = "<group>";
+		};
+		752D7AD22DF71BF100B5AF40 /* HomeViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = HomeViewModel;
+			sourceTree = "<group>";
+		};
+		752D7AD32DF71C0B00B5AF40 /* BrandViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = BrandViewModel;
+			sourceTree = "<group>";
+		};
+		752D7AD42DF71C2500B5AF40 /* BrandView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = BrandView;
+			sourceTree = "<group>";
+		};
+		752D7AD52DF71C4B00B5AF40 /* ImageCarouselView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ImageCarouselView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -468,6 +575,7 @@
 				227383D92DF0D448007C4B1C /* APIClient.swift in Sources */,
 				227383F32DF0E05C007C4B1C /* GetAllProductsUseCase.swift in Sources */,
 				2273839A2DF07FCC007C4B1C /* ShopletApp.swift in Sources */,
+				752D7AC82DF7168E00B5AF40 /* Support.swift in Sources */,
 				22FE271F2DF45BFC00442B9D /* SplashScreen.swift in Sources */,
 				22FE27262DF45CAC00442B9D /* Color.swift in Sources */,
 				22FE27282DF45CD100442B9D /* Font.swift in Sources */,
