@@ -6,3 +6,14 @@
 //
 
 import Foundation
+final class GetBestSellersUseCase {
+    private let repository: HomeRepository
+    
+    init(repository: HomeRepository) {
+        self.repository = repository
+    }
+
+    func execute(completion: @escaping (Result<[PopularProductItem], Error>) -> Void) {
+        repository.getBestSellers(completion: completion)
+    }
+}
