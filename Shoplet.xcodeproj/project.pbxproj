@@ -336,6 +336,8 @@
 		752D7ACA2DF7187C00B5AF40 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				752D7AD02DF71BC400B5AF40 /* View */,
+				752D7ACF2DF71BB400B5AF40 /* ViewModel */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -366,6 +368,60 @@
 			children = (
 			);
 			path = Cart;
+			sourceTree = "<group>";
+		};
+		752D7ACF2DF71BB400B5AF40 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				752D7AD32DF71C0B00B5AF40 /* BrandViewModel */,
+				752D7AD22DF71BF100B5AF40 /* HomeViewModel */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		752D7AD02DF71BC400B5AF40 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				752D7AD52DF71C4B00B5AF40 /* ImageCarouselView */,
+				752D7AD42DF71C2500B5AF40 /* BrandView */,
+				752D7AD12DF71BD900B5AF40 /* HomeView */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		752D7AD12DF71BD900B5AF40 /* HomeView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = HomeView;
+			sourceTree = "<group>";
+		};
+		752D7AD22DF71BF100B5AF40 /* HomeViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = HomeViewModel;
+			sourceTree = "<group>";
+		};
+		752D7AD32DF71C0B00B5AF40 /* BrandViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = BrandViewModel;
+			sourceTree = "<group>";
+		};
+		752D7AD42DF71C2500B5AF40 /* BrandView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = BrandView;
+			sourceTree = "<group>";
+		};
+		752D7AD52DF71C4B00B5AF40 /* ImageCarouselView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ImageCarouselView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
