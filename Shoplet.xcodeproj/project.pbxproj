@@ -156,7 +156,7 @@
 		227383982DF07FCC007C4B1C /* Shoplet */ = {
 			isa = PBXGroup;
 			children = (
-				752D7AC92DF7186300B5AF40 /* Features */,
+				754A6A9D2DF78F96007BFCB6 /* Features */,
 				22FE271B2DF45B5200442B9D /* Presentation */,
 				227383F02DF0DFEF007C4B1C /* Core */,
 				227383EB2DF0DCA9007C4B1C /* Data */,
@@ -321,107 +321,51 @@
 			path = "Color+Theme";
 			sourceTree = "<group>";
 		};
-		752D7AC92DF7186300B5AF40 /* Features */ = {
+		754A6A9D2DF78F96007BFCB6 /* Features */ = {
 			isa = PBXGroup;
 			children = (
-				752D7ACE2DF718D100B5AF40 /* Cart */,
-				752D7ACD2DF718BB00B5AF40 /* Catgories */,
-				752D7ACC2DF7189500B5AF40 /* Favorites */,
-				752D7ACB2DF7188600B5AF40 /* Me */,
-				752D7ACA2DF7187C00B5AF40 /* Home */,
+				754A6AA22DF78FF6007BFCB6 /* Cart */,
+				754A6AA12DF78FE0007BFCB6 /* Catgories */,
+				754A6AA02DF78FC9007BFCB6 /* Favorites */,
+				754A6A9F2DF78FC3007BFCB6 /* Me */,
+				754A6A9E2DF78FA0007BFCB6 /* Home */,
 			);
 			path = Features;
 			sourceTree = "<group>";
 		};
-		752D7ACA2DF7187C00B5AF40 /* Home */ = {
+		754A6A9E2DF78FA0007BFCB6 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				752D7AD02DF71BC400B5AF40 /* View */,
-				752D7ACF2DF71BB400B5AF40 /* ViewModel */,
 			);
 			path = Home;
 			sourceTree = "<group>";
 		};
-		752D7ACB2DF7188600B5AF40 /* Me */ = {
+		754A6A9F2DF78FC3007BFCB6 /* Me */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			path = Me;
 			sourceTree = "<group>";
 		};
-		752D7ACC2DF7189500B5AF40 /* Favorites */ = {
+		754A6AA02DF78FC9007BFCB6 /* Favorites */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			path = Favorites;
 			sourceTree = "<group>";
 		};
-		752D7ACD2DF718BB00B5AF40 /* Catgories */ = {
+		754A6AA12DF78FE0007BFCB6 /* Catgories */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			path = Catgories;
 			sourceTree = "<group>";
 		};
-		752D7ACE2DF718D100B5AF40 /* Cart */ = {
+		754A6AA22DF78FF6007BFCB6 /* Cart */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			path = Cart;
-			sourceTree = "<group>";
-		};
-		752D7ACF2DF71BB400B5AF40 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				752D7AD32DF71C0B00B5AF40 /* BrandViewModel */,
-				752D7AD22DF71BF100B5AF40 /* HomeViewModel */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		752D7AD02DF71BC400B5AF40 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				752D7AD52DF71C4B00B5AF40 /* ImageCarouselView */,
-				752D7AD42DF71C2500B5AF40 /* BrandView */,
-				752D7AD12DF71BD900B5AF40 /* HomeView */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		752D7AD12DF71BD900B5AF40 /* HomeView */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = HomeView;
-			sourceTree = "<group>";
-		};
-		752D7AD22DF71BF100B5AF40 /* HomeViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = HomeViewModel;
-			sourceTree = "<group>";
-		};
-		752D7AD32DF71C0B00B5AF40 /* BrandViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = BrandViewModel;
-			sourceTree = "<group>";
-		};
-		752D7AD42DF71C2500B5AF40 /* BrandView */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = BrandView;
-			sourceTree = "<group>";
-		};
-		752D7AD52DF71C4B00B5AF40 /* ImageCarouselView */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ImageCarouselView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
