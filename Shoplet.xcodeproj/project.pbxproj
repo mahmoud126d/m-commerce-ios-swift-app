@@ -156,6 +156,7 @@
 		227383982DF07FCC007C4B1C /* Shoplet */ = {
 			isa = PBXGroup;
 			children = (
+				753E00482DF79FBF00C1DA66 /* Features */,
 				22FE271B2DF45B5200442B9D /* Presentation */,
 				227383F02DF0DFEF007C4B1C /* Core */,
 				227383EB2DF0DCA9007C4B1C /* Data */,
@@ -318,6 +319,29 @@
 				22FE27292DF45CE600442B9D /* AppTheme.swift */,
 			);
 			path = "Color+Theme";
+			sourceTree = "<group>";
+		};
+		753E00482DF79FBF00C1DA66 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				753E004A2DF79FDC00C1DA66 /* Cart */,
+				753E00492DF79FD400C1DA66 /* Home */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		753E00492DF79FD400C1DA66 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		753E004A2DF79FDC00C1DA66 /* Cart */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Cart;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
