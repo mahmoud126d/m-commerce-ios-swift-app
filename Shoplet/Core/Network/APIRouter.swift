@@ -14,10 +14,12 @@ enum APIRouter: URLRequestConvertible {
     //1
     case getProducts
     case getProductsByIds(ids: [String])
+    case priceRules
+    case coupons(id : Int)
 
     var method: HTTPMethod {
         switch self {
-        case .getProducts, .getProductsByIds:
+        case .getProducts, .getProductsByIds, .priceRules, .coupons:
             return .get
         }
     }
@@ -32,7 +34,9 @@ enum APIRouter: URLRequestConvertible {
             return nil
         case .getProductsByIds(let ids):
             return ["ids": ids.joined(separator: ",")]
-        default:
+        case .priceRules:
+            return nil
+        case .coupons:
             return nil
         }
     }
@@ -41,6 +45,10 @@ enum APIRouter: URLRequestConvertible {
         switch self {
         case .getProducts, .getProductsByIds:
             return "\(Support.apiVersion)\(ShopifyResource.products.endpoint)"
+        case .priceRules:
+            return "\(Support.apiVersion)\(ShopifyResource.priceRules.endpoint)"
+        case .coupons(let priceRuleId):
+            return "\(Support.apiVersion)price_rules/\(priceRuleId)/\(ShopifyResource.discounts.endpoint)"
         default:
             return ""
         }
@@ -48,14 +56,14 @@ enum APIRouter: URLRequestConvertible {
 
     var authorizationHeader: HTTPHeaderField? {
         switch self {
-        case .getProducts, .getProductsByIds:
+        case .getProducts, .getProductsByIds, .priceRules, .coupons:
             return .authorization
         }
     }
 
     var authorizationType: AuthorizationType {
         switch self {
-        case .getProducts, .getProductsByIds:
+        case .getProducts, .getProductsByIds, .priceRules, .coupons:
             return .basic
         }
     }

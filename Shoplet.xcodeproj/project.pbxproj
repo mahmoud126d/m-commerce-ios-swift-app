@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		222A06B52DF5C97300672967 /* Support.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222A06B42DF5C97300672967 /* Support.swift */; };
+		222A06BB2DF5E03C00672967 /* PriceRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222A06BA2DF5E03C00672967 /* PriceRule.swift */; };
+		222A06BD2DF5E48800672967 /* Coupon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222A06BC2DF5E48800672967 /* Coupon.swift */; };
+		222A06BF2DF5E6F300672967 /* CouponViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222A06BE2DF5E6F300672967 /* CouponViewModel.swift */; };
+		222A06C12DF5E78000672967 /* CouponsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222A06C02DF5E78000672967 /* CouponsView.swift */; };
+		222A06C32DF5FF6200672967 /* PriceRulesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222A06C22DF5FF6200672967 /* PriceRulesUseCase.swift */; };
+		222A06C52DF625CD00672967 /* CouponsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222A06C42DF625CD00672967 /* CouponsUseCase.swift */; };
+		222A06C72DF62BBD00672967 /* PriceRuleCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222A06C62DF62BBD00672967 /* PriceRuleCard.swift */; };
+		22668D0F2DF70FCC0054D931 /* Coupons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22668D0E2DF70FCC0054D931 /* Coupons.swift */; };
 		2273839A2DF07FCC007C4B1C /* ShopletApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227383992DF07FCC007C4B1C /* ShopletApp.swift */; };
 		2273839C2DF07FCC007C4B1C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2273839B2DF07FCC007C4B1C /* ContentView.swift */; };
 		2273839E2DF07FCF007C4B1C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2273839D2DF07FCF007C4B1C /* Assets.xcassets */; };
@@ -71,6 +80,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		222A06B42DF5C97300672967 /* Support.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Support.swift; sourceTree = "<group>"; };
+		222A06BA2DF5E03C00672967 /* PriceRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceRule.swift; sourceTree = "<group>"; };
+		222A06BC2DF5E48800672967 /* Coupon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coupon.swift; sourceTree = "<group>"; };
+		222A06BE2DF5E6F300672967 /* CouponViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponViewModel.swift; sourceTree = "<group>"; };
+		222A06C02DF5E78000672967 /* CouponsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponsView.swift; sourceTree = "<group>"; };
+		222A06C22DF5FF6200672967 /* PriceRulesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceRulesUseCase.swift; sourceTree = "<group>"; };
+		222A06C42DF625CD00672967 /* CouponsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponsUseCase.swift; sourceTree = "<group>"; };
+		222A06C62DF62BBD00672967 /* PriceRuleCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceRuleCard.swift; sourceTree = "<group>"; };
+		22668D0E2DF70FCC0054D931 /* Coupons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coupons.swift; sourceTree = "<group>"; };
 		227383962DF07FCC007C4B1C /* Shoplet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shoplet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		227383992DF07FCC007C4B1C /* ShopletApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopletApp.swift; sourceTree = "<group>"; };
 		2273839B2DF07FCC007C4B1C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -130,6 +148,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		222A06B62DF5DFFB00672967 /* Cupons */ = {
+			isa = PBXGroup;
+			children = (
+				222A06B92DF5E02800672967 /* ViewModel */,
+				222A06B82DF5E01F00672967 /* View */,
+				222A06B72DF5E01800672967 /* Model */,
+			);
+			path = Cupons;
+			sourceTree = "<group>";
+		};
+		222A06B72DF5E01800672967 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				222A06BA2DF5E03C00672967 /* PriceRule.swift */,
+				222A06BC2DF5E48800672967 /* Coupon.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		222A06B82DF5E01F00672967 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				222A06C02DF5E78000672967 /* CouponsView.swift */,
+				222A06C62DF62BBD00672967 /* PriceRuleCard.swift */,
+				22668D0E2DF70FCC0054D931 /* Coupons.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		222A06B92DF5E02800672967 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				222A06BE2DF5E6F300672967 /* CouponViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		2273838D2DF07FCC007C4B1C = {
 			isa = PBXGroup;
 			children = (
@@ -242,6 +297,8 @@
 			children = (
 				227383E92DF0DC82007C4B1C /* GetProductByIdUseCase.swift */,
 				227383F22DF0E05C007C4B1C /* GetAllProductsUseCase.swift */,
+				222A06C22DF5FF6200672967 /* PriceRulesUseCase.swift */,
+				222A06C42DF625CD00672967 /* CouponsUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -273,6 +330,7 @@
 		227383F12DF0E00D007C4B1C /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				222A06B42DF5C97300672967 /* Support.swift */,
 				227383CE2DF09057007C4B1C /* APIRouter.swift */,
 				227383CC2DF08C54007C4B1C /* NetworkError.swift */,
 				227383D82DF0D448007C4B1C /* APIClient.swift */,
@@ -283,6 +341,7 @@
 		22FE271B2DF45B5200442B9D /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				222A06B62DF5DFFB00672967 /* Cupons */,
 				22FE271D2DF45BCC00442B9D /* SplashScreen */,
 				22FE271C2DF45B6500442B9D /* Onboarding */,
 				22FE272D2DF4693700442B9D /* AllProductTest.swift */,
@@ -457,23 +516,32 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				222A06BF2DF5E6F300672967 /* CouponViewModel.swift in Sources */,
 				22FE272A2DF45CE600442B9D /* AppTheme.swift in Sources */,
 				227383F52DF0E0B3007C4B1C /* ProductRepositoryImpl.swift in Sources */,
 				22FE272E2DF4693700442B9D /* AllProductTest.swift in Sources */,
+				222A06C72DF62BBD00672967 /* PriceRuleCard.swift in Sources */,
+				222A06BD2DF5E48800672967 /* Coupon.swift in Sources */,
 				227383E72DF0DC42007C4B1C /* ProductRepository.swift in Sources */,
 				22FE27212DF45C3A00442B9D /* OnboardingScreen.swift in Sources */,
 				227383E22DF0D7F8007C4B1C /* AppCommon.swift in Sources */,
+				222A06C12DF5E78000672967 /* CouponsView.swift in Sources */,
 				2273839C2DF07FCC007C4B1C /* ContentView.swift in Sources */,
 				22FE27232DF45C6300442B9D /* OnboardingPageView.swift in Sources */,
 				227383D92DF0D448007C4B1C /* APIClient.swift in Sources */,
 				227383F32DF0E05C007C4B1C /* GetAllProductsUseCase.swift in Sources */,
 				2273839A2DF07FCC007C4B1C /* ShopletApp.swift in Sources */,
+				222A06BB2DF5E03C00672967 /* PriceRule.swift in Sources */,
+				222A06B52DF5C97300672967 /* Support.swift in Sources */,
 				22FE271F2DF45BFC00442B9D /* SplashScreen.swift in Sources */,
 				22FE27262DF45CAC00442B9D /* Color.swift in Sources */,
+				22668D0F2DF70FCC0054D931 /* Coupons.swift in Sources */,
 				22FE27282DF45CD100442B9D /* Font.swift in Sources */,
+				222A06C52DF625CD00672967 /* CouponsUseCase.swift in Sources */,
 				227383EA2DF0DC82007C4B1C /* GetProductByIdUseCase.swift in Sources */,
 				227383CD2DF08C54007C4B1C /* NetworkError.swift in Sources */,
 				227383DD2DF0D74D007C4B1C /* ProductModel.swift in Sources */,
+				222A06C32DF5FF6200672967 /* PriceRulesUseCase.swift in Sources */,
 				227383CF2DF09057007C4B1C /* APIRouter.swift in Sources */,
 				227383A62DF07FCF007C4B1C /* Shoplet.xcdatamodeld in Sources */,
 				227383F72DF0E216007C4B1C /* ProductViewModel.swift in Sources */,

@@ -13,6 +13,8 @@ struct Empty: Codable {}
 protocol APIClientType {
     static func getProducts(completion: @escaping (Result<ProductResponse, NetworkError>) -> Void)
     static func getProductsByIds(ids: [String], completion: @escaping (Result<ProductResponse, NetworkError>) -> Void)
+    static func getPriceRules(completion: @escaping (Result<PriceRuleResponse, NetworkError>) -> Void)
+    static func getCoupons(id: Int, completion: @escaping (Result<CouponResponse, NetworkError>) -> Void)
     //add yours and implement it
    
 }
@@ -58,7 +60,11 @@ class APIClient: APIClientType {
         performRequest(route: .getProductsByIds(ids: ids), completion: completion)
     }
 
-
-  
+    static func getPriceRules(completion: @escaping (Result<PriceRuleResponse, NetworkError>) -> Void){
+        performRequest(route: .priceRules, completion: completion)
+    }
+    static func getCoupons(id: Int, completion: @escaping (Result<CouponResponse, NetworkError>) -> Void) {
+        performRequest(route: .coupons(id: id), completion: completion)
+    }
 }
 

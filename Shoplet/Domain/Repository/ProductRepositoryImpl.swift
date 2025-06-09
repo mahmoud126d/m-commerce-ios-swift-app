@@ -34,4 +34,25 @@ final class ProductRepositoryImpl: ProductRepository {
             }
         }
     }
+    func getPriceRules(completion: @escaping (Result<[PriceRule], NetworkError>) -> Void) {
+        APIClient.getPriceRules { res in
+            switch res{
+            case .success(let res):
+                completion(.success(res.price_rules))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    func getCoupons(id: Int, completion: @escaping (Result<[Coupon], NetworkError>) -> Void) {
+        APIClient.getCoupons(id: id){
+            res in
+            switch res{
+            case .success(let res):
+                completion(.success(res.discount_codes))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
 }

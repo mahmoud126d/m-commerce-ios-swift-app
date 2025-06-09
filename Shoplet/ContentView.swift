@@ -22,7 +22,7 @@ struct ContentView: View {
         if !hasSeenSplash {
             SplashScreen(hasSeenSplash: $hasSeenSplash)
         } else if !hasCompletedOnboarding {
-            OnboardingScreen()
+            CouponsView()
         }
     }
 }

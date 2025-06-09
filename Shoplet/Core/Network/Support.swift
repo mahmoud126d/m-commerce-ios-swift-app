@@ -21,11 +21,17 @@ struct Support {
 
 enum ShopifyResource {
     case products
+    case priceRules
+    case discounts
 
     var endpoint: String {
         switch self {
         case .products:
             return "products"
+        case .priceRules:
+            return "price_rules"
+        case .discounts:
+            return "discount_codes"
         }
     }
 }

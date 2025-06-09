@@ -8,10 +8,29 @@
 import SwiftUI
 
 struct CouponsView: View {
+    @StateObject private var viewModel = CouponViewModel()
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView{
+            ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 16) {
+                            ForEach(viewModel.priceRules, id: \.id) { item in
+                                NavigationLink(destination: {
+                                    Coupons(PriceRuleId: item.id)
+                                },
+                                              label: {
+                                   PriceRuleCard(priceRule: item.value)
+                                       .frame(width: 300)
+                               })
+                            }
+                        }
+                    }
+        }
+                    .onAppear{
+                        viewModel.getPriceRules()
+                    }
+        }
     }
-}
+
 
 #Preview {
     CouponsView()
