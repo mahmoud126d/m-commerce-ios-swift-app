@@ -13,6 +13,11 @@ struct Empty: Codable {}
 protocol APIClientType {
     static func getProducts(completion: @escaping (Result<ProductResponse, NetworkError>) -> Void)
     static func getProductsByIds(ids: [String], completion: @escaping (Result<ProductResponse, NetworkError>) -> Void)
+//
+    static func getPopularProducts(completion: @escaping (Result<PopularProductsResponse, NetworkError>) -> Void)
+       
+       // Add method to fetch brands (smart collections)
+       static func getBrands(completion: @escaping (Result<BrandsResponse, NetworkError>) -> Void)
     //add yours and implement it
    
 }
@@ -58,7 +63,13 @@ class APIClient: APIClientType {
         performRequest(route: .getProductsByIds(ids: ids), completion: completion)
     }
 
-
+    static func getPopularProducts(completion: @escaping (Result<PopularProductsResponse, NetworkError>) -> Void) {
+        performRequest(route: .getPopularProducts, completion: completion)
+    }
+    
+    static func getBrands(completion: @escaping (Result<BrandsResponse, NetworkError>) -> Void) {
+        performRequest(route: .getBrands, completion: completion)
+    }
   
 }
 

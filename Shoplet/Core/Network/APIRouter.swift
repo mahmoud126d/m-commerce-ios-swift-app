@@ -10,14 +10,17 @@ import Alamofire
 
 
 enum APIRouter: URLRequestConvertible {
-
+    
     //1
     case getProducts
     case getProductsByIds(ids: [String])
+    case getPopularProducts
+    case getBrands
+    
 
     var method: HTTPMethod {
         switch self {
-        case .getProducts, .getProductsByIds:
+        case .getProducts, .getProductsByIds , .getPopularProducts, .getBrands:
             return .get
         }
     }
@@ -28,10 +31,11 @@ enum APIRouter: URLRequestConvertible {
 
     var parameters: [String: Any]? {
         switch self {
-        case .getProducts:
+        case .getProducts,.getPopularProducts, .getBrands:
             return nil
         case .getProductsByIds(let ids):
             return ["ids": ids.joined(separator: ",")]
+     
         default:
             return nil
         }
@@ -39,8 +43,11 @@ enum APIRouter: URLRequestConvertible {
 
     var path: String {
         switch self {
-        case .getProducts, .getProductsByIds:
+        case .getProducts, .getProductsByIds,.getPopularProducts:
             return "\(Support.apiVersion)\(ShopifyResource.products.endpoint)"
+    
+           case .getBrands:
+            return "\(Support.apiVersion)\(ShopifyResource.smartCollections.endpoint)"
         default:
             return ""
         }
@@ -48,14 +55,14 @@ enum APIRouter: URLRequestConvertible {
 
     var authorizationHeader: HTTPHeaderField? {
         switch self {
-        case .getProducts, .getProductsByIds:
+        case .getProducts, .getProductsByIds,.getPopularProducts,.getBrands:
             return .authorization
         }
     }
 
     var authorizationType: AuthorizationType {
         switch self {
-        case .getProducts, .getProductsByIds:
+        case .getProducts, .getProductsByIds,.getPopularProducts,.getBrands:
             return .basic
         }
     }
@@ -66,6 +73,7 @@ enum APIRouter: URLRequestConvertible {
         switch self {
         case .getProductsByIds:
             url.appendPathComponent(ShopifyResource.products.endpoint)
+        
         default:
             url.appendPathComponent(path + ".json")
         }
@@ -82,6 +90,7 @@ enum APIRouter: URLRequestConvertible {
     }
 
 }
+
 
 
 

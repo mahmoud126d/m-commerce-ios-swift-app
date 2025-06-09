@@ -39,7 +39,7 @@ struct OnboardingScreen: View {
 
             if currentIndex == onboardingItems.count - 1 {
                 NavigationLink(
-                    destination: AllProductTest(),
+                    destination: CustomeTabBarView(),
                     isActive: $isNextScreenActive
                 ) {
                     Button(action: {
