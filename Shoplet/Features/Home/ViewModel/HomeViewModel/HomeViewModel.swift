@@ -15,7 +15,7 @@ final class HomeViewModel: ObservableObject {
 
     // Published properties for UI binding
     @Published var brands: [SmartCollection] = []
-    @Published var bestSellers: [PopularProductItem] = []
+    @Published var bestSellers: [ProductModel] = []
     @Published var errorMessage: String?
 
     init(repository: HomeRepository = HomeRepositoryImpl()) {

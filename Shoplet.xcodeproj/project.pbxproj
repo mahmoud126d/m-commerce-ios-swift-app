@@ -412,7 +412,6 @@
 		75B306CF2DF7A71200AB1965 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				75B306D62DF7A78300AB1965 /* ViewModel */,
 				75B306D42DF7A76700AB1965 /* View */,
 			);
 			path = Categories;
@@ -464,13 +463,6 @@
 				75B306FD2DF7AAE100AB1965 /* CartView.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		75B306D62DF7A78300AB1965 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		75B306D72DF7A7B900AB1965 /* HomeViewModel */ = {

@@ -22,14 +22,14 @@ class HomeRepositoryImpl: HomeRepository {
            }
        }
 
-       func getBestSellers(completion: @escaping (Result<[PopularProductItem], Error>) -> Void) {
+       func getBestSellers(completion: @escaping (Result<[ProductModel], Error>) -> Void) {
            APIClient.getPopularProducts { result in
                switch result {
                case .success(let response):
-                   if let products = response.products {
-                       completion(.success(products))
-                   } else {
+                   if response.products.isEmpty {
                        completion(.failure(NetworkError.invalidResponse))
+                   } else {
+                       completion(.success(response.products))
                    }
                case .failure(let error):
                    completion(.failure(error))

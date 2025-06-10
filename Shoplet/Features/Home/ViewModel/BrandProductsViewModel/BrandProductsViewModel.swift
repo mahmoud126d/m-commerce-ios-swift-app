@@ -28,7 +28,7 @@ class BrandProductsViewModel: ObservableObject {
         URLSession.shared.dataTaskPublisher(for: request)
             .map(\.data)
             .decode(type: ProductResponse.self, decoder: JSONDecoder())
-            .map { $0.products.filter { $0.vendor == brand } ?? [] }
+            .map { $0.products.filter { $0.vendor == brand } }
             .receive(on: DispatchQueue.main)
             .replaceError(with: [])
             .assign(to: \.products, on: self)

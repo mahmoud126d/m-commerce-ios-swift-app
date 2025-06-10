@@ -13,7 +13,7 @@ final class GetBestSellersUseCase {
         self.repository = repository
     }
 
-    func execute(completion: @escaping (Result<[PopularProductItem], Error>) -> Void) {
+    func execute(completion: @escaping (Result<[ProductModel], Error>) -> Void) {
         repository.getBestSellers(completion: completion)
     }
 }

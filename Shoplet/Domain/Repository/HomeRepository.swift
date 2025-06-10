@@ -8,5 +8,5 @@
 import Foundation
 protocol HomeRepository {
     func getAllBrands(completion: @escaping (Result<[SmartCollection], Error>) -> Void)
-    func getBestSellers(completion: @escaping (Result<[PopularProductItem], Error>) -> Void)
+    func getBestSellers(completion: @escaping (Result<[ProductModel], Error>) -> Void)
 }

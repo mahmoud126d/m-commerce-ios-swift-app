@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @StateObject private var viewModel = HomeViewModel()
+    @State private var selectedProduct: ProductModel? = nil
     var body: some View {
         NavigationView {
             ScrollView {
@@ -25,7 +26,10 @@ struct HomeView: View {
                             VStack {
                                 Text("BEST PRODUCT")
                                     .font(.title)
-                                    .fontWeight(.bold)
+                                    .sheet(item: $selectedProduct) { product in
+                                        ProductDetailsView(product: product)
+                                            .presentationDetents([.medium, .large]) // Optional, iOS 16+
+                                    }               .fontWeight(.bold)
                                     .foregroundColor(.white)
                                 Text("STARTED")
                                     .font(.headline)
@@ -47,7 +51,7 @@ struct HomeView: View {
                         .padding(.horizontal)
                         .foregroundColor(.primaryColor)
                     ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 12) {
+                        HStack(spacing: 14) {
                             ForEach(viewModel.brands, id: \.id) { brand in
                                 NavigationLink(destination: BrandProductsView(brandName: brand.title ?? "")) {
                                     VStack(spacing: 8) {
@@ -102,13 +106,16 @@ struct HomeView: View {
                         .foregroundColor(.primaryColor)
 
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
-                                            ForEach(viewModel.bestSellers, id: \.id) { product in
-                                                NavigationLink(destination: ProductDetailsView(productId: product.id ?? 1)) {
-                                                    ProductItemView(product: product)
-                                                }
-                                            }
-                                        }
-                                        .padding(.horizontal)
+                        ForEach(viewModel.bestSellers, id: \.id) { product in
+                            Button {
+                                selectedProduct = product
+                            } label: {
+                                ProductItemView(product: product)
+                            }
+                        }
+                    }
+                    .padding(.horizontal)
+
                                     }
                                     .padding(.top)
                                 }
@@ -120,7 +127,13 @@ struct HomeView: View {
                                     viewModel.fetchBestSellers()
                                 }
                             }
+                         .sheet(item: $selectedProduct) { product in
+                            ProductDetailsView(product: product)
+                                .presentationDetents([.medium, .large])
                         }
+                        }
+       
+
                     }
 #Preview {
     HomeView()

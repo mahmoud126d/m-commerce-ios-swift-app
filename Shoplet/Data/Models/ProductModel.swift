@@ -47,7 +47,6 @@ struct Variant: Codable {
     let sku: String?
     let position: Int?
     let compareAtPrice: String?
-
     let inventoryItemId: Int?
     let inventoryQuantity: Int?
     let oldInventoryQuantity: Int?
@@ -92,7 +91,7 @@ struct ProductImage: Codable {
     let productId: Int
     let width: Int
     let height: Int
-    let src: String
+    let src: String?
     let variantIds: [Int]
 
     enum CodingKeys: String, CodingKey {
