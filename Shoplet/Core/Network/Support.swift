@@ -2,13 +2,10 @@
 //  Support.swift
 //  Shoplet
 //
-//  Created by Macos on 04/06/2025.
+//  Created by Farid on 10/06/2025.
 //
 
 import Foundation
-
-// MARK: - Network Support BaseURL
-
 struct Support {
     
     static let shopName = "ios1-ism"
@@ -21,11 +18,15 @@ struct Support {
 
 enum ShopifyResource {
     case products
+    case smartCollections
 
     var endpoint: String {
         switch self {
         case .products:
             return "products"
+        case .smartCollections: return "smart_collections"
+
+
         }
     }
 }

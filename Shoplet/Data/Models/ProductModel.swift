@@ -11,10 +11,10 @@ struct ProductResponse: Codable {
     let products: [ProductModel]
 }
 
-struct ProductModel: Codable {
+struct ProductModel: Codable ,Identifiable{
     let id: Int?
     let title: String?
-    let bodyHTML: String?        
+    let bodyHTML: String?
     let vendor: String?
     let productType: String?
     let tags: String?
@@ -46,6 +46,8 @@ struct Variant: Codable {
     let price: String?
     let sku: String?
     let position: Int?
+    let compareAtPrice: String?
+
     let inventoryItemId: Int?
     let inventoryQuantity: Int?
     let oldInventoryQuantity: Int?
@@ -62,6 +64,8 @@ struct Variant: Codable {
         case inventoryQuantity = "inventory_quantity"
         case oldInventoryQuantity = "old_inventory_quantity"
         case imageId = "image_id"
+        case compareAtPrice = "compare_at_price"
+
     }
 }
 

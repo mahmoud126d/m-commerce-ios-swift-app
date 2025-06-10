@@ -7,28 +7,28 @@
 
 import SwiftUI
 
-struct AllProductTest: View {
-    @StateObject private var viewModel = ProductViewModel()
-    var body: some View {
-        NavigationView {
-            List(viewModel.allProducts, id: \.id) { product in
-                NavigationLink(destination: ProductDetailsView(product: product)) {
-                    VStack(alignment: .leading) {
-                        Text(product.title ?? "")
-                            .font(.headline)
-                        Text("ID: \(product.id ?? 0)")
-                            .font(.subheadline)
-                    }
-                }
-            }
-            .navigationTitle("Products")
-            .onAppear {
-                viewModel.fetchAllProducts()
-            }
-        }
-    }
-}
-
-#Preview {
-    AllProductTest()
-}
+//struct AllProductTest: View {
+//    @StateObject private var viewModel = ProductViewModel()
+//    var body: some View {
+//        NavigationView {
+//            List(viewModel.allProducts, id: \.id) { product in
+//                NavigationLink(destination: ProductDetailsView(product: product)) {
+//                    VStack(alignment: .leading) {
+//                        Text(product.title ?? "")
+//                            .font(.headline)
+//                        Text("ID: \(product.id ?? 0)")
+//                            .font(.subheadline)
+//                    }
+//                }
+//            }
+//            .navigationTitle("Products")
+//            .onAppear {
+//                viewModel.fetchAllProducts()
+//            }
+//        }
+//    }
+//}
+//
+//#Preview {
+//    AllProductTest()
+//}

@@ -14,7 +14,9 @@ struct ContentView: View {
     @State private var hasCompletedOnboarding = false
     
     var body: some View {
-        currentView
+        CustomeTabBarView()
+
+        //currentView
         //AllProductTest()
     }
 
