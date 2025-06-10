@@ -15,35 +15,8 @@ struct HomeView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 10) {
                     
-                    TabView {
-                        ZStack {
-                            Image("best_product_banner")
-                                .resizable()
-                                .scaledToFill()
-                                .frame(height: 180)
-                                .clipped()
-                            
-                            VStack {
-                                Text("BEST PRODUCT")
-                                    .font(.title)
-                                    .sheet(item: $selectedProduct) { product in
-                                        ProductDetailsView(product: product)
-                                            .presentationDetents([.medium, .large]) // Optional, iOS 16+
-                                    }               .fontWeight(.bold)
-                                    .foregroundColor(.white)
-                                Text("STARTED")
-                                    .font(.headline)
-                                    .foregroundColor(.white)
-                                Text("35% OFF")
-                                    .font(.subheadline)
-                                    .foregroundColor(.yellow)
-                            }
-                        }
-                    }
-                    .frame(height: 180)
-                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                    .cornerRadius(15)
-                    .padding(.horizontal)
+                    CouponsView()
+                        .padding(.vertical)
                     
                     // Brands Section
                     Text("Popular Brands")
