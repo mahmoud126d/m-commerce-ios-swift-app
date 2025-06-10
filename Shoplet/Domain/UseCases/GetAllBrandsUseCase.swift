@@ -7,9 +7,9 @@
 
 import Foundation
 final class GetAllBrandsUseCase {
-    private let repository: HomeRepository
+    private let repository: ProductRepository
     
-    init(repository: HomeRepository) {
+    init(repository: ProductRepository) {
         self.repository = repository
     }
 

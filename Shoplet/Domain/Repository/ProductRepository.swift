@@ -10,4 +10,8 @@ import Foundation
 protocol ProductRepository {
     func getProductById(_ id: String, completion: @escaping (Result<ProductModel, Error>) -> Void)
     func getAllProducts(completion: @escaping (Result<[ProductModel], Error>) -> Void)
+    func getAllBrands(completion: @escaping (Result<[SmartCollection], Error>) -> Void)
+    func getBestSellers(completion: @escaping (Result<[ProductModel], Error>) -> Void)
+    func getPriceRules(completion: @escaping (Result<[PriceRule], NetworkError>) -> Void)
+    func getCoupons(id: Int, completion: @escaping (Result<[Coupon], NetworkError>) -> Void)
 }

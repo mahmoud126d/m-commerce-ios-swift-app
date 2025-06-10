@@ -18,7 +18,7 @@ final class HomeViewModel: ObservableObject {
     @Published var bestSellers: [ProductModel] = []
     @Published var errorMessage: String?
 
-    init(repository: HomeRepository = HomeRepositoryImpl()) {
+    init(repository: ProductRepository = ProductRepositoryImpl()) {
         self.getAllBrandsUseCase = GetAllBrandsUseCase(repository: repository)
         self.getBestSellersUseCase = GetBestSellersUseCase(repository: repository)
     }
