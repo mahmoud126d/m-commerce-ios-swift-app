@@ -16,11 +16,12 @@ enum APIRouter: URLRequestConvertible {
     case getProductsByIds(ids: [String])
     case getPopularProducts
     case getBrands
-    
+    case priceRules
+    case coupons(id : Int)
 
     var method: HTTPMethod {
         switch self {
-        case .getProducts, .getProductsByIds , .getPopularProducts, .getBrands:
+        case .getProducts, .getProductsByIds , .getPopularProducts, .getBrands, .priceRules, .coupons:
             return .get
         }
     }
@@ -31,7 +32,7 @@ enum APIRouter: URLRequestConvertible {
 
     var parameters: [String: Any]? {
         switch self {
-        case .getProducts,.getPopularProducts, .getBrands:
+        case .getProducts,.getPopularProducts, .getBrands, .priceRules, .coupons:
             return nil
         case .getProductsByIds(let ids):
             return ["ids": ids.joined(separator: ",")]
@@ -48,6 +49,12 @@ enum APIRouter: URLRequestConvertible {
     
            case .getBrands:
             return "\(Support.apiVersion)\(ShopifyResource.smartCollections.endpoint)"
+            
+        case .priceRules:
+            return "\(Support.apiVersion)\(ShopifyResource.priceRules.endpoint)"
+            
+        case .coupons(let priceRuleId):
+            return "\(Support.apiVersion)price_rules/\(priceRuleId)/\(ShopifyResource.discounts.endpoint)"
         default:
             return ""
         }
@@ -55,14 +62,14 @@ enum APIRouter: URLRequestConvertible {
 
     var authorizationHeader: HTTPHeaderField? {
         switch self {
-        case .getProducts, .getProductsByIds,.getPopularProducts,.getBrands:
+        case .getProducts, .getProductsByIds,.getPopularProducts,.getBrands, .priceRules, .coupons:
             return .authorization
         }
     }
 
     var authorizationType: AuthorizationType {
         switch self {
-        case .getProducts, .getProductsByIds,.getPopularProducts,.getBrands:
+        case .getProducts, .getProductsByIds,.getPopularProducts,.getBrands, .priceRules, .coupons:
             return .basic
         }
     }

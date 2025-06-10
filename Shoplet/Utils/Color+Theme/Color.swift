@@ -10,7 +10,7 @@ import SwiftUI
 
 extension Color {
     static let primaryColor = Color(red: 111/255, green: 79/255, blue: 56/255)
-
+    static let secondaryColor = Color(red: 245/255, green: 235/255, blue: 220/255)
         static func adaptiveBackground(for colorScheme: ColorScheme) -> Color {
             colorScheme == .dark ? Color.primaryColor : .white
         }}

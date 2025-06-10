@@ -18,6 +18,8 @@ protocol APIClientType {
        
        // Add method to fetch brands (smart collections)
        static func getBrands(completion: @escaping (Result<BrandsResponse, NetworkError>) -> Void)
+    static func getPriceRules(completion: @escaping (Result<PriceRuleResponse, NetworkError>) -> Void)
+    static func getCoupons(id: Int, completion: @escaping (Result<CouponResponse, NetworkError>) -> Void)
     //add yours and implement it
    
 }
@@ -70,6 +72,11 @@ class APIClient: APIClientType {
     static func getBrands(completion: @escaping (Result<BrandsResponse, NetworkError>) -> Void) {
         performRequest(route: .getBrands, completion: completion)
     }
-  
+    static func getPriceRules(completion: @escaping (Result<PriceRuleResponse, NetworkError>) -> Void){
+        performRequest(route: .priceRules, completion: completion)
+    }
+    static func getCoupons(id: Int, completion: @escaping (Result<CouponResponse, NetworkError>) -> Void) {
+        performRequest(route: .coupons(id: id), completion: completion)
+    }
 }
 
