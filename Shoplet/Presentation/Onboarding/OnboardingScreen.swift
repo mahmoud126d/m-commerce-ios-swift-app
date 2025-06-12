@@ -38,30 +38,14 @@ struct OnboardingScreen: View {
             .padding(.top, 20)
 
             if currentIndex == onboardingItems.count - 1 {
-                Button(action: {
+                PrimaryButton(title: "Create Account") {
                     hasCompletedOnboarding = true
-                }) {
-                    Text("Create Account")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.primaryColor)
-                        .foregroundColor(.white)
-                        .cornerRadius(25)
-                        .padding(.horizontal, 30)
                 }
             } else {
-                Button(action: {
+                PrimaryButton(title: "Next") {
                     withAnimation {
                         currentIndex += 1
                     }
-                }) {
-                    Text("Next")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.primaryColor)
-                        .foregroundColor(.white)
-                        .cornerRadius(25)
-                        .padding(.horizontal, 30)
                 }
             }
 

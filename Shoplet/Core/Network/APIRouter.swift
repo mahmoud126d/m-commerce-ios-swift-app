@@ -18,16 +18,25 @@ enum APIRouter: URLRequestConvertible {
     case getBrands
     case priceRules
     case coupons(id : Int)
+    case createCustomer(customer: CustomerRequest)
+
 
     var method: HTTPMethod {
         switch self {
         case .getProducts, .getProductsByIds , .getPopularProducts, .getBrands, .priceRules, .coupons:
             return .get
+        case .createCustomer:
+            return .post
         }
     }
 
     var encoding: ParameterEncoding {
-        return URLEncoding.default
+        switch self {
+        case .createCustomer:
+            return JSONEncoding.default
+        default:
+            return URLEncoding.default
+        }
     }
 
     var parameters: [String: Any]? {
@@ -36,17 +45,18 @@ enum APIRouter: URLRequestConvertible {
             return nil
         case .getProductsByIds(let ids):
             return ["ids": ids.joined(separator: ",")]
-     
-        default:
-            return nil
+        case .createCustomer(let customer):
+            return try? JSONSerialization.jsonObject(with: JSONEncoder().encode(customer)) as? [String: Any]
         }
     }
 
     var path: String {
         switch self {
+        case .createCustomer:
+            return "\(Support.apiVersion)customers"
         case .getProducts, .getProductsByIds,.getPopularProducts:
             return "\(Support.apiVersion)\(ShopifyResource.products.endpoint)"
-    
+
            case .getBrands:
             return "\(Support.apiVersion)\(ShopifyResource.smartCollections.endpoint)"
             
@@ -55,46 +65,50 @@ enum APIRouter: URLRequestConvertible {
             
         case .coupons(let priceRuleId):
             return "\(Support.apiVersion)price_rules/\(priceRuleId)/\(ShopifyResource.discounts.endpoint)"
-        default:
-            return ""
+     
         }
     }
 
     var authorizationHeader: HTTPHeaderField? {
         switch self {
-        case .getProducts, .getProductsByIds,.getPopularProducts,.getBrands, .priceRules, .coupons:
+        case .getProducts, .getProductsByIds,.getPopularProducts,.getBrands, .priceRules, .coupons ,.createCustomer:
             return .authorization
+        case .createCustomer:
+            return .shopifyAccessToken
         }
     }
 
     var authorizationType: AuthorizationType {
         switch self {
-        case .getProducts, .getProductsByIds,.getPopularProducts,.getBrands, .priceRules, .coupons:
+        case .createCustomer:
+            return .apiKey
+        default:
             return .basic
         }
     }
 
+
     func asURLRequest() throws -> URLRequest {
         var url = try Constants.baseUrl.asURL()
-        
-        switch self {
-        case .getProductsByIds:
-            url.appendPathComponent(ShopifyResource.products.endpoint)
-        
-        default:
-            url.appendPathComponent(path + ".json")
-        }
+        url.appendPathComponent(path + ".json")
 
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = method.rawValue
+
         urlRequest.setValue(ContentType.json.rawValue, forHTTPHeaderField: HTTPHeaderField.contentType.rawValue)
 
-        if let headerField = authorizationHeader {
-            urlRequest.setValue(authorizationType.headerValue(), forHTTPHeaderField: headerField.rawValue)
-        }
+        let (headerField, headerValue) = authorizationType.header(for: .authorization)
+        urlRequest.setValue(headerValue, forHTTPHeaderField: headerField)
 
-        return try encoding.encode(urlRequest, with: parameters)
+        switch self {
+        case .createCustomer(let body):
+            urlRequest.httpBody = try JSONEncoder().encode(body)
+            return urlRequest
+        default:
+            return try encoding.encode(urlRequest, with: parameters)
+        }
     }
+
 
 }
 
