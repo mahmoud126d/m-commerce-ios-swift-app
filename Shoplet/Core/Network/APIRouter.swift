@@ -18,27 +18,44 @@ enum APIRouter: URLRequestConvertible {
     case getBrands
     case priceRules
     case coupons(id : Int)
-
+    case createDraftOrder(draftOrder : DraftOrderItem)
+    case updateDraftOrder(draftOrder : DraftOrderItem, dtaftOrderId: Int)
+    case getDraftOrderById(draftOrderId: Int)
+    case deleteDraftOrder(draftOrderId: Int)
+    
     var method: HTTPMethod {
         switch self {
-        case .getProducts, .getProductsByIds , .getPopularProducts, .getBrands, .priceRules, .coupons:
+        case .getProducts, .getProductsByIds , .getPopularProducts, .getBrands, .priceRules, .coupons, .getDraftOrderById:
             return .get
+        case .createDraftOrder:
+            return .post
+        case .updateDraftOrder:
+            return .put
+        case .deleteDraftOrder:
+            return .delete
         }
     }
 
     var encoding: ParameterEncoding {
-        return URLEncoding.default
+        switch self {
+        case .createDraftOrder, .updateDraftOrder:
+                return JSONEncoding.default
+            default:
+                return URLEncoding.default
+            }
     }
 
     var parameters: [String: Any]? {
         switch self {
-        case .getProducts,.getPopularProducts, .getBrands, .priceRules, .coupons:
+        case .getProducts,.getPopularProducts, .getBrands, .priceRules, .coupons, .getDraftOrderById, .deleteDraftOrder:
             return nil
         case .getProductsByIds(let ids):
             return ["ids": ids.joined(separator: ",")]
-     
-        default:
-            return nil
+        case .createDraftOrder(let draftOrder):
+            return try? JSONSerialization.jsonObject(with: JSONEncoder().encode(draftOrder)) as? [String : Any]
+        case .updateDraftOrder(let draftOrder, _):
+            return try? JSONSerialization.jsonObject(with: JSONEncoder().encode(draftOrder)) as? [String : Any]
+
         }
     }
 
@@ -55,22 +72,30 @@ enum APIRouter: URLRequestConvertible {
             
         case .coupons(let priceRuleId):
             return "\(Support.apiVersion)price_rules/\(priceRuleId)/\(ShopifyResource.discounts.endpoint)"
-        default:
-            return ""
+        case .createDraftOrder:
+            return "\(Support.apiVersion)\(ShopifyResource.createDraftOrder.endpoint)"
+        case .updateDraftOrder(_, let draftOrderId), .getDraftOrderById(let draftOrderId),.deleteDraftOrder(let draftOrderId):
+            return "\(Support.apiVersion)\(ShopifyResource.updateDraftOrder.endpoint)/\(draftOrderId)"
+
         }
     }
 
     var authorizationHeader: HTTPHeaderField? {
         switch self {
-        case .getProducts, .getProductsByIds,.getPopularProducts,.getBrands, .priceRules, .coupons:
+        case .getProducts, .getProductsByIds,.getPopularProducts,.getBrands, .priceRules, .coupons, .getDraftOrderById, .deleteDraftOrder:
             return .authorization
+        case .createDraftOrder, .updateDraftOrder:
+            return .password
         }
     }
 
     var authorizationType: AuthorizationType {
         switch self {
-        case .getProducts, .getProductsByIds,.getPopularProducts,.getBrands, .priceRules, .coupons:
+        case .getProducts, .getProductsByIds,.getPopularProducts,.getBrands, .priceRules, .coupons, .getDraftOrderById, .deleteDraftOrder:
             return .basic
+        case .createDraftOrder, .updateDraftOrder:
+            return .apiKey
+            
         }
     }
 

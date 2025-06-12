@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+class Methods{
+    static func getPrice(product: ProductModel, quantity: Int) -> Double {
+        let basePrice = product.variants?.first?.price ?? "35.8"
+        return (Double(basePrice) ?? 0.0) * Double(quantity)
+    }
+}

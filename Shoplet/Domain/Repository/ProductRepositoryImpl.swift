@@ -84,4 +84,56 @@ final class ProductRepositoryImpl: ProductRepository {
             }
         }
     }
+    func createDraftOrder(draftOrder:DraftOrderItem,completion: @escaping (Result<DraftOrder, NetworkError>) -> Void){
+        APIClient.createDraftOrder(draftOrder: draftOrder) { res in
+            switch res{
+            case .success(let draftOrder):
+                guard let draft_order = draftOrder.draft_order else{
+                    return
+                }
+                completion(.success(draft_order))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    func updateDraftOrder(draftOrder : DraftOrderItem, dtaftOrderId: Int, completion: @escaping (Result<DraftOrder, NetworkError>) -> Void){
+        APIClient.updateDraftOrder(draftOrder: draftOrder, dtaftOrderId: dtaftOrderId) { res in
+            switch res{
+            case .success(let draftOrder):
+                guard let draft_order = draftOrder.draft_order else{
+                    return
+                }
+                completion(.success(draft_order))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    func  getDraftOrderById(dtaftOrderId: Int, completion: @escaping (Result<DraftOrder, NetworkError>) -> Void)
+    {
+        APIClient.getDraftOrderById(dtaftOrderId: dtaftOrderId) { res in
+            switch res{
+            case .success(let draftOrder):
+                guard let draft_order = draftOrder.draft_order else{
+                    return
+                }
+                completion(.success(draft_order))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    func deleteDraftOrder(dtaftOrderId: Int, completion: @escaping () -> Void){
+        APIClient.deleteDraftOrder(dtaftOrderId: dtaftOrderId) { res in
+            switch res{
+            case .success(_):
+                completion()
+            case .failure(let error):
+                print(error)
+                completion()
+            }
+        }
+    }
+
 }

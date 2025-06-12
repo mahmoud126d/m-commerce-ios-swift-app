@@ -21,6 +21,10 @@ enum ShopifyResource {
     case smartCollections
     case priceRules
     case discounts
+    case createDraftOrder
+    case updateDraftOrder
+    case getDraftOrderById
+    case deleteDraftOrder
     
     var endpoint: String {
         switch self {
@@ -31,6 +35,8 @@ enum ShopifyResource {
             return "price_rules"
         case .discounts:
             return "discount_codes"
+        case .createDraftOrder, .updateDraftOrder, .getDraftOrderById, .deleteDraftOrder :
+            return "draft_orders"
 
         }
     }
@@ -40,6 +46,7 @@ enum ShopifyResource {
 enum HTTPHeaderField: String {
     case contentType = "Content-Type"
     case authorization = "Authorization"
+    case password = "X-Shopify-Access-Token"
 }
 
 enum ContentType: String {
@@ -49,6 +56,7 @@ enum ContentType: String {
 
 enum AuthorizationType {
     case basic
+    case apiKey
     
     func headerValue() -> String {
         switch self {
@@ -56,6 +64,8 @@ enum AuthorizationType {
             let credentialData = "\(Support.apiKey):\(Support.accessToken)".data(using: .utf8)!
             let base64Credentials = credentialData.base64EncodedString()
             return "Basic \(base64Credentials)"
+        case .apiKey:
+            return Support.accessToken
         }
     }
 }

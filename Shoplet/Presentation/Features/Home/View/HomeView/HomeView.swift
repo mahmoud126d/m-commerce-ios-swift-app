@@ -101,7 +101,7 @@ struct HomeView: View {
                                 }
                             }
                          .sheet(item: $selectedProduct) { product in
-                            ProductDetailsView(product: product)
+                             ProductDetailsView(product: product, viewModel:ProductViewModel())
                                 .presentationDetents([.medium, .large])
                         }
                         }

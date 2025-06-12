@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProductDetailsView: View {
     let product: ProductModel
-
+    @StateObject var viewModel : ProductViewModel
     @State private var selectedColor: String = ""
     @State private var selectedSize: String = ""
     @State private var showFullDescription: Bool = false
@@ -66,7 +66,10 @@ struct ProductDetailsView: View {
 
                         HStack(spacing: 12) {
                             Button(action: {
-                                if quantity > 1 { quantity -= 1 }
+                                if quantity > 1 {
+                                    quantity -= 1
+                                    viewModel.selectedQuantity = quantity
+                                }
                             }) {
                                 Image(systemName: "minus")
                                     .frame(width: 30, height: 30)
@@ -77,9 +80,9 @@ struct ProductDetailsView: View {
                             Text("\(quantity)")
                                 .font(.headline)
                                 .frame(width: 24)
-
                             Button(action: {
                                 quantity += 1
+                                viewModel.selectedQuantity = quantity
                             }) {
                                 Image(systemName: "plus")
                                     .frame(width: 30, height: 30)
@@ -117,6 +120,8 @@ struct ProductDetailsView: View {
                                     )
                                     .onTapGesture {
                                         selectedColor = color
+                                        viewModel.selectedColor = selectedColor
+                                        
                                     }
                             }
                         }
@@ -136,6 +141,7 @@ struct ProductDetailsView: View {
                                         .cornerRadius(10)
                                         .onTapGesture {
                                             selectedSize = size
+                                            viewModel.selectedSize = Int(selectedSize) ?? 32
                                         }
                                 }
                             }
@@ -168,6 +174,8 @@ struct ProductDetailsView: View {
 
                         Button(action: {
                             // TODO: Add to Cart Logic
+                            
+                            viewModel.addToCart(product: product)
                         }) {
                             HStack(spacing: 8) {
                                 Image(systemName: "cart.fill")
@@ -212,7 +220,8 @@ struct ProductDetailsView: View {
         options: nil,
         images: nil,
         image: nil
-    ))
+        
+    ),viewModel: ProductViewModel())
 }
 
 struct ImageModel: Identifiable, Codable {
