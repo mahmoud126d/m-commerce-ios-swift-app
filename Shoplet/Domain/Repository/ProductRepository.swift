@@ -14,4 +14,9 @@ protocol ProductRepository {
     func getBestSellers(completion: @escaping (Result<[ProductModel], Error>) -> Void)
     func getPriceRules(completion: @escaping (Result<[PriceRule], NetworkError>) -> Void)
     func getCoupons(id: Int, completion: @escaping (Result<[Coupon], NetworkError>) -> Void)
+    func createDraftOrder(draftOrder:DraftOrderItem,completion: @escaping (Result<DraftOrder, NetworkError>) -> Void)
+    func updateDraftOrder(draftOrder : DraftOrderItem, dtaftOrderId: Int, completion: @escaping (Result<DraftOrder, NetworkError>) -> Void)
+    func  getDraftOrderById(dtaftOrderId: Int, completion: @escaping (Result<DraftOrder, NetworkError>) -> Void)
+     func deleteDraftOrder(dtaftOrderId: Int, completion: @escaping () -> Void)
+
 }
