@@ -11,7 +11,8 @@ import Combine
 class ProductViewModel: ObservableObject {
     private let getProductByIdUseCase: GetProductByIdUseCase
     private let getAllProductsUseCase: GetAllProductsUseCase
-
+    private let draftOrderUseCase : DraftOrderUseCase
+    
     @Published var allProducts: [ProductModel] = []
     @Published var selectedProduct: ProductModel?
     @Published var errorMessage: String?
@@ -19,6 +20,7 @@ class ProductViewModel: ObservableObject {
     init(repository: ProductRepository = ProductRepositoryImpl()) {
         self.getProductByIdUseCase = GetProductByIdUseCase(repository: repository)
         self.getAllProductsUseCase = GetAllProductsUseCase(repository: repository)
+        self.draftOrderUseCase = DraftOrderUseCase(repo: repository)
     }
 
     func fetchAllProducts() {
@@ -45,5 +47,15 @@ class ProductViewModel: ObservableObject {
                 }
             }
         }
+    }
+    
+    func addToCart(product : ProductModel){
+        let userDraftOrder = DraftOrderItem(draft_order: DraftOrder(
+            line_items: [
+                LineItem(product_id: product.id, title: product.title,variant_id: product.variants?.first?.id, variant_title: product.variants?.first?.title, vendor: product.vendor,properties: [
+                    Property()
+                ])
+            ]
+        ))
     }
 }
