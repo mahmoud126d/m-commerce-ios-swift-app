@@ -45,126 +45,126 @@ struct CategoryView: View {
                                .padding(6)
                        }
                    }
-//                   .padding(.horizontal)
-//                   
-//                   // Category Tabs
-//                   ScrollView(.horizontal, showsIndicators: false) {
-//                       HStack(spacing: 10) {
-//                           ForEach(ProductCategory.allCases, id: \.self) { category in
-//                               Button {
-//                                   selectedCategory = category
-//                                   selectedFilter = nil
-//                                   selectedPriceFilter = .all
-//                                   searchText = ""
-//                                   viewModel.updateCategory(category)
-//                                   viewModel.clearFilter()
-//                                   viewModel.updatePriceFilter(.all)
-//                               } label: {
-//                                   Text(category.rawValue)
-//                                       .font(.subheadline)
-//                                       .foregroundColor(selectedCategory == category ? .white : .primary)
-//                                       .padding(.horizontal, 12)
-//                                       .padding(.vertical, 8)
-//                                       .background(selectedCategory == category ? Color.primaryColor : Color.gray.opacity(0.2))
-//                                       .cornerRadius(12)
-//                               }
-//                           }
-//                       }
-//                       .padding(.horizontal)
-//                   }
-//                   
-//                   // Filter options
-//                   if showFilterOptions {
-//                       VStack(spacing: 4) {
-//                           // Product Filter
-//                           ScrollView(.horizontal, showsIndicators: false) {
-//                               HStack(spacing: 10) {
-//                                   ForEach(ProductFilter.allCases, id: \.self) { filter in
-//                                       Button {
-//                                           if selectedFilter == filter {
-//                                               selectedFilter = nil
-//                                               viewModel.clearFilter()
-//                                           } else {
-//                                               selectedFilter = filter
-//                                               searchText = ""
-//                                               viewModel.updateFilter(filter)
-//                                           }
-//                                       } label: {
-//                                           Text(filter.rawValue)
-//                                               .font(.subheadline)
-//                                               .foregroundColor(selectedFilter == filter ? .white : .primary)
-//                                               .padding(.horizontal, 12)
-//                                               .padding(.vertical, 8)
-//                                               .background(selectedFilter == filter ? Color.primaryColor : Color.gray.opacity(0.2))
-//                                               .cornerRadius(12)
-//                                       }
-//                                   }
-//                               }
-//                               .padding(.horizontal)
-//                           }
-//                           
-//                           // Price Filter
-//                           ScrollView(.horizontal, showsIndicators: false) {
-//                               HStack(spacing: 10) {
-//                                   ForEach(PriceFilter.allCases, id: \.self) { priceOption in
-//                                       Button {
-//                                           selectedPriceFilter = priceOption
-//                                           viewModel.updatePriceFilter(priceOption)
-//                                       } label: {
-//                                           Text(priceOption.rawValue)
-//                                               .font(.subheadline)
-//                                               .foregroundColor(selectedPriceFilter == priceOption ? .white : .primary)
-//                                               .padding(.horizontal, 12)
-//                                               .padding(.vertical, 8)
-//                                               .background(selectedPriceFilter == priceOption ? Color.primaryColor : Color.gray.opacity(0.2))
-//                                               .cornerRadius(12)
-//                                       }
-//                                   }
-//                               }
-//                               .padding(.horizontal)
-//                           }
-//                       }
-//                       .transition(.opacity.combined(with: .slide))
-//                   }
-//                   
-//                   // Loading / Error / Grid
-//                   if viewModel.isLoading {
-//                       Spacer()
-//                       ProgressView()
-//                       Spacer()
-//                   } else if let errorMessage = viewModel.errorMessage {
-//                       Spacer()
-//                       Text(errorMessage)
-//                           .foregroundColor(.red)
-//                           .multilineTextAlignment(.center)
-//                           .padding()
-//                       Spacer()
-//                   } else {
-//                       ScrollView {
-//                           LazyVGrid(columns: gridColumns, spacing: 16) {
-//                               ForEach(viewModel.filteredProducts, id: \.id) { product in
-//                                   Button {
-//                                       selectedProduct = product
-//                                   } label: {
-//                                       ProductCardView(product: product)
-//                                   }
-//                               }
-//                           }
-//                           .padding(.horizontal)
-//                           .padding(.top)
-//                       }
-//                   }
-//               }
-//               .navigationTitle("Categories")
-//               .navigationBarTitleDisplayMode(.inline)
-//           }
-//           .sheet(item: $selectedProduct) { product in
-//               ProductDetailsView(product: product, viewModel: ProductViewModel())
-//                   .presentationDetents([.medium, .large])
-//           }
-//       }
-//   }
-//
-//   #Preview {
-//       CategoryView()
-//   }
+                   .padding(.horizontal)
+                   
+                   // Category Tabs
+                   ScrollView(.horizontal, showsIndicators: false) {
+                       HStack(spacing: 10) {
+                           ForEach(ProductCategory.allCases, id: \.self) { category in
+                               Button {
+                                   selectedCategory = category
+                                   selectedFilter = nil
+                                   selectedPriceFilter = .all
+                                   searchText = ""
+                                   viewModel.updateCategory(category)
+                                   viewModel.clearFilter()
+                                   viewModel.updatePriceFilter(.all)
+                               } label: {
+                                   Text(category.rawValue)
+                                       .font(.subheadline)
+                                       .foregroundColor(selectedCategory == category ? .white : .primary)
+                                       .padding(.horizontal, 12)
+                                       .padding(.vertical, 8)
+                                       .background(selectedCategory == category ? Color.primaryColor : Color.gray.opacity(0.2))
+                                       .cornerRadius(12)
+                               }
+                           }
+                       }
+                       .padding(.horizontal)
+                   }
+                   
+                   // Filter options
+                   if showFilterOptions {
+                       VStack(spacing: 4) {
+                           // Product Filter
+                           ScrollView(.horizontal, showsIndicators: false) {
+                               HStack(spacing: 10) {
+                                   ForEach(ProductFilter.allCases, id: \.self) { filter in
+                                       Button {
+                                           if selectedFilter == filter {
+                                               selectedFilter = nil
+                                               viewModel.clearFilter()
+                                           } else {
+                                               selectedFilter = filter
+                                               searchText = ""
+                                               viewModel.updateFilter(filter)
+                                           }
+                                       } label: {
+                                           Text(filter.rawValue)
+                                               .font(.subheadline)
+                                               .foregroundColor(selectedFilter == filter ? .white : .primary)
+                                               .padding(.horizontal, 12)
+                                               .padding(.vertical, 8)
+                                               .background(selectedFilter == filter ? Color.primaryColor : Color.gray.opacity(0.2))
+                                               .cornerRadius(12)
+                                       }
+                                   }
+                               }
+                               .padding(.horizontal)
+                           }
+                           
+                           // Price Filter
+                           ScrollView(.horizontal, showsIndicators: false) {
+                               HStack(spacing: 10) {
+                                   ForEach(PriceFilter.allCases, id: \.self) { priceOption in
+                                       Button {
+                                           selectedPriceFilter = priceOption
+                                           viewModel.updatePriceFilter(priceOption)
+                                       } label: {
+                                           Text(priceOption.rawValue)
+                                               .font(.subheadline)
+                                               .foregroundColor(selectedPriceFilter == priceOption ? .white : .primary)
+                                               .padding(.horizontal, 12)
+                                               .padding(.vertical, 8)
+                                               .background(selectedPriceFilter == priceOption ? Color.primaryColor : Color.gray.opacity(0.2))
+                                               .cornerRadius(12)
+                                       }
+                                   }
+                               }
+                               .padding(.horizontal)
+                           }
+                       }
+                       .transition(.opacity.combined(with: .slide))
+                   }
+                   
+                   // Loading / Error / Grid
+                   if viewModel.isLoading {
+                       Spacer()
+                       ProgressView()
+                       Spacer()
+                   } else if let errorMessage = viewModel.errorMessage {
+                       Spacer()
+                       Text(errorMessage)
+                           .foregroundColor(.red)
+                           .multilineTextAlignment(.center)
+                           .padding()
+                       Spacer()
+                   } else {
+                       ScrollView {
+                           LazyVGrid(columns: gridColumns, spacing: 16) {
+                               ForEach(viewModel.filteredProducts, id: \.id) { product in
+                                   Button {
+                                       selectedProduct = product
+                                   } label: {
+                                       ProductCardView(product: product)
+                                   }
+                               }
+                           }
+                           .padding(.horizontal)
+                           .padding(.top)
+                       }
+                   }
+               }
+               .navigationTitle("Categories")
+               .navigationBarTitleDisplayMode(.inline)
+           }
+           .sheet(item: $selectedProduct) { product in
+               ProductDetailsView(product: product, viewModel: ProductViewModel())
+                   .presentationDetents([.medium, .large])
+           }
+       }
+   }
+
+   #Preview {
+       CategoryView()
+   }
