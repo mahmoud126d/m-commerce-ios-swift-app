@@ -19,11 +19,13 @@ enum APIRouter: URLRequestConvertible {
     case priceRules
     case coupons(id : Int)
     case createCustomer(customer: CustomerRequest)
+    case getCustomerById(id: Int)
+    case getAllCustomers
 
 
     var method: HTTPMethod {
         switch self {
-        case .getProducts, .getProductsByIds , .getPopularProducts, .getBrands, .priceRules, .coupons:
+        case .getProducts, .getProductsByIds , .getPopularProducts, .getBrands, .priceRules, .coupons, .getCustomerById, .getAllCustomers:
             return .get
         case .createCustomer:
             return .post
@@ -41,7 +43,7 @@ enum APIRouter: URLRequestConvertible {
 
     var parameters: [String: Any]? {
         switch self {
-        case .getProducts,.getPopularProducts, .getBrands, .priceRules, .coupons:
+        case .getProducts,.getPopularProducts, .getBrands, .priceRules, .coupons,.getCustomerById, .getAllCustomers:
             return nil
         case .getProductsByIds(let ids):
             return ["ids": ids.joined(separator: ",")]
@@ -65,22 +67,28 @@ enum APIRouter: URLRequestConvertible {
             
         case .coupons(let priceRuleId):
             return "\(Support.apiVersion)price_rules/\(priceRuleId)/\(ShopifyResource.discounts.endpoint)"
+            
+        case .getCustomerById(let id):
+            return "\(Support.apiVersion)customers/\(id)"
+            
+        case .getAllCustomers:
+                return "\(Support.apiVersion)customers"
      
         }
     }
 
     var authorizationHeader: HTTPHeaderField? {
         switch self {
-        case .getProducts, .getProductsByIds,.getPopularProducts,.getBrands, .priceRules, .coupons ,.createCustomer:
+        case .getProducts, .getProductsByIds,.getPopularProducts,.getBrands, .priceRules, .coupons, .getAllCustomers:
             return .authorization
-        case .createCustomer:
+        case .createCustomer,.getCustomerById:
             return .shopifyAccessToken
         }
     }
 
     var authorizationType: AuthorizationType {
         switch self {
-        case .createCustomer:
+        case .createCustomer, .getCustomerById, .getAllCustomers:
             return .apiKey
         default:
             return .basic

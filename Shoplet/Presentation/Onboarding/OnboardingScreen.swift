@@ -9,6 +9,8 @@ import SwiftUI
 
 struct OnboardingScreen: View {
     @Binding var hasCompletedOnboarding: Bool
+    @State private var navigateToSignIn = false
+
     
     let onboardingItems = [
         OnboardingItem(imageName: "bag1", title: "Various Collections Of The Latest Products", subtitle: "Urna amet, suspendisse ullamcorper ac elit diam facilisis cursus vestibulum."),

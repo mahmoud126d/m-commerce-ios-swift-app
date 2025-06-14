@@ -8,7 +8,7 @@
 import Foundation
 
 protocol CreateCustomerUseCase {
-    func execute(customer: CustomerRequest, completion: @escaping (Result<Customer, NetworkError>) -> Void)
+    func execute(customer: CustomerRequest, completion: @escaping (Result<CustomerAuthResponse, NetworkError>) -> Void)
 }
 
 class DefaultCreateCustomerUseCase: CreateCustomerUseCase {
@@ -18,7 +18,7 @@ class DefaultCreateCustomerUseCase: CreateCustomerUseCase {
         self.repository = repository
     }
     
-    func execute(customer: CustomerRequest, completion: @escaping (Result<Customer, NetworkError>) -> Void) {
+    func execute(customer: CustomerRequest, completion: @escaping (Result<CustomerAuthResponse, NetworkError>) -> Void) {
         repository.createCustomer(customer: customer, completion: completion)
     }
 }

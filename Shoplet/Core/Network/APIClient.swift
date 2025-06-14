@@ -17,7 +17,9 @@ protocol APIClientType {
     static func getBrands(completion: @escaping (Result<BrandsResponse, NetworkError>) -> Void)
     static func getPriceRules(completion: @escaping (Result<PriceRuleResponse, NetworkError>) -> Void)
     static func getCoupons(id: Int, completion: @escaping (Result<CouponResponse, NetworkError>) -> Void)
-    static func createCustomer(customer: CustomerRequest, completion: @escaping (Result<Customer, NetworkError>) -> Void)
+    static func createCustomer(customer: CustomerRequest, completion: @escaping (Result<CustomerAuthResponse, NetworkError>) -> Void)
+    static func getCustomerById(id: Int, completion: @escaping (Result<CustomerAuthResponse, NetworkError>) -> Void)
+    static func getAllCustomers(completion: @escaping (Result<CustomerListResponse, NetworkError>) -> Void)
    
 }
 
@@ -74,10 +76,17 @@ class APIClient: APIClientType {
     static func getCoupons(id: Int, completion: @escaping (Result<CouponResponse, NetworkError>) -> Void) {
         performRequest(route: .coupons(id: id), completion: completion)
     }
-    static func createCustomer(customer: CustomerRequest, completion: @escaping (Result<Customer, NetworkError>) -> Void) {
-        var ro : APIRouter = .createCustomer(customer: customer)
-        print("Routee::: \(ro.parameters)")
+    static func createCustomer(customer: CustomerRequest, completion: @escaping (Result<CustomerAuthResponse, NetworkError>) -> Void) {
         performRequest(route: .createCustomer(customer: customer), completion: completion)
     }
+    static func getCustomerById(id: Int, completion: @escaping (Result<CustomerAuthResponse, NetworkError>) -> Void) {
+        performRequest(route: .getCustomerById(id: id), completion: completion)
+    }
+    
+    static func getAllCustomers(completion: @escaping (Result<CustomerListResponse, NetworkError>) -> Void) {
+        performRequest(route: .getAllCustomers, completion: completion)
+    }
+
+
 }
 

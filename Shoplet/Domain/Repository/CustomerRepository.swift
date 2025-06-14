@@ -8,5 +8,8 @@
 import Foundation
 
 protocol CustomerRepository {
-    func createCustomer(customer: CustomerRequest, completion: @escaping (Result<Customer, NetworkError>) -> Void)
+    func createCustomer(customer: CustomerRequest, completion: @escaping (Result<CustomerAuthResponse, NetworkError>) -> Void)
+    func getCustomerById(id: Int, completion: @escaping (Result<CustomerAuthResponse, NetworkError>) -> Void)
+    func getAllCustomers(completion: @escaping (Result<CustomerListResponse, NetworkError>) -> Void)
+
 }

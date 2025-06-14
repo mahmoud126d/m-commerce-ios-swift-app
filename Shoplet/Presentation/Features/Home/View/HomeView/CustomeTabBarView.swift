@@ -38,7 +38,7 @@ struct CustomeTabBarView: View {
                             TabButton(icon: "house", title: "Home", tab: .home, selectedTab: $selectedTab)
                             TabButton(icon: "square.grid.2x2", title: "Category", tab: .category, selectedTab: $selectedTab)
 
-                            Spacer(minLength: 60) // Space for floating cart
+                            Spacer(minLength: 60)
 
                             TabButton(icon: "heart", title: "Favorite", tab: .favorite, selectedTab: $selectedTab)
                             TabButton(icon: "person", title: "Profile", tab: .profile, selectedTab: $selectedTab)
@@ -63,6 +63,10 @@ struct CustomeTabBarView: View {
                     }
                 }
                 .ignoresSafeArea(edges: .bottom)
+                .onAppear {
+                        let customerId = UserDefaultManager.shared.customerId ?? -1
+                        print("🧑‍💻 Logged-in Customer ID: \(customerId)")
+                    }
             }
         }
 
