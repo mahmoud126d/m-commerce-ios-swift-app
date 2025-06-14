@@ -23,18 +23,18 @@ final class HomeViewModel: ObservableObject {
         self.getBestSellersUseCase = GetBestSellersUseCase(repository: repository)
     }
 
-//    func fetchBrands() {
-//        getAllBrandsUseCase.execute { [weak self] result in
-//            DispatchQueue.main.async {
-//                switch result {
-//                case .success(let brands):
-//                    self?.brands = brands
-//                case .failure(let error):
-//                    self?.errorMessage = "Brands Error: \(error.localizedDescription)"
-//                }
-//            }
-//        }
-//    }
+    func fetchBrands() {
+        getAllBrandsUseCase.execute { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let brands):
+                    self?.brands = brands
+                case .failure(let error):
+                    self?.errorMessage = "Brands Error: \(error.localizedDescription)"
+                }
+            }
+        }
+    }
 
     func fetchBestSellers() {
         getBestSellersUseCase.execute { [weak self] result in
