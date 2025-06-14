@@ -7,44 +7,44 @@
 
 import SwiftUI
 
-//struct CategoryView: View {
-//    @StateObject private var viewModel = CategoryViewModel()
-//       
-//       @State private var selectedCategory: ProductCategory = .all
-//       @State private var selectedFilter: ProductFilter?
-//       @State private var selectedPriceFilter: PriceFilter = .all
-//       @State private var searchText = ""
-//       @State private var showFilterOptions = false
-//       
-//       @State private var selectedProduct: ProductModel? = nil
-//       
-//       private let gridColumns = [GridItem(.flexible()), GridItem(.flexible())]
-//       
-//       var body: some View {
-//           NavigationView {
-//               VStack(spacing: 8) {
-//                   
-//                   // Search Bar + Filter Button
-//                   HStack {
-//                       TextField("Search products...", text: $searchText)
-//                           .padding(10)
-//                           .background(Color(.systemGray6))
-//                           .cornerRadius(8)
-//                           .onChange(of: searchText) { newText in
-//                               viewModel.search(text: newText)
-//                           }
-//                       
-//                       Button {
-//                           withAnimation {
-//                               showFilterOptions.toggle()
-//                           }
-//                       } label: {
-//                           Image(systemName: "line.3.horizontal.decrease.circle")
-//                               .font(.title2)
-//                               .foregroundColor(.primary)
-//                               .padding(6)
-//                       }
-//                   }
+struct CategoryView: View {
+    @StateObject private var viewModel = CategoryViewModel()
+       
+       @State private var selectedCategory: ProductCategory = .all
+       @State private var selectedFilter: ProductFilter?
+       @State private var selectedPriceFilter: PriceFilter = .all
+       @State private var searchText = ""
+       @State private var showFilterOptions = false
+       
+       @State private var selectedProduct: ProductModel? = nil
+       
+       private let gridColumns = [GridItem(.flexible()), GridItem(.flexible())]
+       
+       var body: some View {
+           NavigationView {
+               VStack(spacing: 8) {
+                   
+                   // Search Bar + Filter Button
+                   HStack {
+                       TextField("Search products...", text: $searchText)
+                           .padding(10)
+                           .background(Color(.systemGray6))
+                           .cornerRadius(8)
+                           .onChange(of: searchText) { newText in
+                               viewModel.search(text: newText)
+                           }
+                       
+                       Button {
+                           withAnimation {
+                               showFilterOptions.toggle()
+                           }
+                       } label: {
+                           Image(systemName: "line.3.horizontal.decrease.circle")
+                               .font(.title2)
+                               .foregroundColor(.primary)
+                               .padding(6)
+                       }
+                   }
 //                   .padding(.horizontal)
 //                   
 //                   // Category Tabs
