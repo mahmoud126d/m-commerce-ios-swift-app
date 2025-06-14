@@ -25,7 +25,8 @@ enum ShopifyResource {
     case updateDraftOrder
     case getDraftOrderById
     case deleteDraftOrder
-    
+    case customers
+
     var endpoint: String {
         switch self {
         case .products:
@@ -37,6 +38,8 @@ enum ShopifyResource {
             return "discount_codes"
         case .createDraftOrder, .updateDraftOrder, .getDraftOrderById, .deleteDraftOrder :
             return "draft_orders"
+        case .customers: return "customers"
+
 
         }
     }

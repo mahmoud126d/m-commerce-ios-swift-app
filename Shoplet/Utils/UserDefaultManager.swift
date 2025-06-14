@@ -7,7 +7,7 @@
 
 import Foundation
 
-class UserDefaultManager{
+class UserDefaultManager:ObservableObject{
     
     static let shared = UserDefaultManager()
     private init(){}
@@ -26,6 +26,38 @@ class UserDefaultManager{
         }
         set{
             UserDefaults.standard.setValue(newValue, forKey: "hasDraftOrder")
+        }
+    }
+    @Published var cartItems: Int = 0 {
+            didSet {
+                UserDefaults.standard.setValue(cartItems, forKey: "cartItems")
+            }
+        }
+
+    func getNumOfCartItems()->Int{
+            return UserDefaults.standard.integer(forKey: "cartItems")
+        }
+       
+    var isUserLoggedIn: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: "isUserLoggedIn")
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: "isUserLoggedIn")
+        }
+    }
+
+    var customerId: Int? {
+        get {
+            let id = UserDefaults.standard.integer(forKey: "customerId")
+            return id == 0 ? nil : id
+        }
+        set {
+            if let newValue = newValue {
+                UserDefaults.standard.setValue(newValue, forKey: "customerId")
+            } else {
+                UserDefaults.standard.removeObject(forKey: "customerId")
+            }
         }
     }
     

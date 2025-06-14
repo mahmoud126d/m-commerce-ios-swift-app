@@ -10,7 +10,6 @@ import SwiftUI
 struct BrandProductsView: View {
     let brandName: String
     @State private var selectedProduct: ProductModel? = nil
-
     @StateObject private var viewModel = BrandProductsViewModel()
     @State private var favorites: Set<Int> = []
 
@@ -60,6 +59,8 @@ struct BrandProductsView: View {
 
                                     Button(action: {
                                         // TODO: Handle add to cart logic
+                                        viewModel.addToCart(product: product)
+
                                         print("Add to cart tapped for \(product.title ?? "")")
                                     }) {
                                         Label("Add to Cart", systemImage: "cart.badge.plus")

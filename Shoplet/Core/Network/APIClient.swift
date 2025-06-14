@@ -13,7 +13,6 @@ struct Empty: Codable {}
 protocol APIClientType {
     static func getProducts(completion: @escaping (Result<ProductResponse, NetworkError>) -> Void)
     static func getProductsByIds(ids: [String], completion: @escaping (Result<ProductResponse, NetworkError>) -> Void)
-//
     static func getPopularProducts(completion: @escaping (Result<ProductResponse, NetworkError>) -> Void)
        
        static func getBrands(completion: @escaping (Result<BrandsResponse, NetworkError>) -> Void)
@@ -23,6 +22,9 @@ protocol APIClientType {
     static func updateDraftOrder(draftOrder : DraftOrderItem, dtaftOrderId: Int, completion: @escaping (Result<DraftOrderItem, NetworkError>) -> Void)
     static func getDraftOrderById(dtaftOrderId: Int, completion: @escaping (Result<DraftOrderItem, NetworkError>) -> Void)
     static func deleteDraftOrder(dtaftOrderId: Int, completion: @escaping (Result<EmptyResponse, NetworkError>) -> Void)
+    static func createCustomer(customer: CustomerRequest, completion: @escaping (Result<CustomerAuthResponse, NetworkError>) -> Void)
+    static func getCustomerById(id: Int, completion: @escaping (Result<CustomerAuthResponse, NetworkError>) -> Void)
+    static func getAllCustomers(completion: @escaping (Result<CustomerListResponse, NetworkError>) -> Void)
    
 }
 
@@ -92,6 +94,16 @@ class APIClient: APIClientType {
     static func deleteDraftOrder(dtaftOrderId: Int, completion: @escaping (Result<EmptyResponse, NetworkError>) -> Void)
     {
         performRequest(route: .deleteDraftOrder(draftOrderId: dtaftOrderId), completion:completion )
+    }
+    static func createCustomer(customer: CustomerRequest, completion: @escaping (Result<CustomerAuthResponse, NetworkError>) -> Void) {
+        performRequest(route: .createCustomer(customer: customer), completion: completion)
+    }
+    static func getCustomerById(id: Int, completion: @escaping (Result<CustomerAuthResponse, NetworkError>) -> Void) {
+        performRequest(route: .getCustomerById(id: id), completion: completion)
+    }
+    
+    static func getAllCustomers(completion: @escaping (Result<CustomerListResponse, NetworkError>) -> Void) {
+        performRequest(route: .getAllCustomers, completion: completion)
     }
 }
 

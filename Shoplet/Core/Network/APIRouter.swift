@@ -22,12 +22,15 @@ enum APIRouter: URLRequestConvertible {
     case updateDraftOrder(draftOrder : DraftOrderItem, dtaftOrderId: Int)
     case getDraftOrderById(draftOrderId: Int)
     case deleteDraftOrder(draftOrderId: Int)
-    
+    case createCustomer(customer: CustomerRequest)
+    case getCustomerById(id: Int)
+    case getAllCustomers
+
     var method: HTTPMethod {
         switch self {
-        case .getProducts, .getProductsByIds , .getPopularProducts, .getBrands, .priceRules, .coupons, .getDraftOrderById:
+        case .getProducts, .getProductsByIds , .getPopularProducts, .getBrands, .priceRules, .coupons, .getDraftOrderById,.getCustomerById, .getAllCustomers:
             return .get
-        case .createDraftOrder:
+        case .createDraftOrder, .createCustomer:
             return .post
         case .updateDraftOrder:
             return .put
@@ -38,7 +41,7 @@ enum APIRouter: URLRequestConvertible {
 
     var encoding: ParameterEncoding {
         switch self {
-        case .createDraftOrder, .updateDraftOrder:
+        case .createDraftOrder, .updateDraftOrder,.createCustomer:
                 return JSONEncoding.default
             default:
                 return URLEncoding.default
@@ -47,7 +50,7 @@ enum APIRouter: URLRequestConvertible {
 
     var parameters: [String: Any]? {
         switch self {
-        case .getProducts,.getPopularProducts, .getBrands, .priceRules, .coupons, .getDraftOrderById, .deleteDraftOrder:
+        case .getProducts,.getPopularProducts, .getBrands, .priceRules, .coupons, .getDraftOrderById, .deleteDraftOrder, .getAllCustomers, .getCustomerById:
             return nil
         case .getProductsByIds(let ids):
             return ["ids": ids.joined(separator: ",")]
@@ -55,6 +58,8 @@ enum APIRouter: URLRequestConvertible {
             return try? JSONSerialization.jsonObject(with: JSONEncoder().encode(draftOrder)) as? [String : Any]
         case .updateDraftOrder(let draftOrder, _):
             return try? JSONSerialization.jsonObject(with: JSONEncoder().encode(draftOrder)) as? [String : Any]
+        case .createCustomer(let customer):
+            return try? JSONSerialization.jsonObject(with: JSONEncoder().encode(customer)) as? [String: Any]
 
         }
     }
@@ -76,15 +81,24 @@ enum APIRouter: URLRequestConvertible {
             return "\(Support.apiVersion)\(ShopifyResource.createDraftOrder.endpoint)"
         case .updateDraftOrder(_, let draftOrderId), .getDraftOrderById(let draftOrderId),.deleteDraftOrder(let draftOrderId):
             return "\(Support.apiVersion)\(ShopifyResource.updateDraftOrder.endpoint)/\(draftOrderId)"
+            
+            
+
+        case .createCustomer(customer: let customer):
+            return "\(Support.apiVersion)customers"
+        case .getCustomerById(id: let id):
+            return "\(Support.apiVersion)customers/\(id)"
+        case .getAllCustomers:
+            return "\(Support.apiVersion)customers"
 
         }
     }
 
     var authorizationHeader: HTTPHeaderField? {
         switch self {
-        case .getProducts, .getProductsByIds,.getPopularProducts,.getBrands, .priceRules, .coupons, .getDraftOrderById, .deleteDraftOrder:
+        case .getProducts, .getProductsByIds,.getPopularProducts,.getBrands, .priceRules, .coupons, .getDraftOrderById, .deleteDraftOrder, .getAllCustomers:
             return .authorization
-        case .createDraftOrder, .updateDraftOrder:
+        case .createDraftOrder, .updateDraftOrder, .createCustomer,.getCustomerById:
             return .password
         }
     }
@@ -93,7 +107,7 @@ enum APIRouter: URLRequestConvertible {
         switch self {
         case .getProducts, .getProductsByIds,.getPopularProducts,.getBrands, .priceRules, .coupons, .getDraftOrderById, .deleteDraftOrder:
             return .basic
-        case .createDraftOrder, .updateDraftOrder:
+        case .createDraftOrder, .updateDraftOrder, .createCustomer, .getCustomerById, .getAllCustomers:
             return .apiKey
             
         }
