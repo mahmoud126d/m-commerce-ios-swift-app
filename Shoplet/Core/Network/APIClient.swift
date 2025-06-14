@@ -20,6 +20,11 @@ protocol APIClientType {
     static func createCustomer(customer: CustomerRequest, completion: @escaping (Result<CustomerAuthResponse, NetworkError>) -> Void)
     static func getCustomerById(id: Int, completion: @escaping (Result<CustomerAuthResponse, NetworkError>) -> Void)
     static func getAllCustomers(completion: @escaping (Result<CustomerListResponse, NetworkError>) -> Void)
+    static func createDraftOrder(draftOrder:DraftOrderItem,completion: @escaping (Result<DraftOrderItem, NetworkError>) -> Void)
+        static func updateDraftOrder(draftOrder : DraftOrderItem, dtaftOrderId: Int, completion: @escaping (Result<DraftOrderItem, NetworkError>) -> Void)
+        static func getDraftOrderById(dtaftOrderId: Int, completion: @escaping (Result<DraftOrderItem, NetworkError>) -> Void)
+        static func deleteDraftOrder(dtaftOrderId: Int, completion: @escaping (Result<EmptyResponse, NetworkError>) -> Void)
+       
    
 }
 
@@ -86,6 +91,20 @@ class APIClient: APIClientType {
     static func getAllCustomers(completion: @escaping (Result<CustomerListResponse, NetworkError>) -> Void) {
         performRequest(route: .getAllCustomers, completion: completion)
     }
+    
+    static func createDraftOrder(draftOrder:DraftOrderItem,completion: @escaping (Result<DraftOrderItem, NetworkError>) -> Void){
+            performRequest(route: .createDraftOrder(draftOrder: draftOrder), completion: completion)
+        }
+        static func updateDraftOrder(draftOrder : DraftOrderItem, dtaftOrderId: Int, completion: @escaping (Result<DraftOrderItem, NetworkError>) -> Void){
+            performRequest(route: .updateDraftOrder(draftOrder: draftOrder, dtaftOrderId: dtaftOrderId), completion: completion)
+        }
+        static func getDraftOrderById(dtaftOrderId: Int, completion: @escaping (Result<DraftOrderItem, NetworkError>) -> Void){
+            performRequest(route: .getDraftOrderById(draftOrderId: dtaftOrderId), completion: completion)
+        }
+        static func deleteDraftOrder(dtaftOrderId: Int, completion: @escaping (Result<EmptyResponse, NetworkError>) -> Void)
+        {
+            performRequest(route: .deleteDraftOrder(draftOrderId: dtaftOrderId), completion:completion )
+        }
 
 
 }
