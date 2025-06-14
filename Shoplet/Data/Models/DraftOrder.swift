@@ -18,7 +18,7 @@ struct DraftOrderItem : Codable{
 struct DraftOrder: Codable {
     var id: Int?
     var name: String?
-    var customer: Customer?
+    var customer: DraftOrderCustomer?
     var shipping_address: Address?
     var billing_address: Address?
     var note: String?
@@ -47,7 +47,7 @@ struct DraftOrder: Codable {
 
 }
 
-struct Customer: Codable {
+struct DraftOrderCustomer:Codable {
     var id: Int?
     var email: String?
     var accepts_marketing: Bool?
@@ -69,10 +69,11 @@ struct Customer: Codable {
     var last_order_name: String?
     var currency: String?
     var admin_graphql_api_id: String?
-    var default_address: Address?
+    var addresses: [DraftOrderAddress]?
+    var default_address: DraftOrderAddress?
 }
 
-struct Address: Codable {
+struct DraftOrderAddress: Codable {
     var address1: String?
     var address2: String?
     var city: String?

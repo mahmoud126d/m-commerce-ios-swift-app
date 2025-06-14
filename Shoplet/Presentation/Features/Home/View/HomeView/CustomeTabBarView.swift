@@ -9,7 +9,8 @@ import SwiftUI
 
 struct CustomeTabBarView: View {
     @State private var selectedTab: Tab = .home
-
+    @ObservedObject var homeViewModel : HomeViewModel
+    @ObservedObject var userDefaultManager : UserDefaultManager
     enum Tab {
         case home, category, cart, favorite, profile
     }
@@ -48,22 +49,34 @@ struct CustomeTabBarView: View {
                         .padding(.bottom, 10)
 
                         // MARK: - Floating Cart Button
-                        Button(action: {
-                            selectedTab = .cart
-                        }) {
-                            Image(systemName: "cart.fill")
-                                .font(.system(size: 22, weight: .bold))
-                                .foregroundColor(.white)
-                                .padding(20)
-                                .background(Color.primaryColor)
-                                .clipShape(Circle())
-                                .shadow(radius: 5)
+                        ZStack {
+                            Button(action: {
+                                selectedTab = .cart
+                            }) {
+                                Image(systemName: "cart.fill")
+                                    .font(.system(size: 22, weight: .bold))
+                                    .foregroundColor(.white)
+                                    .padding(20)
+                                    .background(Color.primaryColor)
+                                    .clipShape(Circle())
+                                    .shadow(radius: 5)
+                            }
+
+                            if userDefaultManager.getNumOfCartItems() > 0 {
+                                Text("\(userDefaultManager.getNumOfCartItems())")
+                                    .font(.caption2)
+                                    .foregroundColor(.white)
+                                    .padding(8)
+                                    .background(Color.red)
+                                    .clipShape(Circle())
+                                    .offset(x: 15, y: -25)
+                            }
                         }
                         .offset(y: -35)
                     }
-                }
+        }
                 .ignoresSafeArea(edges: .bottom)
-            }
+    }
         }
 
 struct TabButton: View {
@@ -89,5 +102,5 @@ struct TabButton: View {
     }
 }
 #Preview {
-    CustomeTabBarView()
+    CustomeTabBarView(homeViewModel: HomeViewModel(), userDefaultManager: UserDefaultManager.shared)
 }

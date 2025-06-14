@@ -9,37 +9,64 @@ import SwiftUI
 
 struct CartView: View {
     @StateObject var cartViewModel = CartViewModel()
+    @State private var isActive = false
     var body: some View {
-        VStack{
-            Text("Cart")
-                .font(.largeTitle)
-                .bold()
-            if let draftOrder = cartViewModel.draftOrder {
-                           ScrollView {
-                               ForEach(0..<(draftOrder.line_items?.count ?? 0 ), id: \.self) { index in
-                                   
-                                   if let item = cartViewModel.draftOrder?.line_items?[index] {
-                                           CartItem(
-                                               lineItem: item,
-                                               onQuantityChange: { qan in
-                                                   cartViewModel.draftOrder?.line_items?[index].quantity = qan
-                                                   cartViewModel.updateLineItemQuantity(lineItem: cartViewModel.draftOrder!.line_items![index])
+        NavigationView{
+            VStack{
+                Text("Cart")
+                    .font(.headline)
+                    .bold()
+                if cartViewModel.draftOrder != nil {
+                    let draftOrder = cartViewModel.draftOrder
+                               ScrollView (showsIndicators: false){
+                                   VStack{
+                                       ForEach(0..<(draftOrder?.line_items?.count ?? 0), id: \.self) { index in
+                                           
+                                           if let item = cartViewModel.draftOrder?.line_items?[index] {
+                                                   CartItem(
+                                                       lineItem: item,
+                                                       onQuantityChange: { qan in
+                                                           cartViewModel.draftOrder?.line_items?[index].quantity = qan
+                                                           cartViewModel.updateLineItemQuantity(lineItem: cartViewModel.draftOrder!.line_items![index])
+                                                       }
+                                                   ){
+                                                       cartViewModel.deleteItemLine(lineItem: item)
+                                                   }
                                                }
-                                           ){
-                                               cartViewModel.deleteItemLine(lineItem: item)
-                                           }
                                        }
+                                      
+                                   }
                                }
+                    HStack{
+                        
+                        Text("SubTotal: \(cartViewModel.subTotal ?? "0.0") USD")
+                            .bold()
+                        NavigationLink(destination: CheckoutPage(cartViewModel: cartViewModel), isActive: $isActive) {
+                            Button(action: {
+                               isActive = true
+                            }) {
+                                Text("Checkout")
+                                    .padding()
+                                    .background(Color.primaryColor.opacity(0.7))
+                                    .foregroundColor(.white)
+                                    .padding(.horizontal, 16)
+                            }
+                        }
+                    }.padding(.bottom, 120)
+                     .padding(.top)
+                    
+                           } else {
+                               Spacer()
+                               Text("No Data in Cart")
+                                   .foregroundColor(.gray)
+                               Spacer()
                            }
-                       } else {
-                           Text("No Data in Cart")
-                               .foregroundColor(.gray)
-                       }
-        }.onAppear{
-            cartViewModel.getDraftOrderById()
+            }.onAppear{
+                cartViewModel.getDraftOrderById()
+            }
+        }
         }
     }
-}
 
 #Preview {
     CartView()

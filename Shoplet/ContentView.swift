@@ -10,15 +10,19 @@ import SwiftUI
 struct ContentView: View {
     @State private var hasSeenSplash = false
     @State private var hasCompletedOnboarding = false
-
+    @AppStorage("isUserLoggedIn") private var isUserLoggedIn = false
+    @StateObject var homeViewModel = HomeViewModel()
     var body: some View {
         Group {
             if !hasSeenSplash {
                 SplashScreen(hasSeenSplash: $hasSeenSplash)
-            } else if !hasCompletedOnboarding {
+            } else if !hasCompletedOnboarding && !isUserLoggedIn{
                 OnboardingScreen(hasCompletedOnboarding: $hasCompletedOnboarding)
-            } else {
-                CustomeTabBarView()
+            } else if !isUserLoggedIn {
+                AuthView()
+            }
+            else {
+                CustomeTabBarView(homeViewModel: homeViewModel, userDefaultManager: UserDefaultManager.shared)
             }
         }
     }

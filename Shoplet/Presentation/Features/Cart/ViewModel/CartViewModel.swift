@@ -11,6 +11,9 @@ class CartViewModel : ObservableObject{
     private var draftOrderUseCase : DraftOrderUseCase
     private var userDefault = UserDefaultManager.shared
     @Published var draftOrder : DraftOrder?
+    @Published var subTotal : String?
+    @Published var tax: String?
+    @Published var total: String?
     init(repo :ProductRepository = ProductRepositoryImpl()) {
         self.draftOrderUseCase = DraftOrderUseCase(repo: repo)
     }
@@ -22,6 +25,9 @@ class CartViewModel : ObservableObject{
                     switch res{
                     case .success(let draftOrder):
                         self?.draftOrder = draftOrder
+                        self?.subTotal = draftOrder.subtotal_price
+                        self?.tax = draftOrder.total_tax
+                        self?.total = draftOrder.total_price
                     case .failure(let error):
                         print(error)
                     }
@@ -63,11 +69,15 @@ class CartViewModel : ObservableObject{
     
     
     func updateDraftOrder(draftOrderItem : DraftOrderItem){
-        draftOrderUseCase.update(draftOrder: draftOrderItem, dtaftOrderId: userDefault.draftOrderId) { res in
+        draftOrderUseCase.update(draftOrder: draftOrderItem, dtaftOrderId: userDefault.draftOrderId) {[weak self] res in
             DispatchQueue.main.async {
                 switch res {
                 case .success(let draftOrder):
                     print("updated \(String(describing: draftOrder.id))")
+                    self?.userDefault.cartItems = draftOrder.line_items?.count ?? 0
+                    self?.subTotal = draftOrder.subtotal_price
+                    self?.tax = draftOrder.total_tax
+                    self?.total = draftOrder.total_price
                 case .failure(let error):
                     print(error)
                 }
@@ -79,6 +89,8 @@ class CartViewModel : ObservableObject{
             print("deleted")
             self.userDefault.hasDraftOrder = false
             self.userDefault.draftOrderId = 0
+            self.userDefault.cartItems =  0
+            self.getDraftOrderById()
         }
     }
 }

@@ -43,7 +43,7 @@ struct AuthView: View {
                 }
 
                 NavigationLink(
-                    destination: CustomeTabBarView(),
+                    destination: CustomeTabBarView(homeViewModel: HomeViewModel(), userDefaultManager: UserDefaultManager.shared),
                     isActive: $exploreAsGuest
                 ) {
                     EmptyView()

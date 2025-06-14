@@ -18,7 +18,7 @@ class ProductViewModel: ObservableObject {
     @Published var allProducts: [ProductModel] = []
     @Published var selectedProduct: ProductModel?
     @Published var errorMessage: String?
-    @Published var selectedColor : String = "Black"
+    @Published var selectedColor : String?
     @Published var selectedQuantity : Int = 1
     @Published var selectedSize : Int = 32
     @Published var price : String = ""
@@ -59,7 +59,7 @@ class ProductViewModel: ObservableObject {
         //userDefault.hasDraftOrder = false
         let userDraftOrder = DraftOrderItem(
             draft_order: DraftOrder(
-                customer: Customer(id: 7971971891418),
+                customer: DraftOrderCustomer(id: 7971971891418),
                 line_items: [
                     LineItem(price: product.variants?.first?.price,
                              product_id: product.id,
@@ -69,7 +69,7 @@ class ProductViewModel: ObservableObject {
                              variant_title: product.variants?.first?.title,
                              vendor: product.vendor,
                              properties: [
-                                Property(name: "Color", value: selectedColor),
+                                Property(name: "Color", value: selectedColor ?? (product.options?[1].values.first ?? "Black")),
                                 Property(name: "Image", value: product.image?.src),
                                 Property(name: "Size", value: "\(selectedSize)")
                              ])
@@ -85,6 +85,7 @@ class ProductViewModel: ObservableObject {
                         print("Added \(String(describing: res.id))")
                         self?.userDefault.hasDraftOrder = true
                         self?.userDefault.draftOrderId = res.id ?? 0
+                        self?.userDefault.cartItems = res.line_items?.count ?? 0
                     case .failure(let error):
                         print(error)
                     }
@@ -119,20 +120,26 @@ class ProductViewModel: ObservableObject {
                 self.draftOrderLineItem = items
                 var updatedDraftOrder = userDraftOrder
                 updatedDraftOrder.draft_order?.line_items = items
-
-                self.draftOrderUseCase.update(draftOrder: updatedDraftOrder, dtaftOrderId: self.userDefault.draftOrderId) { res in
-                    DispatchQueue.main.async {
-                        switch res {
-                        case .success(let draftOrder):
-                            print("updated \(String(describing: draftOrder.id))")
-                        case .failure(let error):
-                            print(error)
-                        }
-                    }
-                }
+                self.updateDraftOrder(updatedDraftOrder: updatedDraftOrder)
+               
             }
 
             
+        }
+    }
+    
+    func updateDraftOrder(updatedDraftOrder : DraftOrderItem){
+        self.draftOrderUseCase.update(draftOrder: updatedDraftOrder, dtaftOrderId: self.userDefault.draftOrderId) { res in
+            DispatchQueue.main.async {
+                switch res {
+                case .success(let draftOrder):
+                    print("updated \(String(describing: draftOrder.id))")
+                    self.userDefault.cartItems = draftOrder.line_items?.count ?? 0
+
+                case .failure(let error):
+                    print(error)
+                }
+            }
         }
     }
     func getDraftOrderById(completion: @escaping () -> Void){
