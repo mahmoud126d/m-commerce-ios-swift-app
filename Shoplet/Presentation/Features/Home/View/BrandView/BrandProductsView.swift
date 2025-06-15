@@ -41,9 +41,9 @@ struct BrandProductsView: View {
                                 .font(.headline)
                                 .foregroundColor(.primaryColor)
 
-                            Text("Vendor: \(product.vendor ?? "")")
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
+//                            Text("Vendor: \(product.vendor ?? "")")
+//                                .font(.subheadline)
+//                                .foregroundColor(.secondary)
 
                             Text("Type: \(product.productType ?? "")")
                                 .font(.subheadline)
