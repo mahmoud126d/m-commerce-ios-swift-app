@@ -46,86 +46,89 @@ class BrandProductsViewModel: ObservableObject {
     }
     
     func addToCart(product : ProductModel){
-        //userDefault.hasDraftOrder = false
-        let userDraftOrder = DraftOrderItem(
-            draft_order: DraftOrder(
-                customer: DraftOrderCustomer(id: 7971971891418),
-                line_items: [
-                    LineItem(price: product.variants?.first?.price,
-                             product_id: product.id,
-                             quantity: 1,
-                             title: product.title,
-                             variant_id: product.variants?.first?.id,
-                             variant_title: product.variants?.first?.title,
-                             vendor: product.vendor,
-                             properties: [
-                                Property(name: "Color", value: product.options?[1].values.first ?? "black"),
-                                Property(name: "Image", value: product.image?.src),
-                                Property(name: "Size", value: product.options?[0].values.first ?? "35")
-                             ])
-                ]
+        if userDefault.isUserLoggedIn{
+            let userDraftOrder = DraftOrderItem(
+                draft_order: DraftOrder(
+                    customer: DraftOrderCustomer(id: 7971971891418),
+                    line_items: [
+                        LineItem(price: product.variants?.first?.price,
+                                 product_id: product.id,
+                                 quantity: 1,
+                                 title: product.title,
+                                 variant_id: product.variants?.first?.id,
+                                 variant_title: product.variants?.first?.title,
+                                 vendor: product.vendor,
+                                 properties: [
+                                    Property(name: "Color", value: product.options?[1].values.first ?? "black"),
+                                    Property(name: "Image", value: product.image?.src),
+                                    Property(name: "Size", value: product.options?[0].values.first ?? "35")
+                                 ])
+                    ]
+                    
+                ))
+            if userDefault.hasDraftOrder == false {
                 
-            ))
-        if userDefault.hasDraftOrder == false {
-            
-            draftOrderUseCase.create(draftOrder: userDraftOrder) {[weak self] res in
-                DispatchQueue.main.async {
-                    switch res{
-                    case .success(let res):
-                        print("Added \(String(describing: res.id))")
-                        self?.userDefault.hasDraftOrder = true
-                        self?.userDefault.draftOrderId = res.id ?? 0
-                        self?.userDefault.cartItems = res.line_items?.count ?? 0
-                    case .failure(let error):
-                        print(error)
-                    }
-                }
-            }
-        }else{
-            getDraftOrderById {
-                guard let updatedItem = userDraftOrder.draft_order?.line_items?.first else {
-                    return
-                }
-                var items = self.draftOrderLineItem ?? []
-                if let index = items.firstIndex(where: { item in
-                        guard item.product_id == updatedItem.product_id else { return false }
-
-                        let existingColor = item.properties?.first(where: { $0.name == "Color" })?.value
-                        let existingSize = item.properties?.first(where: { $0.name == "Size" })?.value
-
-                        let newColor = updatedItem.properties?.first(where: { $0.name == "Color" })?.value
-                        let newSize = updatedItem.properties?.first(where: { $0.name == "Size" })?.value
-
-                        return existingColor == newColor && existingSize == newSize
-                    }){
-                    var item = items[index]
-                    item.quantity = (item.quantity ?? 1) + 1
-                    item.price = String(format: "%.2f", Methods.getPrice(product: product, quantity: item.quantity ?? 1))
-                    items[index] = item
-                } else {
-                    items.append(updatedItem)
-                    print("not exist")
-                }
-
-                self.draftOrderLineItem = items
-                var updatedDraftOrder = userDraftOrder
-                updatedDraftOrder.draft_order?.line_items = items
-
-                self.draftOrderUseCase.update(draftOrder: updatedDraftOrder, dtaftOrderId: self.userDefault.draftOrderId) { res in
+                draftOrderUseCase.create(draftOrder: userDraftOrder) {[weak self] res in
                     DispatchQueue.main.async {
-                        switch res {
-                        case .success(let draftOrder):
-                            print("updated \(String(describing: draftOrder.id))")
-                            self.userDefault.cartItems = draftOrder.line_items?.count ?? 0
-
+                        switch res{
+                        case .success(let res):
+                            print("Added \(String(describing: res.id))")
+                            self?.userDefault.hasDraftOrder = true
+                            self?.userDefault.draftOrderId = res.id ?? 0
+                            self?.userDefault.cartItems = res.line_items?.count ?? 0
                         case .failure(let error):
                             print(error)
                         }
                     }
                 }
+            }else{
+                getDraftOrderById {
+                    guard let updatedItem = userDraftOrder.draft_order?.line_items?.first else {
+                        return
+                    }
+                    var items = self.draftOrderLineItem ?? []
+                    if let index = items.firstIndex(where: { item in
+                        guard item.product_id == updatedItem.product_id else { return false }
+                        
+                        let existingColor = item.properties?.first(where: { $0.name == "Color" })?.value
+                        let existingSize = item.properties?.first(where: { $0.name == "Size" })?.value
+                        
+                        let newColor = updatedItem.properties?.first(where: { $0.name == "Color" })?.value
+                        let newSize = updatedItem.properties?.first(where: { $0.name == "Size" })?.value
+                        
+                        return existingColor == newColor && existingSize == newSize
+                    }){
+                        var item = items[index]
+                        item.quantity = (item.quantity ?? 1) + 1
+                        item.price = String(format: "%.2f", Methods.getPrice(product: product, quantity: item.quantity ?? 1))
+                        items[index] = item
+                    } else {
+                        items.append(updatedItem)
+                        print("not exist")
+                    }
+                    
+                    self.draftOrderLineItem = items
+                    var updatedDraftOrder = userDraftOrder
+                    updatedDraftOrder.draft_order?.line_items = items
+                    
+                    self.draftOrderUseCase.update(draftOrder: updatedDraftOrder, dtaftOrderId: self.userDefault.draftOrderId) { res in
+                        DispatchQueue.main.async {
+                            switch res {
+                            case .success(let draftOrder):
+                                print("updated \(String(describing: draftOrder.id))")
+                                self.userDefault.cartItems = draftOrder.line_items?.count ?? 0
+                                
+                            case .failure(let error):
+                                print(error)
+                            }
+                        }
+                    }
+                }
+                
+                
             }
-
-            
+        }else{
+            print("guest")
         }
     }
     func getDraftOrderById(completion: @escaping () -> Void){

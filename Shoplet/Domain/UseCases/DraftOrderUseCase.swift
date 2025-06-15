@@ -26,5 +26,9 @@ class DraftOrderUseCase{
     func delete(dtaftOrderId: Int, completion: @escaping () -> Void){
         repo.deleteDraftOrder(dtaftOrderId: dtaftOrderId, completion: completion)
     }
+    func getDraftOrders(completion: @escaping (Result<[DraftOrder], NetworkError>) -> Void)
+    {
+        repo.getDraftOrders(completion:completion)
+    }
 
 }

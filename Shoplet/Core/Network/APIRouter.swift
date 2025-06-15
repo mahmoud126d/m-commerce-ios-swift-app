@@ -17,6 +17,7 @@ enum APIRouter: URLRequestConvertible {
     case getPopularProducts
     case getBrands
     case priceRules
+    case getPriceRule(priceRule: Int)
     case coupons(id : Int)
     case createDraftOrder(draftOrder : DraftOrderItem)
     case updateDraftOrder(draftOrder : DraftOrderItem, dtaftOrderId: Int)
@@ -25,10 +26,11 @@ enum APIRouter: URLRequestConvertible {
     case createCustomer(customer: CustomerRequest)
     case getCustomerById(id: Int)
     case getAllCustomers
+    case getAllDraftOrders
 
     var method: HTTPMethod {
         switch self {
-        case .getProducts, .getProductsByIds , .getPopularProducts, .getBrands, .priceRules, .coupons, .getDraftOrderById,.getCustomerById, .getAllCustomers:
+        case .getProducts, .getProductsByIds , .getPopularProducts, .getBrands, .priceRules, .coupons, .getDraftOrderById,.getCustomerById, .getAllCustomers, .getPriceRule, .getAllDraftOrders:
             return .get
         case .createDraftOrder, .createCustomer:
             return .post
@@ -50,7 +52,7 @@ enum APIRouter: URLRequestConvertible {
 
     var parameters: [String: Any]? {
         switch self {
-        case .getProducts,.getPopularProducts, .getBrands, .priceRules, .coupons, .getDraftOrderById, .deleteDraftOrder, .getAllCustomers, .getCustomerById:
+        case .getProducts,.getPopularProducts, .getBrands, .priceRules, .coupons, .getDraftOrderById, .deleteDraftOrder, .getAllCustomers, .getCustomerById, .getPriceRule, .getAllDraftOrders:
             return nil
         case .getProductsByIds(let ids):
             return ["ids": ids.joined(separator: ",")]
@@ -74,10 +76,11 @@ enum APIRouter: URLRequestConvertible {
             
         case .priceRules:
             return "\(Support.apiVersion)\(ShopifyResource.priceRules.endpoint)"
-            
+        case .getPriceRule(let priceRule):
+            return "\(Support.apiVersion)\(ShopifyResource.priceRules.endpoint)/\(priceRule)"
         case .coupons(let priceRuleId):
             return "\(Support.apiVersion)price_rules/\(priceRuleId)/\(ShopifyResource.discounts.endpoint)"
-        case .createDraftOrder:
+        case .createDraftOrder, .getAllDraftOrders:
             return "\(Support.apiVersion)\(ShopifyResource.createDraftOrder.endpoint)"
         case .updateDraftOrder(_, let draftOrderId), .getDraftOrderById(let draftOrderId),.deleteDraftOrder(let draftOrderId):
             return "\(Support.apiVersion)\(ShopifyResource.updateDraftOrder.endpoint)/\(draftOrderId)"
@@ -96,7 +99,7 @@ enum APIRouter: URLRequestConvertible {
 
     var authorizationHeader: HTTPHeaderField? {
         switch self {
-        case .getProducts, .getProductsByIds,.getPopularProducts,.getBrands, .priceRules, .coupons, .getDraftOrderById, .deleteDraftOrder, .getAllCustomers:
+        case .getProducts, .getProductsByIds,.getPopularProducts,.getBrands, .priceRules, .coupons, .getDraftOrderById, .deleteDraftOrder, .getAllCustomers, .getPriceRule, .getAllDraftOrders:
             return .authorization
         case .createDraftOrder, .updateDraftOrder, .createCustomer,.getCustomerById:
             return .password
@@ -105,7 +108,7 @@ enum APIRouter: URLRequestConvertible {
 
     var authorizationType: AuthorizationType {
         switch self {
-        case .getProducts, .getProductsByIds,.getPopularProducts,.getBrands, .priceRules, .coupons, .getDraftOrderById, .deleteDraftOrder:
+        case .getProducts, .getProductsByIds,.getPopularProducts,.getBrands, .priceRules, .coupons, .getDraftOrderById, .deleteDraftOrder, .getPriceRule, .getAllDraftOrders:
             return .basic
         case .createDraftOrder, .updateDraftOrder, .createCustomer, .getCustomerById, .getAllCustomers:
             return .apiKey

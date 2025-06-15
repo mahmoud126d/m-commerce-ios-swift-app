@@ -12,6 +12,7 @@ class CouponViewModel : ObservableObject{
     let priceRuleUseCase : PriceRulesUseCase
     let couponUseCase : CouponsUseCase
     @Published var priceRules : [PriceRule] = []
+    @Published var priceRuleId: Int?
     @Published var coupons :[Coupon] = []
     init(repository: ProductRepository = ProductRepositoryImpl()) {
         self.priceRuleUseCase = PriceRulesUseCase(repo: repository)
@@ -40,6 +41,7 @@ class CouponViewModel : ObservableObject{
                 switch res{
                 case .success(let coupons):
                     self?.coupons = coupons
+                    self?.priceRuleId = coupons.first?.price_rule_id
                 case .failure(let error):
                     print(error)
                 }

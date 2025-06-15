@@ -73,6 +73,17 @@ final class ProductRepositoryImpl: ProductRepository {
             }
         }
     }
+    func getPriceRulesById(priceRuleId:Int, completion: @escaping (Result<PriceRule, NetworkError>) -> Void)
+    {
+        APIClient.getPriceRulesById(priceRuleId: priceRuleId) { res in
+            switch res{
+            case .success(let priceRule):
+                completion(.success(priceRule.price_rule))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
     func getCoupons(id: Int, completion: @escaping (Result<[Coupon], NetworkError>) -> Void) {
         APIClient.getCoupons(id: id){
             res in
@@ -134,6 +145,18 @@ final class ProductRepositoryImpl: ProductRepository {
                 completion()
             }
         }
+    }
+    func getDraftOrders(completion: @escaping (Result<[DraftOrder], NetworkError>) -> Void)
+    {
+        APIClient.getDraftOrders { res in
+            switch res{
+            case .success(let res):
+                completion(.success(res.draft_orders))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+        
     }
 
 }

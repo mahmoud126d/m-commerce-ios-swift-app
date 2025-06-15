@@ -9,13 +9,18 @@ import Foundation
 
 class CartViewModel : ObservableObject{
     private var draftOrderUseCase : DraftOrderUseCase
+    private var priceRuleUseCase : PriceRulesUseCase
     private var userDefault = UserDefaultManager.shared
     @Published var draftOrder : DraftOrder?
     @Published var subTotal : String?
     @Published var tax: String?
     @Published var total: String?
+    @Published var selectedPriceRule: PriceRule?
+    @Published var discountValue: String?
+    
     init(repo :ProductRepository = ProductRepositoryImpl()) {
         self.draftOrderUseCase = DraftOrderUseCase(repo: repo)
+        self.priceRuleUseCase = PriceRulesUseCase(repo: repo)
     }
     
     func getDraftOrderById(){
@@ -91,6 +96,59 @@ class CartViewModel : ObservableObject{
             self.userDefault.draftOrderId = 0
             self.userDefault.cartItems =  0
             self.getDraftOrderById()
+        }
+    }
+    
+    func applayDiscount(priceRule: PriceRule){
+        let rawValue = priceRule.value ?? "0"
+        let cleanedValue = rawValue.replacingOccurrences(of: "-", with: "")
+
+        let amount = calculateDiscountAmount(value: cleanedValue, type: priceRule.value_type)
+
+        let applied_discount = AppliedDiscount(
+            description: priceRule.title ?? "Discount",
+            value: cleanedValue,
+            value_type: priceRule.value_type ?? "percentage",
+            amount: amount
+        )
+
+        draftOrder?.applied_discount = applied_discount
+        print(applied_discount)
+        let draftOrderItem = DraftOrderItem(draft_order: draftOrder)
+        updateDraftOrder(draftOrderItem: draftOrderItem)
+    }
+    func calculateDiscountAmount(value: String, type: String?) -> String {
+        guard let value = Double(value),
+              let subtotalStr = draftOrder?.subtotal_price,
+              let subtotal = Double(subtotalStr) else {
+            return "0.00"
+        }
+
+        let discountAmount: Double
+        if type == "percentage" {
+            discountAmount = subtotal * (value / 100)
+        } else if type == "fixed_amount" {
+            discountAmount = value
+        } else {
+            discountAmount = 0.0
+        }
+
+        return String(format: "%.2f", discountAmount)
+    }
+
+    func getPriceRuleById(){
+        guard let priceRuleId = userDefault.priceRuleId else {return}
+        priceRuleUseCase.getPriceRulesById(priceRuleId: priceRuleId) {[weak self] res in
+            switch res{
+            case .success(let priceRule):
+                DispatchQueue.main.async{
+                    self?.selectedPriceRule = priceRule
+                    self?.discountValue = priceRule.value
+                    self?.applayDiscount(priceRule: priceRule)
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
         }
     }
 }
