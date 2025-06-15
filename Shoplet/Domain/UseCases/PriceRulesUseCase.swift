@@ -18,4 +18,9 @@ class PriceRulesUseCase{
     func execute(completion: @escaping (Result<[PriceRule], NetworkError>) -> Void) {
         repo.getPriceRules(completion: completion)
     }
+    
+    func getPriceRulesById(priceRuleId:Int, completion: @escaping (Result<PriceRule, NetworkError>) -> Void)
+    {
+        repo.getPriceRulesById(priceRuleId: priceRuleId, completion: completion)
+    }
 }

@@ -14,13 +14,15 @@ final class HomeViewModel: ObservableObject {
     private let getBestSellersUseCase: GetBestSellersUseCase
     private let draftOrderUseCase : DraftOrderUseCase
     private let userDefault = UserDefaultManager.shared
+    private var allDraftOrders: [DraftOrder]?
+    private var hasDraft: Bool = false
     // Published properties for UI binding
     @Published var brands: [SmartCollection] = []
     @Published var bestSellers: [ProductModel] = []
     @Published var errorMessage: String?
     @Published var cartCount : Int = UserDefaultManager.shared.getNumOfCartItems()
 
-    init(repository: ProductRepository = ProductRepositoryImpl()) {
+    init(repository: ProductRepository = ProductRepositoryImpl(), cusRepo: CustomerRepository = CustomerRepositoryImpl()) {
         self.getAllBrandsUseCase = GetAllBrandsUseCase(repository: repository)
         self.getBestSellersUseCase = GetBestSellersUseCase(repository: repository)
         self.draftOrderUseCase = DraftOrderUseCase(repo: repository)
@@ -51,7 +53,49 @@ final class HomeViewModel: ObservableObject {
             }
         }
     }
+    func getUserDraftOrders() {
+        if userDefault.isUserLoggedIn {
+                var hasDraft = false
+                for draftOrder in self.allDraftOrders ?? [] {
+                    if draftOrder.customer?.id == self.userDefault.customerId {
+                        self.userDefault.hasDraftOrder = true
+                        self.userDefault.draftOrderId = draftOrder.id ?? 0
+                        self.userDefault.cartItems = draftOrder.line_items?.count ?? 0
+                        print("hasDraft")
+                        hasDraft = true
+                        break
+                    }
+                }
+
+                if !hasDraft {
+                    self.userDefault.hasDraftOrder = false
+                    self.userDefault.draftOrderId = 0
+                    self.userDefault.cartItems = 0
+                }
+            
+        } else {
+            userDefault.hasDraftOrder = false
+            userDefault.draftOrderId = 0
+            userDefault.cartItems = 0
+        }
+    }
+
+
     
+    func getAllDraftOrders(){
+        draftOrderUseCase.getDraftOrders { [weak self] res in
+            switch res{
+            case .success(let draftOrders):
+                DispatchQueue.main.async{
+                    self?.allDraftOrders = draftOrders
+                    self?.getUserDraftOrders()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+    }
     func getItemCartCount(){
         if userDefault.hasDraftOrder == true{
             draftOrderUseCase.getById(dtaftOrderId: userDefault.draftOrderId) {res in

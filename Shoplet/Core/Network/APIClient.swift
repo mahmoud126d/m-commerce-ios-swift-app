@@ -17,10 +17,12 @@ protocol APIClientType {
        
        static func getBrands(completion: @escaping (Result<BrandsResponse, NetworkError>) -> Void)
     static func getPriceRules(completion: @escaping (Result<PriceRuleResponse, NetworkError>) -> Void)
+    static func getPriceRulesById(priceRuleId:Int, completion: @escaping (Result<SinglePriceRuleResponse, NetworkError>) -> Void)
     static func getCoupons(id: Int, completion: @escaping (Result<CouponResponse, NetworkError>) -> Void)
     static func createDraftOrder(draftOrder:DraftOrderItem,completion: @escaping (Result<DraftOrderItem, NetworkError>) -> Void)
     static func updateDraftOrder(draftOrder : DraftOrderItem, dtaftOrderId: Int, completion: @escaping (Result<DraftOrderItem, NetworkError>) -> Void)
     static func getDraftOrderById(dtaftOrderId: Int, completion: @escaping (Result<DraftOrderItem, NetworkError>) -> Void)
+    static func getDraftOrders(completion: @escaping (Result<DraftOrdersResponse, NetworkError>) -> Void)
     static func deleteDraftOrder(dtaftOrderId: Int, completion: @escaping (Result<EmptyResponse, NetworkError>) -> Void)
     static func createCustomer(customer: CustomerRequest, completion: @escaping (Result<CustomerAuthResponse, NetworkError>) -> Void)
     static func getCustomerById(id: Int, completion: @escaping (Result<CustomerAuthResponse, NetworkError>) -> Void)
@@ -104,6 +106,13 @@ class APIClient: APIClientType {
     
     static func getAllCustomers(completion: @escaping (Result<CustomerListResponse, NetworkError>) -> Void) {
         performRequest(route: .getAllCustomers, completion: completion)
+    }
+    static func getPriceRulesById(priceRuleId:Int, completion: @escaping (Result<SinglePriceRuleResponse, NetworkError>) -> Void){
+        performRequest(route: .getPriceRule(priceRule: priceRuleId), completion: completion)
+    }
+    static func getDraftOrders(completion: @escaping (Result<DraftOrdersResponse, NetworkError>) -> Void)
+    {
+        performRequest(route: .getAllDraftOrders, completion: completion)
     }
 }
 

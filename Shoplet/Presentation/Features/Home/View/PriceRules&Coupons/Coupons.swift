@@ -18,6 +18,7 @@ struct Coupons: View {
                 CouponCard(coupon: item.code)
                     .onTapGesture {
                         UIPasteboard.general.string = item.code
+                        UserDefaultManager.shared.priceRuleId = viewModel.priceRuleId
                     }
             }
                 

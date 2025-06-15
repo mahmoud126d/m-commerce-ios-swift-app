@@ -10,6 +10,9 @@ import Foundation
 struct PriceRuleResponse : Codable{
     var price_rules : [PriceRule]
 }
+struct SinglePriceRuleResponse: Codable{
+    var price_rule: PriceRule
+}
 
 struct PriceRule : Codable{
     var id : Int
@@ -18,6 +21,7 @@ struct PriceRule : Codable{
     var starts_at : String
     var ends_at : String?
     var once_per_customer : Bool
+    var title: String?
     var usage_limit : Int?
     var target_type : String?
     var target_selection : String?

@@ -10,6 +10,7 @@ import SwiftUI
 struct CheckoutPage: View {
     @State private var coupon = ""
     @StateObject  var cartViewModel : CartViewModel
+    @State var discountValue = "0.0"
     var body: some View {
         VStack{
             Text("Checkout")
@@ -27,6 +28,8 @@ struct CheckoutPage: View {
                             )
                 
                 Button {
+                    cartViewModel.getPriceRuleById()
+                    discountValue = cartViewModel.discountValue ?? "5.0"
                     
                 } label: {
                     Text("Validate")
@@ -37,7 +40,7 @@ struct CheckoutPage: View {
 
             }.padding()
             
-            PriceRow(title: "Discounts", desc: "0.0", color: .red).padding(.trailing, 8)
+            PriceRow(title: "Discounts", desc: discountValue, color: .red).padding(.trailing, 8)
             PriceRow(title: "SubPrice", desc: "\(cartViewModel.subTotal ?? "0.0") USD")
             PriceRow(title: "Tax", desc: "\(cartViewModel.tax ?? "0.0") USD")
             PriceRow(title: "TotalPrice", desc: "\(cartViewModel.total ?? "0.0") USD")

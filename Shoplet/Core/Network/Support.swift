@@ -20,10 +20,12 @@ enum ShopifyResource {
     case products
     case smartCollections
     case priceRules
+    case getPriceRule
     case discounts
     case createDraftOrder
     case updateDraftOrder
     case getDraftOrderById
+    case getAllDraftOrders
     case deleteDraftOrder
     case customers
 
@@ -32,11 +34,11 @@ enum ShopifyResource {
         case .products:
             return "products"
         case .smartCollections: return "smart_collections"
-        case .priceRules:
+        case .priceRules, .getPriceRule:
             return "price_rules"
         case .discounts:
             return "discount_codes"
-        case .createDraftOrder, .updateDraftOrder, .getDraftOrderById, .deleteDraftOrder :
+        case .createDraftOrder, .updateDraftOrder, .getDraftOrderById, .deleteDraftOrder, .getAllDraftOrders:
             return "draft_orders"
         case .customers: return "customers"
 

@@ -61,4 +61,13 @@ class UserDefaultManager:ObservableObject{
         }
     }
     
+    var priceRuleId: Int?{
+        set{
+            UserDefaults.standard.setValue(newValue, forKey: "priceRuleId")
+        }
+        get{
+            UserDefaults.standard.integer(forKey: "priceRuleId")
+        }
+    }
+    
 }
