@@ -87,12 +87,12 @@ struct ProductItemView: View {
                !compareAt.isEmpty,
                compareAt != priceStr {
                 HStack(spacing: 6) {
-                    Text("\(priceStr) USD")
+                    Text("$\(priceStr)")
                         .foregroundColor(.red)
                         .font(.footnote)
                         .fontWeight(.bold)
 
-                    Text("\(compareAt) USD")
+                    Text("$\(compareAt)")
                         .strikethrough()
                         .foregroundColor(.gray)
                         .font(.footnote)
@@ -100,12 +100,12 @@ struct ProductItemView: View {
             } else {
                 let originalPrice = price * 1.10
                 HStack(spacing: 6) {
-                    Text(String(format: "%.2f USD", price))
+                    Text(String(format: "$%.2f ", price))
                         .foregroundColor(.red)
                         .font(.footnote)
                         .fontWeight(.bold)
 
-                    Text(String(format: "%.2f USD", originalPrice))
+                    Text(String(format: "$%.2f ", originalPrice))
                         .strikethrough()
                         .foregroundColor(.gray)
                         .font(.footnote)
