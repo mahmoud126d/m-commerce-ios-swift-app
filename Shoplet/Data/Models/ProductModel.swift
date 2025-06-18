@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 struct ProductResponse: Codable {
     let products: [ProductModel]
 }
@@ -121,3 +122,7 @@ struct ProductEntity {
     let images: [String]?
     var isFav: Bool? = false
 }
+
+
+
+

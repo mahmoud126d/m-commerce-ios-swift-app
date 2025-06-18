@@ -51,6 +51,10 @@
 		227383F52DF0E0B3007C4B1C /* ProductRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227383F42DF0E0B3007C4B1C /* ProductRepositoryImpl.swift */; };
 		227383F72DF0E216007C4B1C /* ProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227383F62DF0E216007C4B1C /* ProductViewModel.swift */; };
 		227383F92DF0FB47007C4B1C /* ProductDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227383F82DF0FB47007C4B1C /* ProductDetailsView.swift */; };
+		22C8C0C02E02098A001711BA /* FavoriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C8C0BF2E02098A001711BA /* FavoriteViewModel.swift */; };
+		22C8C0C22E0209C1001711BA /* FavoriteItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C8C0C12E0209C1001711BA /* FavoriteItem.swift */; };
+		22C8C0C52E021D1F001711BA /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C8C0C42E021D1F001711BA /* CoreDataManager.swift */; };
+		22C8C0C72E02B44F001711BA /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C8C0C62E02B44F001711BA /* FirestoreManager.swift */; };
 		22DB73B02DFDB6610021EF75 /* AuthScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB73AE2DFDB6600021EF75 /* AuthScreen.swift */; };
 		22DB73B12DFDB6610021EF75 /* CustomerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB73AF2DFDB6610021EF75 /* CustomerModel.swift */; };
 		22DB73B32DFDB8EB0021EF75 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 22DB73B22DFDB8EB0021EF75 /* GoogleService-Info.plist */; };
@@ -165,6 +169,10 @@
 		227383F42DF0E0B3007C4B1C /* ProductRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRepositoryImpl.swift; sourceTree = "<group>"; };
 		227383F62DF0E216007C4B1C /* ProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewModel.swift; sourceTree = "<group>"; };
 		227383F82DF0FB47007C4B1C /* ProductDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsView.swift; sourceTree = "<group>"; };
+		22C8C0BF2E02098A001711BA /* FavoriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewModel.swift; sourceTree = "<group>"; };
+		22C8C0C12E0209C1001711BA /* FavoriteItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteItem.swift; sourceTree = "<group>"; };
+		22C8C0C42E021D1F001711BA /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		22C8C0C62E02B44F001711BA /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		22DB73AE2DFDB6600021EF75 /* AuthScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthScreen.swift; sourceTree = "<group>"; };
 		22DB73AF2DFDB6610021EF75 /* CustomerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomerModel.swift; sourceTree = "<group>"; };
 		22DB73B22DFDB8EB0021EF75 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -373,6 +381,7 @@
 				22FE27242DF45C9000442B9D /* Color+Theme */,
 				227383E12DF0D7F8007C4B1C /* AppCommon.swift */,
 				221746FC2DF9E2D80075F63C /* UserDefaultManager.swift */,
+				22C8C0C62E02B44F001711BA /* FirestoreManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -456,6 +465,7 @@
 		227383F02DF0DFEF007C4B1C /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				22C8C0C32E021D05001711BA /* CoreData */,
 				227383F12DF0E00D007C4B1C /* Network */,
 			);
 			path = Core;
@@ -470,6 +480,22 @@
 				75B306EB2DF7A98700AB1965 /* Support.swift */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		22C8C0BE2E020961001711BA /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				22C8C0BF2E02098A001711BA /* FavoriteViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		22C8C0C32E021D05001711BA /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				22C8C0C42E021D1F001711BA /* CoreDataManager.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 		22DB73B42DFDB9240021EF75 /* Authentication */ = {
@@ -629,6 +655,7 @@
 		75B306D12DF7A72600AB1965 /* Favorites */ = {
 			isa = PBXGroup;
 			children = (
+				22C8C0BE2E020961001711BA /* ViewModel */,
 				75B306D22DF7A75700AB1965 /* View */,
 			);
 			path = Favorites;
@@ -638,6 +665,7 @@
 			isa = PBXGroup;
 			children = (
 				75B306FB2DF7AAC700AB1965 /* FavoriteView.swift */,
+				22C8C0C12E0209C1001711BA /* FavoriteItem.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -875,6 +903,7 @@
 				221747042DFA4B050075F63C /* Empty.swift in Sources */,
 				221746FF2DFA0F250075F63C /* CartItem.swift in Sources */,
 				22DB73C62DFDB9FF0021EF75 /* CustomerRepositoryImpl.swift in Sources */,
+				22C8C0C72E02B44F001711BA /* FirestoreManager.swift in Sources */,
 				7580B5422DFF55A3001FD4BB /* BestSellersView.swift in Sources */,
 				75B306DC2DF7A81C00AB1965 /* HomeViewModel.swift in Sources */,
 				221746F32DF962ED0075F63C /* DraftOrder.swift in Sources */,
@@ -885,6 +914,7 @@
 				75B306DA2DF7A7F900AB1965 /* BrandProductsViewModel.swift in Sources */,
 				75B307002DF7AAF700AB1965 /* MeView.swift in Sources */,
 				75B306EA2DF7A8DD00AB1965 /* BrandProductsView.swift in Sources */,
+				22C8C0C52E021D1F001711BA /* CoreDataManager.swift in Sources */,
 				227383E22DF0D7F8007C4B1C /* AppCommon.swift in Sources */,
 				2273839C2DF07FCC007C4B1C /* ContentView.swift in Sources */,
 				75B306EE2DF7A9C500AB1965 /* bestSellerProduct.swift in Sources */,
@@ -897,6 +927,7 @@
 				7580B5402DFF5525001FD4BB /* ProductCardView.swift in Sources */,
 				227383D92DF0D448007C4B1C /* APIClient.swift in Sources */,
 				227383F32DF0E05C007C4B1C /* GetAllProductsUseCase.swift in Sources */,
+				22C8C0C22E0209C1001711BA /* FavoriteItem.swift in Sources */,
 				22DB73CC2DFDBA290021EF75 /* GetCustomerByIdUseCase.swift in Sources */,
 				22DB73BE2DFDB9690021EF75 /* CreateAccountView.swift in Sources */,
 				2273839A2DF07FCC007C4B1C /* ShopletApp.swift in Sources */,
@@ -913,6 +944,7 @@
 				227383EA2DF0DC82007C4B1C /* GetProductByIdUseCase.swift in Sources */,
 				227383CD2DF08C54007C4B1C /* NetworkError.swift in Sources */,
 				22DB73B02DFDB6610021EF75 /* AuthScreen.swift in Sources */,
+				22C8C0C02E02098A001711BA /* FavoriteViewModel.swift in Sources */,
 				7580B53E2DFF54B4001FD4BB /* CategoryViewModel.swift in Sources */,
 				227383DD2DF0D74D007C4B1C /* ProductModel.swift in Sources */,
 				227383CF2DF09057007C4B1C /* APIRouter.swift in Sources */,
