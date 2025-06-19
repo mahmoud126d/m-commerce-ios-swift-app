@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 
 struct ProductResponse: Codable {
@@ -123,6 +124,54 @@ struct ProductEntity {
     var isFav: Bool? = false
 }
 
+extension CDProduct {
+    func toProductModel() -> ProductModel? {
+        guard let title = self.title else { return nil }
+
+        let imageList: [ProductImage] = (self.images as? Set<CDImage>)?.sorted(by: { $0.position < $1.position }).compactMap {
+            guard let src = $0.src else { return nil }
+            return ProductImage(
+                id: Int($0.id),
+                alt: $0.alt,
+                position: Int($0.position),
+                productId: Int($0.productId),
+                width: Int($0.width),
+                height: Int($0.height),
+                src: src,
+                variantIds: []
+            )
+        } ?? []
+
+        let variantList: [Variant] = (self.variants as? Set<CDVariant>)?.compactMap {
+            guard let price = $0.price else { return nil }
+            return Variant(
+                id: Int($0.id),
+                productId: Int($0.productId),
+                title: $0.title,
+                price: price,
+                sku: $0.sku,
+                position: Int($0.position),
+                compareAtPrice: $0.compareAtPrice,
+                inventoryItemId: Int($0.inventoryItemId),
+                inventoryQuantity: Int($0.inventoryQuantity),
+                oldInventoryQuantity: Int($0.oldInventoryQuantity),
+                imageId: Int($0.imageId ?? "")
+            )
+        } ?? []
 
 
-
+        return ProductModel(
+            id: Int(self.productId),
+            title: title,
+            bodyHTML: self.bodyHTML,
+            vendor: self.vendor,
+            productType: self.productType,
+            tags: self.tags,
+            status: self.status,
+            variants: variantList,
+            options: [],
+            images: imageList,
+            image: imageList.first
+        )
+    }
+}

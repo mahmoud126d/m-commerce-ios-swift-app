@@ -11,11 +11,14 @@ import SwiftUI
 struct ProductDetailsView: View {
     let product: ProductModel
     @StateObject var viewModel: ProductViewModel
-    @StateObject private var favoriteVM = FavoriteViewModel()
+    @ObservedObject private var favoriteVM = AppViewModels.sharedFavoriteVM
     @State private var selectedColor: String = ""
     @State private var selectedSize: String = ""
     @State private var showFullDescription: Bool = false
     @State private var quantity: Int = 1
+    @State private var showDeleteAlert = false
+    @State private var showToast = false
+
 
     var colorOptions: [String] {
         product.options?.first(where: { $0.name.lowercased() == "color" })?.values ?? []
@@ -25,9 +28,8 @@ struct ProductDetailsView: View {
         product.options?.first(where: { $0.name.lowercased() == "size" })?.values ?? []
     }
 
-    var isFavorite: Bool {
-        favoriteVM.favoritesMap[product.id ?? 0] ?? false
-    }
+    @State private var isFavorite: Bool = false
+
 
     var body: some View {
         ScrollView {
@@ -52,9 +54,29 @@ struct ProductDetailsView: View {
                 .cornerRadius(30)
                 .offset(y: -30)
             }
+            .onAppear {
+                isFavorite = favoriteVM.isFavorite(productId: product.id ?? 0)
+            }
+
         }
         .background(Color(.systemGroupedBackground))
         .edgesIgnoringSafeArea(.top)
+        .overlay(
+            Group {
+                if showToast {
+                    Text("Added to favorites")
+                        .font(.subheadline)
+                        .padding()
+                        .background(Color.black.opacity(0.8))
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        .padding(.top, 50)
+                        .transition(.move(edge: .top))
+                        .animation(.easeInOut, value: showToast)
+                }
+            },
+            alignment: .top
+        )
         .navigationTitle("Detail Product")
         .navigationBarTitleDisplayMode(.inline)
     }
@@ -69,7 +91,8 @@ struct ProductDetailsView: View {
                                 AsyncImage(url: url) { image in
                                     image
                                         .resizable()
-                                        .aspectRatio(contentMode: .fit)
+                                        .scaledToFill()
+                                        .clipped()
                                         .frame(maxWidth: .infinity)
                                 } placeholder: {
                                     ProgressView()
@@ -77,11 +100,21 @@ struct ProductDetailsView: View {
                             }
                         }
                     }
-                    .frame(height: 400)
+                    .frame(height: UIScreen.main.bounds.height * 0.45)
                     .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
 
                     Button {
-                        favoriteVM.toggleFavorite(product: product)
+                        if isFavorite {
+                            showDeleteAlert = true
+                        } else {
+                            favoriteVM.toggleFavorite(product: product)
+                            isFavorite = true
+                            showToast = true
+
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                showToast = false
+                            }
+                        }
                     } label: {
                         Image(systemName: isFavorite ? "heart.fill" : "heart")
                             .foregroundColor(.primaryColor)
@@ -91,7 +124,19 @@ struct ProductDetailsView: View {
                             .shadow(radius: 3)
                             .animation(.easeInOut, value: isFavorite)
                     }
-                    .padding()
+                    .padding(15)
+                    .alert(isPresented: $showDeleteAlert) {
+                        Alert(
+                            title: Text("Remove from Favorites"),
+                            message: Text("Are you sure you want to remove this product from your favorites?"),
+                            primaryButton: .destructive(Text("Remove")) {
+                                favoriteVM.toggleFavorite(product: product)
+                                isFavorite = false
+                            },
+                            secondaryButton: .cancel()
+                        )
+                    }
+
                 }
             } else if let fallback = product.image?.src, let url = URL(string: fallback) {
                 AsyncImage(url: url) { image in

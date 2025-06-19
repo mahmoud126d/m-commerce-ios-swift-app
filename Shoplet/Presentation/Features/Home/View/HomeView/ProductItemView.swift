@@ -34,15 +34,15 @@ struct ProductItemView: View {
             .cornerRadius(12)
             .shadow(radius: 2)
 
-            Button(action: {
-                isFavorite.toggle()
-            }) {
-                Image(systemName: isFavorite ? "heart.fill" : "heart")
-                    .resizable()
-                    .frame(width: 22, height: 22)
-                    .foregroundColor(isFavorite ? .primaryColor : .gray)
-                    .padding(8)
-            }
+//            Button(action: {
+//                isFavorite.toggle()
+//            }) {
+//                Image(systemName: isFavorite ? "heart.fill" : "heart")
+//                    .resizable()
+//                    .frame(width: 22, height: 22)
+//                    .foregroundColor(isFavorite ? .primaryColor : .gray)
+//                    .padding(8)
+//            }
         }
     }
 
