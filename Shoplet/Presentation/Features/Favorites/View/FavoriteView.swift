@@ -8,11 +8,39 @@
 import SwiftUI
 
 struct FavoriteView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
+    @ObservedObject private var viewModel = AppViewModels.sharedFavoriteVM
 
-#Preview {
-    FavoriteView()
+    var body: some View {
+        NavigationView {
+            VStack {
+                if viewModel.favoriteProducts.isEmpty {
+                    Text("No favorite products found.")
+                        .foregroundColor(.gray)
+                        .padding()
+                } else {
+                    ScrollView {
+                        LazyVStack(spacing: 20) {
+                            ForEach(viewModel.favoriteProducts, id: \.productId) { product in
+                                FavoriteProductCard(
+                                    product: product,
+                                    onDelete: {
+                                        withAnimation {
+                                            viewModel.removeFromFavorites(productId: Int(product.productId))
+                                        }
+                                    }
+                                )
+                            }
+                        }
+                        .padding(.vertical)
+                    }
+                }
+            }
+            .navigationTitle("Favorites")
+            .onAppear {
+                print("FavoriteView appeared")
+                viewModel.fetchFavorites()
+            }
+
+        }
+    }
 }
