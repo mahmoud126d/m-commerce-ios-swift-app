@@ -9,6 +9,8 @@ import SwiftUI
 
 struct FavoriteView: View {
     @ObservedObject private var viewModel = AppViewModels.sharedFavoriteVM
+    @State private var selectedProduct: CDProduct? = nil
+
 
     var body: some View {
         NavigationView {
@@ -29,6 +31,9 @@ struct FavoriteView: View {
                                         }
                                     }
                                 )
+                                .onTapGesture {
+                                    selectedProduct = product
+                                }
                             }
                         }
                         .padding(.vertical)
@@ -36,6 +41,14 @@ struct FavoriteView: View {
                 }
             }
             .navigationTitle("Favorites")
+            .sheet(item: $selectedProduct) { cdProduct in
+                if let convertedProduct = cdProduct.toProductModel() {
+                    ProductDetailsView(product: convertedProduct, viewModel: ProductViewModel())
+                        .presentationDetents([.medium, .large])
+                } else {
+                    Text("Invalid product data.")
+                }
+            }
             .onAppear {
                 print("FavoriteView appeared")
                 viewModel.fetchFavorites()

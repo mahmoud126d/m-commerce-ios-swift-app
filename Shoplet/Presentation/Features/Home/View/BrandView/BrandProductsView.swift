@@ -11,6 +11,10 @@ struct BrandProductsView: View {
     let brandName: String
     @State private var selectedProduct: ProductModel? = nil
     @StateObject private var viewModel = BrandProductsViewModel()
+    @ObservedObject private var favoriteVM = AppViewModels.sharedFavoriteVM
+    @State private var selectedFavoriteProduct: ProductModel? = nil
+    @State private var showToast = false
+    @State private var showDeleteAlert = false
     @State private var favorites: Set<Int> = []
 
     var body: some View {
@@ -25,16 +29,37 @@ struct BrandProductsView: View {
                                 ImageCarouselView(imageURLs: product.images?.compactMap { $0.src } ?? [])
 
                                 Button(action: {
-                                    toggleFavorite(productId: product.id ?? 0)
+                                    if favoriteVM.isFavorite(productId: product.id ?? 0) {
+                                        selectedFavoriteProduct = product
+                                        showDeleteAlert = true
+                                    } else {
+                                        favoriteVM.toggleFavorite(product: product)
+                                        showToast = true
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                            showToast = false
+                                        }
+                                    }
                                 }) {
-                                    Image(systemName: favorites.contains(product.id ?? 0) ? "heart.fill" : "heart")
-                                        .foregroundColor(favorites.contains(product.id ?? 0) ? .primaryColor : .gray)
+                                    Image(systemName: favoriteVM.isFavorite(productId: product.id ?? 0) ? "heart.fill" : "heart")
+                                        .foregroundColor(.primaryColor)
                                         .padding(10)
                                         .background(Color.white.opacity(0.8))
                                         .clipShape(Circle())
                                         .shadow(radius: 2)
                                 }
-                                .padding(8)
+                                .alert(isPresented: $showDeleteAlert) {
+                                    Alert(
+                                        title: Text("Remove from Favorites"),
+                                        message: Text("Are you sure you want to remove this product from your favorites?"),
+                                        primaryButton: .destructive(Text("Remove")) {
+                                            if let selected = selectedFavoriteProduct {
+                                                favoriteVM.toggleFavorite(product: selected)
+                                            }
+                                        },
+                                        secondaryButton: .cancel()
+                                    )
+                                }
+
                             }
 
                             Text(product.title ?? "")
@@ -84,6 +109,23 @@ struct BrandProductsView: View {
                 }
             }
         }
+        .overlay(
+            Group {
+                if showToast {
+                    Text("Added to favorites")
+                        .font(.subheadline)
+                        .padding()
+                        .background(Color.black.opacity(0.8))
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        .padding(.top, 50)
+                        .transition(.move(edge: .top))
+                        .animation(.easeInOut, value: showToast)
+                }
+            },
+            alignment: .top
+        )
+
         .navigationTitle(brandName)
         .onAppear {
             viewModel.fetchProducts(for: brandName)

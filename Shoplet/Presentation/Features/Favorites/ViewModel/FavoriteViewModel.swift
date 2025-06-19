@@ -98,7 +98,6 @@ class FavoriteViewModel: ObservableObject {
     // MARK: - Add Favorite
     func addToFavorites(product: ProductModel) {
         guard !isFavorite(productId: product.id ?? 0) else { return }
-
         FirestoreManager.shared.addFavorite(product: product, userId: userId) { [weak self] error in
             if let error = error {
                 print("Firestore add failed: \(error)")
@@ -142,6 +141,7 @@ class FavoriteViewModel: ObservableObject {
 
     // MARK: - Remove Favorite
     func removeFromFavorites(productId: Int) {
+        favoriteProducts.removeAll(where: {$0.productId == productId})
         FirestoreManager.shared.deleteFavorite(productId: productId, userId: userId) { [weak self] error in
             if let error = error {
                 print("Firestore delete failed: \(error)")
