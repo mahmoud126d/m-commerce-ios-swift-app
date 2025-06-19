@@ -26,7 +26,7 @@ class FirestoreManager {
             "tags": product.tags ?? "",
             "status": product.status ?? "",
             "images": product.images?.map {
-                ["id": $0.id, "src": $0.src, "position": $0.position]
+                ["id": $0.id, "src": $0.src ?? "", "position": $0.position]
             } ?? [],
             "variant": [
                 "id": product.variants?.first?.id ?? 0,

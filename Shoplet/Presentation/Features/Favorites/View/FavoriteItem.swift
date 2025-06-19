@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct FavoriteProductCard: View {
     var product: CDProduct
     var onDelete: () -> Void
