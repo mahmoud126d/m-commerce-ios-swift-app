@@ -49,7 +49,7 @@ class BrandProductsViewModel: ObservableObject {
         if userDefault.isUserLoggedIn{
             let userDraftOrder = DraftOrderItem(
                 draft_order: DraftOrder(
-                    customer: DraftOrderCustomer(id: 7971971891418),
+                    customer: DraftOrderCustomer(id: userDefault.customerId),
                     line_items: [
                         LineItem(price: product.variants?.first?.price,
                                  product_id: product.id,

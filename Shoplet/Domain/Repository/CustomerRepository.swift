@@ -11,5 +11,5 @@ protocol CustomerRepository {
     func createCustomer(customer: CustomerRequest, completion: @escaping (Result<CustomerAuthResponse, NetworkError>) -> Void)
     func getCustomerById(id: Int, completion: @escaping (Result<CustomerAuthResponse, NetworkError>) -> Void)
     func getAllCustomers(completion: @escaping (Result<CustomerListResponse, NetworkError>) -> Void)
-
+    func updateCustomer(customerId: Int, customer: CustomerRequest, completion: @escaping (Result<CustomerAuthResponse, NetworkError>)->Void)
 }

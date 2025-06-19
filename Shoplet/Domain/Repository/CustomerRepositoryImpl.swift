@@ -18,5 +18,7 @@ class CustomerRepositoryImpl: CustomerRepository {
         APIClient.getAllCustomers(completion: completion)
     }
 
-
+    func updateCustomer(customerId: Int, customer: CustomerRequest, completion: @escaping (Result<CustomerAuthResponse, NetworkError>)->Void){
+        APIClient.updateCustomer(customerId: customerId, customer: customer, completion: completion)
+    }
 }

@@ -28,6 +28,12 @@ enum ShopifyResource {
     case getAllDraftOrders
     case deleteDraftOrder
     case customers
+    case getAddress
+    case updateAddress
+    case createAddress
+    case getuserAddresses
+    case markAddressDefault
+    case deleteAddress
 
     var endpoint: String {
         switch self {
@@ -41,7 +47,10 @@ enum ShopifyResource {
         case .createDraftOrder, .updateDraftOrder, .getDraftOrderById, .deleteDraftOrder, .getAllDraftOrders:
             return "draft_orders"
         case .customers: return "customers"
-
+        case .createAddress, .getAddress, .updateAddress, .getuserAddresses, .deleteAddress:
+            return "addresses"
+        case .markAddressDefault:
+            return "default"
 
         }
     }
