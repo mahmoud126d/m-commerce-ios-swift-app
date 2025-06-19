@@ -108,6 +108,7 @@ struct HomeView: View {
                .onAppear {
                    viewModel.fetchBrands()
                    viewModel.fetchBestSellers()
+                   viewModel.getAllDraftOrders()
                }
                .sheet(item: $selectedProduct) { product in
                    ProductDetailsView(product: product, viewModel: ProductViewModel())

@@ -51,6 +51,23 @@
 		227383F52DF0E0B3007C4B1C /* ProductRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227383F42DF0E0B3007C4B1C /* ProductRepositoryImpl.swift */; };
 		227383F72DF0E216007C4B1C /* ProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227383F62DF0E216007C4B1C /* ProductViewModel.swift */; };
 		227383F92DF0FB47007C4B1C /* ProductDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227383F82DF0FB47007C4B1C /* ProductDetailsView.swift */; };
+		2296CA622E04B2CB0028F295 /* Cities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2296CA602E04B2CB0028F295 /* Cities.swift */; };
+		2296CA632E04B2CB0028F295 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2296CA612E04B2CB0028F295 /* Address.swift */; };
+		2296CA662E04B7AA0028F295 /* AddressesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2296CA642E04B7AA0028F295 /* AddressesRepository.swift */; };
+		2296CA672E04B7AA0028F295 /* AddressesRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2296CA652E04B7AA0028F295 /* AddressesRepositoryImpl.swift */; };
+		2296CA6E2E04B8580028F295 /* GetUserAddressesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2296CA682E04B8580028F295 /* GetUserAddressesUseCase.swift */; };
+		2296CA6F2E04B8580028F295 /* DeleteAddressUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2296CA692E04B8580028F295 /* DeleteAddressUseCase.swift */; };
+		2296CA702E04B8580028F295 /* MarkDefaultAddressUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2296CA6A2E04B8580028F295 /* MarkDefaultAddressUseCase.swift */; };
+		2296CA712E04B8580028F295 /* UpdateCustomerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2296CA6B2E04B8580028F295 /* UpdateCustomerUseCase.swift */; };
+		2296CA722E04B8580028F295 /* CitiesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2296CA6C2E04B8580028F295 /* CitiesUseCase.swift */; };
+		2296CA732E04B8580028F295 /* CreateAddressUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2296CA6D2E04B8580028F295 /* CreateAddressUseCase.swift */; };
+		2296CA762E04BA860028F295 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2296CA752E04BA860028F295 /* ProfileViewModel.swift */; };
+		2296CA7C2E04BB4A0028F295 /* LocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2296CA7A2E04BB4A0028F295 /* LocationViewModel.swift */; };
+		2296CA7D2E04BB4A0028F295 /* AddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2296CA7B2E04BB4A0028F295 /* AddressViewModel.swift */; };
+		2296CA822E04BBA40028F295 /* AddAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2296CA7E2E04BBA40028F295 /* AddAddress.swift */; };
+		2296CA832E04BBA40028F295 /* CitiesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2296CA7F2E04BBA40028F295 /* CitiesListView.swift */; };
+		2296CA842E04BBA40028F295 /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2296CA802E04BBA40028F295 /* Map.swift */; };
+		2296CA852E04BBA40028F295 /* AddressesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2296CA812E04BBA40028F295 /* AddressesView.swift */; };
 		22C8C0C02E02098A001711BA /* FavoriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C8C0BF2E02098A001711BA /* FavoriteViewModel.swift */; };
 		22C8C0C22E0209C1001711BA /* FavoriteItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C8C0C12E0209C1001711BA /* FavoriteItem.swift */; };
 		22C8C0C52E021D1F001711BA /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C8C0C42E021D1F001711BA /* CoreDataManager.swift */; };
@@ -169,6 +186,23 @@
 		227383F42DF0E0B3007C4B1C /* ProductRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRepositoryImpl.swift; sourceTree = "<group>"; };
 		227383F62DF0E216007C4B1C /* ProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewModel.swift; sourceTree = "<group>"; };
 		227383F82DF0FB47007C4B1C /* ProductDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsView.swift; sourceTree = "<group>"; };
+		2296CA602E04B2CB0028F295 /* Cities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cities.swift; sourceTree = "<group>"; };
+		2296CA612E04B2CB0028F295 /* Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		2296CA642E04B7AA0028F295 /* AddressesRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressesRepository.swift; sourceTree = "<group>"; };
+		2296CA652E04B7AA0028F295 /* AddressesRepositoryImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressesRepositoryImpl.swift; sourceTree = "<group>"; };
+		2296CA682E04B8580028F295 /* GetUserAddressesUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetUserAddressesUseCase.swift; sourceTree = "<group>"; };
+		2296CA692E04B8580028F295 /* DeleteAddressUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteAddressUseCase.swift; sourceTree = "<group>"; };
+		2296CA6A2E04B8580028F295 /* MarkDefaultAddressUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkDefaultAddressUseCase.swift; sourceTree = "<group>"; };
+		2296CA6B2E04B8580028F295 /* UpdateCustomerUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateCustomerUseCase.swift; sourceTree = "<group>"; };
+		2296CA6C2E04B8580028F295 /* CitiesUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CitiesUseCase.swift; sourceTree = "<group>"; };
+		2296CA6D2E04B8580028F295 /* CreateAddressUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAddressUseCase.swift; sourceTree = "<group>"; };
+		2296CA752E04BA860028F295 /* ProfileViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		2296CA7A2E04BB4A0028F295 /* LocationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationViewModel.swift; sourceTree = "<group>"; };
+		2296CA7B2E04BB4A0028F295 /* AddressViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressViewModel.swift; sourceTree = "<group>"; };
+		2296CA7E2E04BBA40028F295 /* AddAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAddress.swift; sourceTree = "<group>"; };
+		2296CA7F2E04BBA40028F295 /* CitiesListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CitiesListView.swift; sourceTree = "<group>"; };
+		2296CA802E04BBA40028F295 /* Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
+		2296CA812E04BBA40028F295 /* AddressesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressesView.swift; sourceTree = "<group>"; };
 		22C8C0BF2E02098A001711BA /* FavoriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewModel.swift; sourceTree = "<group>"; };
 		22C8C0C12E0209C1001711BA /* FavoriteItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteItem.swift; sourceTree = "<group>"; };
 		22C8C0C42E021D1F001711BA /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
@@ -413,6 +447,8 @@
 		227383E52DF0DC21007C4B1C /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				2296CA642E04B7AA0028F295 /* AddressesRepository.swift */,
+				2296CA652E04B7AA0028F295 /* AddressesRepositoryImpl.swift */,
 				22DB73C32DFDB9FE0021EF75 /* CustomerRepository.swift */,
 				22DB73C42DFDB9FF0021EF75 /* CustomerRepositoryImpl.swift */,
 				227383E62DF0DC42007C4B1C /* ProductRepository.swift */,
@@ -424,6 +460,12 @@
 		227383E82DF0DC53007C4B1C /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				2296CA6C2E04B8580028F295 /* CitiesUseCase.swift */,
+				2296CA6D2E04B8580028F295 /* CreateAddressUseCase.swift */,
+				2296CA692E04B8580028F295 /* DeleteAddressUseCase.swift */,
+				2296CA682E04B8580028F295 /* GetUserAddressesUseCase.swift */,
+				2296CA6A2E04B8580028F295 /* MarkDefaultAddressUseCase.swift */,
+				2296CA6B2E04B8580028F295 /* UpdateCustomerUseCase.swift */,
 				22DB73C72DFDBA280021EF75 /* CustomerUseCase.swift */,
 				22DB73C82DFDBA290021EF75 /* GetAllCustomerUseCase.swift */,
 				22DB73C92DFDBA290021EF75 /* GetCustomerByIdUseCase.swift */,
@@ -449,6 +491,8 @@
 		227383EF2DF0DFDF007C4B1C /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				2296CA612E04B2CB0028F295 /* Address.swift */,
+				2296CA602E04B2CB0028F295 /* Cities.swift */,
 				22DB73AE2DFDB6600021EF75 /* AuthScreen.swift */,
 				22DB73AF2DFDB6610021EF75 /* CustomerModel.swift */,
 				221D33572DF89A3D00DEBE06 /* Coupon.swift */,
@@ -480,6 +524,43 @@
 				75B306EB2DF7A98700AB1965 /* Support.swift */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		2296CA742E04BA560028F295 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				2296CA752E04BA860028F295 /* ProfileViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		2296CA772E04BB110028F295 /* Adresses */ = {
+			isa = PBXGroup;
+			children = (
+				2296CA792E04BB230028F295 /* ViewModel */,
+				2296CA782E04BB1A0028F295 /* View */,
+			);
+			path = Adresses;
+			sourceTree = "<group>";
+		};
+		2296CA782E04BB1A0028F295 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2296CA7E2E04BBA40028F295 /* AddAddress.swift */,
+				2296CA812E04BBA40028F295 /* AddressesView.swift */,
+				2296CA7F2E04BBA40028F295 /* CitiesListView.swift */,
+				2296CA802E04BBA40028F295 /* Map.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2296CA792E04BB230028F295 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				2296CA7B2E04BB4A0028F295 /* AddressViewModel.swift */,
+				2296CA7A2E04BB4A0028F295 /* LocationViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		22C8C0BE2E020961001711BA /* ViewModel */ = {
@@ -586,6 +667,7 @@
 		75B306C62DF7A33400AB1965 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				2296CA772E04BB110028F295 /* Adresses */,
 				22DB73B42DFDB9240021EF75 /* Authentication */,
 				75B306D12DF7A72600AB1965 /* Favorites */,
 				75B306D02DF7A72000AB1965 /* Me */,
@@ -647,6 +729,7 @@
 		75B306D02DF7A72000AB1965 /* Me */ = {
 			isa = PBXGroup;
 			children = (
+				2296CA742E04BA560028F295 /* ViewModel */,
 				75B306D32DF7A75F00AB1965 /* View */,
 			);
 			path = Me;
@@ -894,36 +977,47 @@
 				227383F52DF0E0B3007C4B1C /* ProductRepositoryImpl.swift in Sources */,
 				22FE272E2DF4693700442B9D /* AllProductTest.swift in Sources */,
 				75B306DF2DF7A86A00AB1965 /* HomeView.swift in Sources */,
+				2296CA832E04BBA40028F295 /* CitiesListView.swift in Sources */,
 				221747012DFA15470075F63C /* CartViewModel.swift in Sources */,
 				221437612DFD5BF200DF3B93 /* CheckoutPage.swift in Sources */,
 				22DB73B12DFDB6610021EF75 /* CustomerModel.swift in Sources */,
 				221746FD2DF9E2D80075F63C /* UserDefaultManager.swift in Sources */,
+				2296CA702E04B8580028F295 /* MarkDefaultAddressUseCase.swift in Sources */,
 				22DB73C22DFDB9A00021EF75 /* CustomerViewModel.swift in Sources */,
 				75B306F02DF7A9E900AB1965 /* Brand.swift in Sources */,
 				221747042DFA4B050075F63C /* Empty.swift in Sources */,
 				221746FF2DFA0F250075F63C /* CartItem.swift in Sources */,
+				2296CA722E04B8580028F295 /* CitiesUseCase.swift in Sources */,
 				22DB73C62DFDB9FF0021EF75 /* CustomerRepositoryImpl.swift in Sources */,
 				22C8C0C72E02B44F001711BA /* FirestoreManager.swift in Sources */,
 				7580B5422DFF55A3001FD4BB /* BestSellersView.swift in Sources */,
 				75B306DC2DF7A81C00AB1965 /* HomeViewModel.swift in Sources */,
 				221746F32DF962ED0075F63C /* DraftOrder.swift in Sources */,
+				2296CA632E04B2CB0028F295 /* Address.swift in Sources */,
 				221D33682DF89B8C00DEBE06 /* CouponViewModel.swift in Sources */,
 				22DB73BD2DFDB9690021EF75 /* RegisterSuccessView.swift in Sources */,
 				227383E72DF0DC42007C4B1C /* ProductRepository.swift in Sources */,
 				22FE27212DF45C3A00442B9D /* OnboardingScreen.swift in Sources */,
 				75B306DA2DF7A7F900AB1965 /* BrandProductsViewModel.swift in Sources */,
+				2296CA762E04BA860028F295 /* ProfileViewModel.swift in Sources */,
 				75B307002DF7AAF700AB1965 /* MeView.swift in Sources */,
 				75B306EA2DF7A8DD00AB1965 /* BrandProductsView.swift in Sources */,
 				22C8C0C52E021D1F001711BA /* CoreDataManager.swift in Sources */,
 				227383E22DF0D7F8007C4B1C /* AppCommon.swift in Sources */,
+				2296CA6E2E04B8580028F295 /* GetUserAddressesUseCase.swift in Sources */,
 				2273839C2DF07FCC007C4B1C /* ContentView.swift in Sources */,
+				2296CA7D2E04BB4A0028F295 /* AddressViewModel.swift in Sources */,
 				75B306EE2DF7A9C500AB1965 /* bestSellerProduct.swift in Sources */,
 				22DB73C02DFDB9690021EF75 /* AuthView.swift in Sources */,
+				2296CA622E04B2CB0028F295 /* Cities.swift in Sources */,
+				2296CA732E04B8580028F295 /* CreateAddressUseCase.swift in Sources */,
 				22FE27232DF45C6300442B9D /* OnboardingPageView.swift in Sources */,
 				221D335D2DF89A7500DEBE06 /* PriceRulesUseCase.swift in Sources */,
 				75B306EC2DF7A98700AB1965 /* Support.swift in Sources */,
 				221D335E2DF89A7500DEBE06 /* CouponsUseCase.swift in Sources */,
+				2296CA7C2E04BB4A0028F295 /* LocationViewModel.swift in Sources */,
 				75B306F22DF7AA2F00AB1965 /* GetAllBrandsUseCase.swift in Sources */,
+				2296CA852E04BBA40028F295 /* AddressesView.swift in Sources */,
 				7580B5402DFF5525001FD4BB /* ProductCardView.swift in Sources */,
 				227383D92DF0D448007C4B1C /* APIClient.swift in Sources */,
 				227383F32DF0E05C007C4B1C /* GetAllProductsUseCase.swift in Sources */,
@@ -934,6 +1028,7 @@
 				22FE271F2DF45BFC00442B9D /* SplashScreen.swift in Sources */,
 				22FE27262DF45CAC00442B9D /* Color.swift in Sources */,
 				221746FB2DF9C84C0075F63C /* Methods.swift in Sources */,
+				2296CA672E04B7AA0028F295 /* AddressesRepositoryImpl.swift in Sources */,
 				75B306E32DF7A89600AB1965 /* ProductItemView.swift in Sources */,
 				22DB73C52DFDB9FF0021EF75 /* CustomerRepository.swift in Sources */,
 				22DB73CA2DFDBA290021EF75 /* CustomerUseCase.swift in Sources */,
@@ -946,16 +1041,21 @@
 				22DB73B02DFDB6610021EF75 /* AuthScreen.swift in Sources */,
 				22C8C0C02E02098A001711BA /* FavoriteViewModel.swift in Sources */,
 				7580B53E2DFF54B4001FD4BB /* CategoryViewModel.swift in Sources */,
+				2296CA822E04BBA40028F295 /* AddAddress.swift in Sources */,
 				227383DD2DF0D74D007C4B1C /* ProductModel.swift in Sources */,
 				227383CF2DF09057007C4B1C /* APIRouter.swift in Sources */,
 				227383A62DF07FCF007C4B1C /* Shoplet.xcdatamodeld in Sources */,
+				2296CA662E04B7AA0028F295 /* AddressesRepository.swift in Sources */,
 				22DB73D02DFDBAB40021EF75 /* CustomTextField.swift in Sources */,
 				75B306FC2DF7AAC700AB1965 /* FavoriteView.swift in Sources */,
 				221D33592DF89A3D00DEBE06 /* Coupon.swift in Sources */,
 				22DB73D12DFDBAB40021EF75 /* PrimaryButton.swift in Sources */,
 				221746F52DF98ECD0075F63C /* DraftOrderUseCase.swift in Sources */,
+				2296CA842E04BBA40028F295 /* Map.swift in Sources */,
 				22DB73CB2DFDBA290021EF75 /* GetAllCustomerUseCase.swift in Sources */,
 				227383F72DF0E216007C4B1C /* ProductViewModel.swift in Sources */,
+				2296CA6F2E04B8580028F295 /* DeleteAddressUseCase.swift in Sources */,
+				2296CA712E04B8580028F295 /* UpdateCustomerUseCase.swift in Sources */,
 				75B306E72DF7A8BB00AB1965 /* ImageCarouselView.swift in Sources */,
 				221D335A2DF89A3D00DEBE06 /* PriceRule.swift in Sources */,
 				75B306FE2DF7AAE100AB1965 /* CartView.swift in Sources */,
@@ -1127,6 +1227,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Shoplet/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "want to access your location";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1155,6 +1256,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Shoplet/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "want to access your location";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

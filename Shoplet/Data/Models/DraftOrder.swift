@@ -74,6 +74,7 @@ struct DraftOrderCustomer:Codable {
 }
 
 struct DraftOrderAddress: Codable {
+    var id: Int?
     var address1: String?
     var address2: String?
     var city: String?

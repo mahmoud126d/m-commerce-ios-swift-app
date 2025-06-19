@@ -8,8 +8,51 @@
 import SwiftUI
 
 struct MeView: View {
+    @StateObject var profileViewModel = ProfileViewModel()
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView{
+            VStack{
+                Text("Profile")
+                    .font(.headline)
+                    .bold()
+                Spacer()
+                
+                List{
+                    UserDetails(profileViewModel: profileViewModel)
+                    NavigationLink(destination: AddressesView(addressViewModel: AddressViewModel())) {
+                        Text("Address")
+                    }
+                    Text("Currency")
+                    Text("About")
+                    Text("Support")
+                }
+                Spacer()
+                
+            }.onAppear{
+                profileViewModel.getCustomer()
+            }
+        }
+        
+    }
+}
+
+struct UserDetails: View {
+    @StateObject var profileViewModel: ProfileViewModel
+    var body: some View {
+        HStack{
+            Spacer()
+            VStack {
+                Text(profileViewModel.customer?.first_name ?? " " + (profileViewModel.customer?.last_name ?? "") )
+                    .bold()
+                
+                
+                Text(profileViewModel.customer?.email ?? " ")
+                    .foregroundColor(.gray)
+                    .padding(.bottom)
+            }.padding(.trailing, 24)
+            Image(systemName: "eraser")
+            Spacer()
+        }
     }
 }
 

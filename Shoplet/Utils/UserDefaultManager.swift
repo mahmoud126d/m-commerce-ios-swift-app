@@ -70,4 +70,13 @@ class UserDefaultManager:ObservableObject{
         }
     }
     
+    var currency:String?{
+        set{
+            UserDefaults.standard.setValue(newValue, forKey: "currency")
+        }
+        get{
+            UserDefaults.standard.string(forKey: "currency")
+
+        }
+    }
 }

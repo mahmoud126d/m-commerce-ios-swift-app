@@ -27,7 +27,12 @@ protocol APIClientType {
     static func createCustomer(customer: CustomerRequest, completion: @escaping (Result<CustomerAuthResponse, NetworkError>) -> Void)
     static func getCustomerById(id: Int, completion: @escaping (Result<CustomerAuthResponse, NetworkError>) -> Void)
     static func getAllCustomers(completion: @escaping (Result<CustomerListResponse, NetworkError>) -> Void)
-   
+    static func updateCustomer(customerId: Int, customer: CustomerRequest, completion: @escaping (Result<CustomerAuthResponse, NetworkError>)->Void)
+    static func createAddress(address: AddressRequest,customerId: Int, completion: @escaping (Result<AddressRequest, NetworkError>) -> Void)
+    static func getUserAddresses(customerId: Int, completion: @escaping (Result<AddressResponse, NetworkError>) -> Void)
+    static func markAddresseDefault(customerId: Int, addressId:Int, completion: @escaping (Result<AddressRequest, NetworkError>) -> Void)
+    static func deleteAddresse(customerId: Int, addressId:Int, completion: @escaping (Result<EmptyResponse, NetworkError>) -> Void)
+    static func getEgyptCities(completion: @escaping(Result<Cities, NetworkError>)->Void)
 }
 
 class APIClient: APIClientType {
@@ -61,6 +66,29 @@ class APIClient: APIClientType {
                     }
                 }
             }
+    }
+    static func getEgyptCities(completion: @escaping(Result<Cities, NetworkError>)->Void)
+    {
+        guard AppCommon.shared.isNetworkReachable() else {
+            completion(.failure(.networkUnreachable))
+            return
+        }
+        let url = "https://countriesnow.space/api/v0.1/countries/cities"
+            
+            let parameters: [String: Any] = [
+                "country": "Egypt"
+            ]
+            
+            AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+                .validate()
+                .responseDecodable(of: Cities.self) { response in
+                    switch response.result {
+                    case .success(let result):
+                        completion(.success(result))
+                    case .failure(let error):
+                        completion(.failure(.serverError(error.localizedDescription)))
+                    }
+                }
     }
 
     static func getProducts(completion: @escaping (Result<ProductResponse, NetworkError>) -> Void) {
@@ -113,6 +141,21 @@ class APIClient: APIClientType {
     static func getDraftOrders(completion: @escaping (Result<DraftOrdersResponse, NetworkError>) -> Void)
     {
         performRequest(route: .getAllDraftOrders, completion: completion)
+    }
+    static func updateCustomer(customerId: Int, customer: CustomerRequest, completion: @escaping (Result<CustomerAuthResponse, NetworkError>)->Void){
+        performRequest(route: .updateCustomer(customer: customer, customerId: customerId), completion: completion)
+    }
+    static func createAddress(address: AddressRequest,customerId: Int, completion: @escaping (Result<AddressRequest, NetworkError>) -> Void){
+        performRequest(route: .createAddress(address: address, customerId: customerId), completion: completion)
+    }
+    static func getUserAddresses(customerId: Int, completion: @escaping (Result<AddressResponse, NetworkError>) -> Void){
+        performRequest(route: .getuserAddresses(customerId: customerId), completion: completion)
+    }
+    static func markAddresseDefault(customerId: Int, addressId:Int, completion: @escaping (Result<AddressRequest, NetworkError>) -> Void){
+        performRequest(route: .markAddressDefault(customerId: customerId, addressId: addressId), completion: completion)
+    }
+    static func deleteAddresse(customerId: Int, addressId:Int, completion: @escaping (Result<EmptyResponse, NetworkError>) -> Void){
+        performRequest(route: .deleteAddress(customerId: customerId, addressId: addressId), completion: completion)
     }
 }
 

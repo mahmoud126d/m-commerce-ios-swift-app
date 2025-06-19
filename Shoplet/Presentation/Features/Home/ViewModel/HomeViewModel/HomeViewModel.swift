@@ -54,30 +54,33 @@ final class HomeViewModel: ObservableObject {
         }
     }
     func getUserDraftOrders() {
-        if userDefault.isUserLoggedIn {
-                var hasDraft = false
-                for draftOrder in self.allDraftOrders ?? [] {
-                    if draftOrder.customer?.id == self.userDefault.customerId {
-                        self.userDefault.hasDraftOrder = true
-                        self.userDefault.draftOrderId = draftOrder.id ?? 0
-                        self.userDefault.cartItems = draftOrder.line_items?.count ?? 0
-                        print("hasDraft")
-                        hasDraft = true
-                        break
-                    }
-                }
+        guard userDefault.isUserLoggedIn else {
+                userDefault.hasDraftOrder = false
+                userDefault.draftOrderId = 0
+                userDefault.cartItems = 0
+                return
+            }
 
-                if !hasDraft {
-                    self.userDefault.hasDraftOrder = false
-                    self.userDefault.draftOrderId = 0
-                    self.userDefault.cartItems = 0
+            var found = false
+            for draftOrder in self.allDraftOrders ?? [] {
+                if draftOrder.customer?.id == self.userDefault.customerId {
+                    userDefault.hasDraftOrder = true
+                    userDefault.draftOrderId = draftOrder.id ?? 0
+                    userDefault.cartItems = draftOrder.line_items?.count ?? 0
+                    print("hasDraft")
+                    found = true
+                    break
                 }
-            
-        } else {
-            userDefault.hasDraftOrder = false
-            userDefault.draftOrderId = 0
-            userDefault.cartItems = 0
-        }
+            }
+
+            if !found {
+                userDefault.hasDraftOrder = false
+                userDefault.draftOrderId = 0
+                userDefault.cartItems = 0
+            }
+
+            print("logged")
+        print(userDefault.customerId)
     }
 
 
