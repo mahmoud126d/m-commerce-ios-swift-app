@@ -22,7 +22,9 @@ struct MeView: View {
                     NavigationLink(destination: AddressesView(isCheckout: false)) {
                         Text("Address")
                     }
-                    Text("Currency")
+                    NavigationLink(destination: CurrencyView()) {
+                        Text("Currency")
+                    }
                     Text("About")
                     Text("Support")
                 }

@@ -274,7 +274,7 @@ struct ProductDetailsView: View {
 
     private var priceAndCart: some View {
         HStack {
-            Text(String(format: "$%.2f", getPrice()))
+            Text(String(format: "\(String(describing: UserDefaultManager.shared.currency ?? "USD")) %.2f", getPrice()))
                 .font(.title2)
                 .bold()
 
@@ -297,7 +297,7 @@ struct ProductDetailsView: View {
     }
 
     private func getPrice() -> Double {
-        let basePrice = product.variants?.first?.price ?? "0"
-        return (Double(basePrice) ?? 0.0) * Double(quantity)
+        let basePrice = (Double(product.variants?.first?.price ?? "1") ?? 1.0) * (Double(UserDefaultManager.shared.currencyRate ?? "1") ?? 1.0)
+        return (Double(basePrice)) * Double(quantity)
     }
 }

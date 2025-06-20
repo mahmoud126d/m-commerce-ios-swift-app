@@ -40,8 +40,9 @@ struct CartView: View {
                                }
                     HStack{
                         
-                        Text("SubTotal: \(cartViewModel.subTotal ?? "0.0") USD")
+                        Text("SubTotal: \(String(format: "%.2f", (Double(cartViewModel.subTotal ?? "0.0") ?? 0.0) * (Double(UserDefaultManager.shared.currencyRate ?? "1.0") ?? 1.0))) \(UserDefaultManager.shared.currency ?? "USD")")
                             .bold()
+
                         NavigationLink(destination: CheckoutPage(cartViewModel: cartViewModel), isActive: $isActive) {
                             Button(action: {
                                 if cartViewModel.address == nil{

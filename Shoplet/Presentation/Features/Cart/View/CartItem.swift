@@ -102,8 +102,9 @@ struct CartItem: View {
 
                 Spacer()
 
-                Text("\(String(format: "USD %.2f", (Double(lineItem.price ?? "0.00") ?? 0.00) * Double(lineItem.quantity ?? 1)))")
+                Text("\(String(format: "%@ %.2f", UserDefaultManager.shared.currency ?? "USD", (Double(lineItem.price ?? "0.00") ?? 0.00) * Double(lineItem.quantity ?? 1) * (Double(UserDefaultManager.shared.currencyRate ?? "1.0") ?? 1.0)))")
                     .bold()
+
             }
             .padding()
         }
