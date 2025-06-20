@@ -10,6 +10,7 @@ import SwiftUI
 struct CartView: View {
     @StateObject var cartViewModel = CartViewModel()
     @State private var isActive = false
+    @State private var showAddressAlert = false
     var body: some View {
         NavigationView{
             VStack{
@@ -43,7 +44,12 @@ struct CartView: View {
                             .bold()
                         NavigationLink(destination: CheckoutPage(cartViewModel: cartViewModel), isActive: $isActive) {
                             Button(action: {
-                               isActive = true
+                                if cartViewModel.address == nil{
+                                    showAddressAlert = true
+                                }
+                                else {
+                                    isActive = true
+                                }
                             }) {
                                 Text("Checkout")
                                     .padding()
@@ -54,6 +60,12 @@ struct CartView: View {
                         }
                     }.padding(.bottom, 120)
                      .padding(.top)
+                     .alert("No Shipping Address", isPresented: $showAddressAlert) {
+                         Button("OK", role: .cancel) {}
+                     } message: {
+                         Text("Please go to profile and add an address before proceeding to checkout.")
+                     }
+
                     
                            } else {
                                Spacer()
@@ -63,6 +75,7 @@ struct CartView: View {
                            }
             }.onAppear{
                 cartViewModel.getDraftOrderById()
+                cartViewModel.getCustomerShippingAddress()
             }
         }
         }

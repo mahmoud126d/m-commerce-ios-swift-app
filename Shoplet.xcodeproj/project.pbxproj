@@ -23,6 +23,7 @@
 		221D33642DF89B2600DEBE06 /* CouponsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221D33612DF89B2600DEBE06 /* CouponsView.swift */; };
 		221D33652DF89B2600DEBE06 /* PriceRuleCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221D33622DF89B2600DEBE06 /* PriceRuleCard.swift */; };
 		221D33682DF89B8C00DEBE06 /* CouponViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221D33672DF89B8C00DEBE06 /* CouponViewModel.swift */; };
+		226ABB8E2E056C3B00A8BA8B /* CartShippingAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226ABB8D2E056C3B00A8BA8B /* CartShippingAddress.swift */; };
 		226D3B4F2DFDCD5E00F3BA58 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 226D3B4E2DFDCD5E00F3BA58 /* FirebaseAnalytics */; };
 		226D3B512DFDCD5E00F3BA58 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 226D3B502DFDCD5E00F3BA58 /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		226D3B532DFDCD5E00F3BA58 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 226D3B522DFDCD5E00F3BA58 /* FirebaseAuth */; };
@@ -164,6 +165,7 @@
 		221D33612DF89B2600DEBE06 /* CouponsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CouponsView.swift; sourceTree = "<group>"; };
 		221D33622DF89B2600DEBE06 /* PriceRuleCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriceRuleCard.swift; sourceTree = "<group>"; };
 		221D33672DF89B8C00DEBE06 /* CouponViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CouponViewModel.swift; sourceTree = "<group>"; };
+		226ABB8D2E056C3B00A8BA8B /* CartShippingAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartShippingAddress.swift; sourceTree = "<group>"; };
 		227383962DF07FCC007C4B1C /* Shoplet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shoplet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		227383992DF07FCC007C4B1C /* ShopletApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopletApp.swift; sourceTree = "<group>"; };
 		2273839B2DF07FCC007C4B1C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -776,6 +778,7 @@
 				75B306FD2DF7AAE100AB1965 /* CartView.swift */,
 				221746FE2DFA0F250075F63C /* CartItem.swift */,
 				221437602DFD5BF200DF3B93 /* CheckoutPage.swift */,
+				226ABB8D2E056C3B00A8BA8B /* CartShippingAddress.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1019,6 +1022,7 @@
 				75B306F22DF7AA2F00AB1965 /* GetAllBrandsUseCase.swift in Sources */,
 				2296CA852E04BBA40028F295 /* AddressesView.swift in Sources */,
 				7580B5402DFF5525001FD4BB /* ProductCardView.swift in Sources */,
+				226ABB8E2E056C3B00A8BA8B /* CartShippingAddress.swift in Sources */,
 				227383D92DF0D448007C4B1C /* APIClient.swift in Sources */,
 				227383F32DF0E05C007C4B1C /* GetAllProductsUseCase.swift in Sources */,
 				22C8C0C22E0209C1001711BA /* FavoriteItem.swift in Sources */,

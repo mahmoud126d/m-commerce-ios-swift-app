@@ -16,7 +16,12 @@ struct CheckoutPage: View {
             Text("Checkout")
                 .font(.headline)
                 .bold()
-            Spacer()
+            CartShippingAddress(address: $cartViewModel.shippingAddress){
+                address in
+                cartViewModel.updateShipingAddress(address: address)
+              
+            }
+                .padding()
             HStack{
                 TextField("Enter Coupon...", text: $coupon)
                             .padding()
@@ -46,6 +51,10 @@ struct CheckoutPage: View {
             PriceRow(title: "TotalPrice", desc: "\(cartViewModel.total ?? "0.0") USD")
             Spacer()
 
+        }.onAppear{
+            (UserDefaultManager.shared.isNotDefaultAddress == false)  ?
+            cartViewModel.getCustomerShippingAddress()
+            : cartViewModel.getDraftOrderById()
         }
     }
 }

@@ -69,6 +69,14 @@ class UserDefaultManager:ObservableObject{
             UserDefaults.standard.integer(forKey: "priceRuleId")
         }
     }
+    var isNotDefaultAddress: Bool?{
+        get {
+            return UserDefaults.standard.bool(forKey: "isNotDefaultAddress")
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: "isNotDefaultAddress")
+        }
+    }
     
     var currency:String?{
         set{
