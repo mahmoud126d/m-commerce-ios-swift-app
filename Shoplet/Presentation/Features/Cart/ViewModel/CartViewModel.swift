@@ -10,6 +10,7 @@ import Foundation
 class CartViewModel : ObservableObject{
     private var draftOrderUseCase : DraftOrderUseCase
     private var priceRuleUseCase : PriceRulesUseCase
+    private var getCustomerUseCase: GetCustomerByIdUseCase
     private var userDefault = UserDefaultManager.shared
     @Published var draftOrder : DraftOrder?
     @Published var subTotal : String?
@@ -17,10 +18,13 @@ class CartViewModel : ObservableObject{
     @Published var total: String?
     @Published var selectedPriceRule: PriceRule?
     @Published var discountValue: String?
-    
-    init(repo :ProductRepository = ProductRepositoryImpl()) {
+    @Published var shippingAddress: AddressDetails?
+    @Published var address: AddressDetails?
+
+    init(repo :ProductRepository = ProductRepositoryImpl(), cusRepo: CustomerRepository = CustomerRepositoryImpl()) {
         self.draftOrderUseCase = DraftOrderUseCase(repo: repo)
         self.priceRuleUseCase = PriceRulesUseCase(repo: repo)
+        self.getCustomerUseCase = DefaultGetCustomerByIdUseCase(repository: cusRepo)
     }
     
     func getDraftOrderById(){
@@ -33,6 +37,8 @@ class CartViewModel : ObservableObject{
                         self?.subTotal = draftOrder.subtotal_price
                         self?.tax = draftOrder.total_tax
                         self?.total = draftOrder.total_price
+                        self?.shippingAddress = draftOrder.shipping_address
+
                     case .failure(let error):
                         print(error)
                     }
@@ -95,12 +101,13 @@ class CartViewModel : ObservableObject{
             self.userDefault.hasDraftOrder = false
             self.userDefault.draftOrderId = 0
             self.userDefault.cartItems =  0
+            self.userDefault.isNotDefaultAddress = false
             self.getDraftOrderById()
         }
     }
     
     func applayDiscount(priceRule: PriceRule){
-        let rawValue = priceRule.value ?? "0"
+        let rawValue = priceRule.value 
         let cleanedValue = rawValue.replacingOccurrences(of: "-", with: "")
 
         let amount = calculateDiscountAmount(value: cleanedValue, type: priceRule.value_type)
@@ -108,7 +115,7 @@ class CartViewModel : ObservableObject{
         let applied_discount = AppliedDiscount(
             description: priceRule.title ?? "Discount",
             value: cleanedValue,
-            value_type: priceRule.value_type ?? "percentage",
+            value_type: priceRule.value_type ,
             amount: amount
         )
 
@@ -150,5 +157,50 @@ class CartViewModel : ObservableObject{
                 print(error.localizedDescription)
             }
         }
+    }
+    func updateDraftOrderShippingAddressDefaultAddress(){
+        draftOrder?.shipping_address = shippingAddress
+        let draftOrderIttem = DraftOrderItem(draft_order: draftOrder)
+        updateDraftOrder(draftOrderItem: draftOrderIttem)
+        
+    }
+  
+    func getCustomerShippingAddress(){
+        getCustomerUseCase.execute(id: userDefault.customerId ?? -1) { [weak self] res in
+            switch res{
+            case .success(let customer):
+                let customerDefaultAddress = customer.customer?.default_address
+                
+                let shipping_address = AddressDetails(id: customerDefaultAddress?.id, customer_id: customerDefaultAddress?.customer_id, first_name: customerDefaultAddress?.first_name, last_name: customerDefaultAddress?.last_name, company: customerDefaultAddress?.company, address1: customerDefaultAddress?.address1, address2: customerDefaultAddress?.address2, city: customerDefaultAddress?.city, province: customerDefaultAddress?.province, country: customerDefaultAddress?.country, zip: customerDefaultAddress?.zip, phone: customerDefaultAddress?.phone, name: customerDefaultAddress?.name, province_code: customerDefaultAddress?.province_code, country_code: customerDefaultAddress?.country_code, country_name: customerDefaultAddress?.country_name, default: customerDefaultAddress?.default)
+                    
+                                self?.shippingAddress = shipping_address
+                self?.address = self?.shippingAddress
+                                self?.draftOrder?.shipping_address = shipping_address
+                                    /*let draftOrderItem = DraftOrderItem(draft_order: self?.draftOrder)
+                                    self?.updateDraftOrder(draftOrderItem: draftOrderItem)*/
+                                
+                print(self?.shippingAddress as Any)
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    func updateShipingAddress(address: AddressDetails){
+        draftOrder?.shipping_address = address
+        let draftOrderItem = DraftOrderItem(draft_order: draftOrder)
+        draftOrderUseCase.update(draftOrder: draftOrderItem, dtaftOrderId: userDefault.draftOrderId) {[weak self]res in
+            DispatchQueue.main.async {
+                switch res {
+                case .success(let draftOrder):
+                    print("updated \(String(describing: draftOrder.id))")
+                    self?.userDefault.isNotDefaultAddress = true
+                    self?.getDraftOrderById()
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        }
+        
     }
 }

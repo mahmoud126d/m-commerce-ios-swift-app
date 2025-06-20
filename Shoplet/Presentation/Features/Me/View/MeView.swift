@@ -19,7 +19,7 @@ struct MeView: View {
                 
                 List{
                     UserDetails(profileViewModel: profileViewModel)
-                    NavigationLink(destination: AddressesView(addressViewModel: AddressViewModel())) {
+                    NavigationLink(destination: AddressesView(isCheckout: false)) {
                         Text("Address")
                     }
                     Text("Currency")
