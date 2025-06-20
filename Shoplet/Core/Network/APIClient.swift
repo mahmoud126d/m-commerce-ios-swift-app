@@ -33,6 +33,7 @@ protocol APIClientType {
     static func markAddresseDefault(customerId: Int, addressId:Int, completion: @escaping (Result<AddressRequest, NetworkError>) -> Void)
     static func deleteAddresse(customerId: Int, addressId:Int, completion: @escaping (Result<EmptyResponse, NetworkError>) -> Void)
     static func getEgyptCities(completion: @escaping(Result<Cities, NetworkError>)->Void)
+    static func getCurrencies(completion: @escaping(Result<CurrencyExChange, NetworkError>)->Void)
 }
 
 class APIClient: APIClientType {
@@ -156,6 +157,21 @@ class APIClient: APIClientType {
     }
     static func deleteAddresse(customerId: Int, addressId:Int, completion: @escaping (Result<EmptyResponse, NetworkError>) -> Void){
         performRequest(route: .deleteAddress(customerId: customerId, addressId: addressId), completion: completion)
+    }
+    static func getCurrencies(completion: @escaping(Result<CurrencyExChange, NetworkError>)->Void)
+    {
+        let url = "https://api.currencyfreaks.com/latest?apikey=\(Support.currencyApikey)"
+
+                AF.request(url)
+                    .validate()
+                    .responseDecodable(of: CurrencyExChange.self) { response in
+                        switch response.result {
+                        case .success(let res):
+                            completion(.success(res))
+                        case .failure(let error):
+                            completion(.failure(.serverError(error.localizedDescription)))
+                        }
+                    }
     }
 }
 

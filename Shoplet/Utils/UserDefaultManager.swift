@@ -87,4 +87,13 @@ class UserDefaultManager:ObservableObject{
 
         }
     }
+    var currencyRate:String?{
+        set{
+            UserDefaults.standard.setValue(newValue, forKey: "currencyRate")
+        }
+        get{
+            UserDefaults.standard.string(forKey: "currencyRate")
+
+        }
+    }
 }

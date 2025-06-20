@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+class CurrencyRepositoryImpl: CurrencyRepository{
+    func getCurrencies(completion: @escaping(Result<CurrencyExChange, NetworkError>)->Void){
+        APIClient.getCurrencies(completion: completion)
+    }
+}

@@ -81,31 +81,43 @@ struct ProductItemView: View {
     func productPriceView() -> some View {
         if let variant = product.variants?.first,
            let priceStr = variant.price,
-           let price = Double(priceStr) {
+           let priceValue = Double(priceStr),
+           let rateStr = UserDefaultManager.shared.currencyRate,
+           let rate = Double(rateStr),
+           let currency = UserDefaultManager.shared.currency {
+
+            let price = priceValue * rate
+            let formattedPrice = String(format: "%.2f", price)
 
             if let compareAt = variant.compareAtPrice,
-               !compareAt.isEmpty,
-               compareAt != priceStr {
+               let compareAtValue = Double(compareAt),
+               compareAtValue != priceValue {
+
+                let convertedCompareAt = compareAtValue * rate
+                let formattedCompareAt = String(format: "%.2f", convertedCompareAt)
+
                 HStack(spacing: 6) {
-                    Text("$\(priceStr)")
+                    Text("\(formattedPrice) \(currency)")
                         .foregroundColor(.red)
                         .font(.footnote)
                         .fontWeight(.bold)
 
-                    Text("$\(compareAt)")
+                    Text("\(formattedCompareAt) \(currency)")
                         .strikethrough()
                         .foregroundColor(.gray)
                         .font(.footnote)
                 }
             } else {
                 let originalPrice = price * 1.10
+                let formattedOriginal = String(format: "%.2f", originalPrice)
+
                 HStack(spacing: 6) {
-                    Text(String(format: "$%.2f ", price))
+                    Text("\(formattedPrice) \(currency)")
                         .foregroundColor(.red)
                         .font(.footnote)
                         .fontWeight(.bold)
 
-                    Text(String(format: "$%.2f ", originalPrice))
+                    Text("\(formattedOriginal) \(currency)")
                         .strikethrough()
                         .foregroundColor(.gray)
                         .font(.footnote)
@@ -113,4 +125,5 @@ struct ProductItemView: View {
             }
         }
     }
+
 }

@@ -13,6 +13,7 @@ struct Support {
     static let apiKey = "eb41b2a7fcfd647779c4b29cb454bdfa"
     static let apiVersion = "/admin/api/2024-10/"
     static let baseURL = "https://\(apiKey):\(accessToken)@\(shopName).myshopify.com"
+    static let currencyApikey = "59669202f8184d2d81e98c2b30ef3b80"
 }
 
 

@@ -24,6 +24,12 @@
 		221D33652DF89B2600DEBE06 /* PriceRuleCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221D33622DF89B2600DEBE06 /* PriceRuleCard.swift */; };
 		221D33682DF89B8C00DEBE06 /* CouponViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221D33672DF89B8C00DEBE06 /* CouponViewModel.swift */; };
 		226ABB8E2E056C3B00A8BA8B /* CartShippingAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226ABB8D2E056C3B00A8BA8B /* CartShippingAddress.swift */; };
+		226ABB952E05E2BE00A8BA8B /* CurrencyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226ABB942E05E2BE00A8BA8B /* CurrencyView.swift */; };
+		226ABB972E05ED3D00A8BA8B /* CurrencyExChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226ABB962E05ED3D00A8BA8B /* CurrencyExChange.swift */; };
+		226ABB992E05F01E00A8BA8B /* CurrencyRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226ABB982E05F01E00A8BA8B /* CurrencyRepository.swift */; };
+		226ABB9B2E05F08D00A8BA8B /* CurrencyRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226ABB9A2E05F08D00A8BA8B /* CurrencyRepositoryImpl.swift */; };
+		226ABB9D2E05F0E300A8BA8B /* CurrencyUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226ABB9C2E05F0E300A8BA8B /* CurrencyUseCase.swift */; };
+		226ABB9F2E05F48500A8BA8B /* CurrencyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226ABB9E2E05F48500A8BA8B /* CurrencyViewModel.swift */; };
 		226D3B4F2DFDCD5E00F3BA58 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 226D3B4E2DFDCD5E00F3BA58 /* FirebaseAnalytics */; };
 		226D3B512DFDCD5E00F3BA58 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 226D3B502DFDCD5E00F3BA58 /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		226D3B532DFDCD5E00F3BA58 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 226D3B522DFDCD5E00F3BA58 /* FirebaseAuth */; };
@@ -166,6 +172,12 @@
 		221D33622DF89B2600DEBE06 /* PriceRuleCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriceRuleCard.swift; sourceTree = "<group>"; };
 		221D33672DF89B8C00DEBE06 /* CouponViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CouponViewModel.swift; sourceTree = "<group>"; };
 		226ABB8D2E056C3B00A8BA8B /* CartShippingAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartShippingAddress.swift; sourceTree = "<group>"; };
+		226ABB942E05E2BE00A8BA8B /* CurrencyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyView.swift; sourceTree = "<group>"; };
+		226ABB962E05ED3D00A8BA8B /* CurrencyExChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyExChange.swift; sourceTree = "<group>"; };
+		226ABB982E05F01E00A8BA8B /* CurrencyRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyRepository.swift; sourceTree = "<group>"; };
+		226ABB9A2E05F08D00A8BA8B /* CurrencyRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyRepositoryImpl.swift; sourceTree = "<group>"; };
+		226ABB9C2E05F0E300A8BA8B /* CurrencyUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyUseCase.swift; sourceTree = "<group>"; };
+		226ABB9E2E05F48500A8BA8B /* CurrencyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyViewModel.swift; sourceTree = "<group>"; };
 		227383962DF07FCC007C4B1C /* Shoplet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shoplet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		227383992DF07FCC007C4B1C /* ShopletApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopletApp.swift; sourceTree = "<group>"; };
 		2273839B2DF07FCC007C4B1C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -345,6 +357,31 @@
 			path = "PriceRules&Coupons";
 			sourceTree = "<group>";
 		};
+		226ABB922E05E29800A8BA8B /* Currency */ = {
+			isa = PBXGroup;
+			children = (
+				226ABBA02E060CD700A8BA8B /* ViewModel */,
+				226ABB932E05E2A900A8BA8B /* View */,
+			);
+			path = Currency;
+			sourceTree = "<group>";
+		};
+		226ABB932E05E2A900A8BA8B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				226ABB942E05E2BE00A8BA8B /* CurrencyView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		226ABBA02E060CD700A8BA8B /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				226ABB9E2E05F48500A8BA8B /* CurrencyViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		2273838D2DF07FCC007C4B1C = {
 			isa = PBXGroup;
 			children = (
@@ -455,6 +492,8 @@
 				22DB73C42DFDB9FF0021EF75 /* CustomerRepositoryImpl.swift */,
 				227383E62DF0DC42007C4B1C /* ProductRepository.swift */,
 				227383F42DF0E0B3007C4B1C /* ProductRepositoryImpl.swift */,
+				226ABB982E05F01E00A8BA8B /* CurrencyRepository.swift */,
+				226ABB9A2E05F08D00A8BA8B /* CurrencyRepositoryImpl.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -478,6 +517,7 @@
 				75B306F12DF7AA2F00AB1965 /* GetAllBrandsUseCase.swift */,
 				75B306F32DF7AA4000AB1965 /* GetBestSellersUseCase.swift */,
 				221746F42DF98ECD0075F63C /* DraftOrderUseCase.swift */,
+				226ABB9C2E05F0E300A8BA8B /* CurrencyUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -504,6 +544,7 @@
 				75B306EF2DF7A9E900AB1965 /* Brand.swift */,
 				221746F22DF962ED0075F63C /* DraftOrder.swift */,
 				221747032DFA4B050075F63C /* Empty.swift */,
+				226ABB962E05ED3D00A8BA8B /* CurrencyExChange.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -669,6 +710,7 @@
 		75B306C62DF7A33400AB1965 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				226ABB922E05E29800A8BA8B /* Currency */,
 				2296CA772E04BB110028F295 /* Adresses */,
 				22DB73B42DFDB9240021EF75 /* Authentication */,
 				75B306D12DF7A72600AB1965 /* Favorites */,
@@ -995,6 +1037,7 @@
 				22C8C0C72E02B44F001711BA /* FirestoreManager.swift in Sources */,
 				7580B5422DFF55A3001FD4BB /* BestSellersView.swift in Sources */,
 				75B306DC2DF7A81C00AB1965 /* HomeViewModel.swift in Sources */,
+				226ABB9D2E05F0E300A8BA8B /* CurrencyUseCase.swift in Sources */,
 				221746F32DF962ED0075F63C /* DraftOrder.swift in Sources */,
 				2296CA632E04B2CB0028F295 /* Address.swift in Sources */,
 				221D33682DF89B8C00DEBE06 /* CouponViewModel.swift in Sources */,
@@ -1003,8 +1046,10 @@
 				22FE27212DF45C3A00442B9D /* OnboardingScreen.swift in Sources */,
 				75B306DA2DF7A7F900AB1965 /* BrandProductsViewModel.swift in Sources */,
 				2296CA762E04BA860028F295 /* ProfileViewModel.swift in Sources */,
+				226ABB992E05F01E00A8BA8B /* CurrencyRepository.swift in Sources */,
 				75B307002DF7AAF700AB1965 /* MeView.swift in Sources */,
 				75B306EA2DF7A8DD00AB1965 /* BrandProductsView.swift in Sources */,
+				226ABB9F2E05F48500A8BA8B /* CurrencyViewModel.swift in Sources */,
 				22C8C0C52E021D1F001711BA /* CoreDataManager.swift in Sources */,
 				227383E22DF0D7F8007C4B1C /* AppCommon.swift in Sources */,
 				2296CA6E2E04B8580028F295 /* GetUserAddressesUseCase.swift in Sources */,
@@ -1018,6 +1063,7 @@
 				221D335D2DF89A7500DEBE06 /* PriceRulesUseCase.swift in Sources */,
 				75B306EC2DF7A98700AB1965 /* Support.swift in Sources */,
 				221D335E2DF89A7500DEBE06 /* CouponsUseCase.swift in Sources */,
+				226ABB952E05E2BE00A8BA8B /* CurrencyView.swift in Sources */,
 				2296CA7C2E04BB4A0028F295 /* LocationViewModel.swift in Sources */,
 				75B306F22DF7AA2F00AB1965 /* GetAllBrandsUseCase.swift in Sources */,
 				2296CA852E04BBA40028F295 /* AddressesView.swift in Sources */,
@@ -1040,6 +1086,7 @@
 				221D33642DF89B2600DEBE06 /* CouponsView.swift in Sources */,
 				221D33652DF89B2600DEBE06 /* PriceRuleCard.swift in Sources */,
 				22FE27282DF45CD100442B9D /* Font.swift in Sources */,
+				226ABB972E05ED3D00A8BA8B /* CurrencyExChange.swift in Sources */,
 				227383EA2DF0DC82007C4B1C /* GetProductByIdUseCase.swift in Sources */,
 				227383CD2DF08C54007C4B1C /* NetworkError.swift in Sources */,
 				22DB73B02DFDB6610021EF75 /* AuthScreen.swift in Sources */,
@@ -1048,6 +1095,7 @@
 				2296CA822E04BBA40028F295 /* AddAddress.swift in Sources */,
 				227383DD2DF0D74D007C4B1C /* ProductModel.swift in Sources */,
 				227383CF2DF09057007C4B1C /* APIRouter.swift in Sources */,
+				226ABB9B2E05F08D00A8BA8B /* CurrencyRepositoryImpl.swift in Sources */,
 				227383A62DF07FCF007C4B1C /* Shoplet.xcdatamodeld in Sources */,
 				2296CA662E04B7AA0028F295 /* AddressesRepository.swift in Sources */,
 				22DB73D02DFDBAB40021EF75 /* CustomTextField.swift in Sources */,

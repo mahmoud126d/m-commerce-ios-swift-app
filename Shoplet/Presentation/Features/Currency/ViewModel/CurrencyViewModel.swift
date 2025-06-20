@@ -22,6 +22,13 @@ class CurrencyViewModel: ObservableObject{
                 DispatchQueue.main.async{
                     self?.isLoading = false
                     self?.currencies = currency.rates
+                    var fetchedRates = currency.rates
+
+                                   if fetchedRates["USD"] == nil {
+                                       fetchedRates["USD"] = "1.0"
+                                   }
+
+                                   self?.currencies = fetchedRates
                 }
             case .failure(let error):
                 print(error.localizedDescription)

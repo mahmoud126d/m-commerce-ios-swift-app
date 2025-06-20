@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+struct CurrencyExChange:Codable{
+    let rates: [String: String]
+}

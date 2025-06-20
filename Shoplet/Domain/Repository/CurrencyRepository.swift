@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+protocol CurrencyRepository{
+    func getCurrencies(completion: @escaping(Result<CurrencyExChange, NetworkError>)->Void)
+}

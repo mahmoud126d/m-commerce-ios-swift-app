@@ -45,10 +45,31 @@ struct CheckoutPage: View {
 
             }.padding()
             
-            PriceRow(title: "Discounts", desc: discountValue, color: .red).padding(.trailing, 8)
-            PriceRow(title: "SubPrice", desc: "\(cartViewModel.subTotal ?? "0.0") USD")
-            PriceRow(title: "Tax", desc: "\(cartViewModel.tax ?? "0.0") USD")
-            PriceRow(title: "TotalPrice", desc: "\(cartViewModel.total ?? "0.0") USD")
+            let currency = UserDefaultManager.shared.currency ?? "USD"
+            let rate = Double(UserDefaultManager.shared.currencyRate ?? "1.0") ?? 1.0
+
+            PriceRow(
+                title: "Discounts",
+                desc:  "\(currency) \(String(format: "%.2f", Double(discountValue)! * rate))" ,
+                color: .red
+            )
+            .padding(.trailing, 8)
+
+            PriceRow(
+                title: "SubPrice",
+                desc: "\(currency) \(String(format: "%.2f", (Double(cartViewModel.subTotal ?? "0.0") ?? 0.0) * rate))"
+            )
+
+            PriceRow(
+                title: "Tax",
+                desc: "\(currency) \(String(format: "%.2f", (Double(cartViewModel.tax ?? "0.0") ?? 0.0) * rate))"
+            )
+
+            PriceRow(
+                title: "TotalPrice",
+                desc: "\(currency) \(String(format: "%.2f", (Double(cartViewModel.total ?? "0.0") ?? 0.0) * rate))"
+            )
+
             Spacer()
 
         }.onAppear{

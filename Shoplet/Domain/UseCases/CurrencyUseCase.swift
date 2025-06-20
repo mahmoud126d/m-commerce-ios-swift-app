@@ -6,3 +6,13 @@
 //
 
 import Foundation
+
+class CurrencyUseCase{
+    private let repo: CurrencyRepository
+    init(repo: CurrencyRepository) {
+        self.repo = repo
+    }
+    func excute(completion: @escaping(Result<CurrencyExChange, NetworkError>)->Void){
+        repo.getCurrencies(completion: completion)
+    }
+}
