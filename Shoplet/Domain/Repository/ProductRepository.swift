@@ -20,6 +20,6 @@ protocol ProductRepository {
     func  getDraftOrderById(dtaftOrderId: Int, completion: @escaping (Result<DraftOrder, NetworkError>) -> Void)
      func deleteDraftOrder(dtaftOrderId: Int, completion: @escaping () -> Void)
      func getDraftOrders(completion: @escaping (Result<[DraftOrder], NetworkError>) -> Void)
-
+    func completeOrder(draftOrderId: Int, completion: @escaping(Result<DraftOrderItem, NetworkError>)->Void)
 
 }

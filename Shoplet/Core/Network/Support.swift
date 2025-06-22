@@ -35,6 +35,7 @@ enum ShopifyResource {
     case getuserAddresses
     case markAddressDefault
     case deleteAddress
+    case completOrder
 
     var endpoint: String {
         switch self {
@@ -52,6 +53,8 @@ enum ShopifyResource {
             return "addresses"
         case .markAddressDefault:
             return "default"
+        case .completOrder:
+            return "complete"
 
         }
     }

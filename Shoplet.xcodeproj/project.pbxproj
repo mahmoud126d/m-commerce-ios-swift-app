@@ -23,6 +23,7 @@
 		221D33642DF89B2600DEBE06 /* CouponsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221D33612DF89B2600DEBE06 /* CouponsView.swift */; };
 		221D33652DF89B2600DEBE06 /* PriceRuleCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221D33622DF89B2600DEBE06 /* PriceRuleCard.swift */; };
 		221D33682DF89B8C00DEBE06 /* CouponViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221D33672DF89B8C00DEBE06 /* CouponViewModel.swift */; };
+		226631D42E07D95F00FF8554 /* ApplePay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226631D32E07D95F00FF8554 /* ApplePay.swift */; };
 		226ABB8E2E056C3B00A8BA8B /* CartShippingAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226ABB8D2E056C3B00A8BA8B /* CartShippingAddress.swift */; };
 		226ABB952E05E2BE00A8BA8B /* CurrencyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226ABB942E05E2BE00A8BA8B /* CurrencyView.swift */; };
 		226ABB972E05ED3D00A8BA8B /* CurrencyExChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226ABB962E05ED3D00A8BA8B /* CurrencyExChange.swift */; };
@@ -79,6 +80,7 @@
 		22C8C0C22E0209C1001711BA /* FavoriteItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C8C0C12E0209C1001711BA /* FavoriteItem.swift */; };
 		22C8C0C52E021D1F001711BA /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C8C0C42E021D1F001711BA /* CoreDataManager.swift */; };
 		22C8C0C72E02B44F001711BA /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C8C0C62E02B44F001711BA /* FirestoreManager.swift */; };
+		22D70DA72E088B6700B6DD92 /* ApplePayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D70DA62E088B6700B6DD92 /* ApplePayButton.swift */; };
 		22DB73B02DFDB6610021EF75 /* AuthScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB73AE2DFDB6600021EF75 /* AuthScreen.swift */; };
 		22DB73B12DFDB6610021EF75 /* CustomerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB73AF2DFDB6610021EF75 /* CustomerModel.swift */; };
 		22DB73B32DFDB8EB0021EF75 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 22DB73B22DFDB8EB0021EF75 /* GoogleService-Info.plist */; };
@@ -171,6 +173,7 @@
 		221D33612DF89B2600DEBE06 /* CouponsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CouponsView.swift; sourceTree = "<group>"; };
 		221D33622DF89B2600DEBE06 /* PriceRuleCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriceRuleCard.swift; sourceTree = "<group>"; };
 		221D33672DF89B8C00DEBE06 /* CouponViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CouponViewModel.swift; sourceTree = "<group>"; };
+		226631D32E07D95F00FF8554 /* ApplePay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePay.swift; sourceTree = "<group>"; };
 		226ABB8D2E056C3B00A8BA8B /* CartShippingAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartShippingAddress.swift; sourceTree = "<group>"; };
 		226ABB942E05E2BE00A8BA8B /* CurrencyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyView.swift; sourceTree = "<group>"; };
 		226ABB962E05ED3D00A8BA8B /* CurrencyExChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyExChange.swift; sourceTree = "<group>"; };
@@ -221,6 +224,7 @@
 		22C8C0C12E0209C1001711BA /* FavoriteItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteItem.swift; sourceTree = "<group>"; };
 		22C8C0C42E021D1F001711BA /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		22C8C0C62E02B44F001711BA /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
+		22D70DA62E088B6700B6DD92 /* ApplePayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePayButton.swift; sourceTree = "<group>"; };
 		22DB73AE2DFDB6600021EF75 /* AuthScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthScreen.swift; sourceTree = "<group>"; };
 		22DB73AF2DFDB6610021EF75 /* CustomerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomerModel.swift; sourceTree = "<group>"; };
 		22DB73B22DFDB8EB0021EF75 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -335,6 +339,7 @@
 			isa = PBXGroup;
 			children = (
 				221747002DFA15470075F63C /* CartViewModel.swift */,
+				226631D32E07D95F00FF8554 /* ApplePay.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -821,6 +826,7 @@
 				221746FE2DFA0F250075F63C /* CartItem.swift */,
 				221437602DFD5BF200DF3B93 /* CheckoutPage.swift */,
 				226ABB8D2E056C3B00A8BA8B /* CartShippingAddress.swift */,
+				22D70DA62E088B6700B6DD92 /* ApplePayButton.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1020,6 +1026,7 @@
 				75B306E12DF7A87B00AB1965 /* CustomeTabBarView.swift in Sources */,
 				75B306F42DF7AA4000AB1965 /* GetBestSellersUseCase.swift in Sources */,
 				227383F52DF0E0B3007C4B1C /* ProductRepositoryImpl.swift in Sources */,
+				22D70DA72E088B6700B6DD92 /* ApplePayButton.swift in Sources */,
 				22FE272E2DF4693700442B9D /* AllProductTest.swift in Sources */,
 				75B306DF2DF7A86A00AB1965 /* HomeView.swift in Sources */,
 				2296CA832E04BBA40028F295 /* CitiesListView.swift in Sources */,
@@ -1044,6 +1051,7 @@
 				22DB73BD2DFDB9690021EF75 /* RegisterSuccessView.swift in Sources */,
 				227383E72DF0DC42007C4B1C /* ProductRepository.swift in Sources */,
 				22FE27212DF45C3A00442B9D /* OnboardingScreen.swift in Sources */,
+				226631D42E07D95F00FF8554 /* ApplePay.swift in Sources */,
 				75B306DA2DF7A7F900AB1965 /* BrandProductsViewModel.swift in Sources */,
 				2296CA762E04BA860028F295 /* ProfileViewModel.swift in Sources */,
 				226ABB992E05F01E00A8BA8B /* CurrencyRepository.swift in Sources */,

@@ -69,6 +69,31 @@ struct CheckoutPage: View {
                 title: "TotalPrice",
                 desc: "\(currency) \(String(format: "%.2f", (Double(cartViewModel.total ?? "0.0") ?? 0.0) * rate))"
             )
+            
+            Spacer().frame(height: 20)
+            Button(
+                action: {
+                    cartViewModel.completeOrder()
+                },
+                   label: {
+                       Text("Cash On Delivery").foregroundColor(.black)
+                   }).frame(maxWidth: .infinity)
+                .padding(.vertical, 8)
+                .background(Color.white)
+                .overlay {
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.primaryColor)
+                }.padding(.horizontal, 24)
+            
+            Button {
+                guard let draft_order = cartViewModel.draftOrder else {return}
+                let applePay = ApplePay(draftOrder: draft_order )
+                applePay.startPayment(draftOrder: draft_order)
+
+            } label: {
+                Text("Buy with apple pay")
+            }.frame(maxWidth: .infinity, maxHeight: 40)
+                .padding(.horizontal, 24)
 
             Spacer()
 
@@ -96,6 +121,8 @@ struct PriceRow : View{
             .padding(.vertical, 8)
     }
 }
+
+
 
 #Preview {
     CheckoutPage(cartViewModel: CartViewModel())

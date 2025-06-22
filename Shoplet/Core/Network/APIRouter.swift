@@ -34,6 +34,7 @@ enum APIRouter: URLRequestConvertible {
     case getuserAddresses(customerId: Int)
     case markAddressDefault(customerId: Int, addressId: Int)
     case deleteAddress(customerId: Int, addressId: Int)
+    case completeOrder(draftOrderId: Int)
     
     var method: HTTPMethod {
         switch self {
@@ -41,7 +42,7 @@ enum APIRouter: URLRequestConvertible {
             return .get
         case .createDraftOrder, .createCustomer, .createAddress:
             return .post
-        case .updateDraftOrder, .updateCustomer, .updateAddress, .markAddressDefault:
+        case .updateDraftOrder, .updateCustomer, .updateAddress, .markAddressDefault, .completeOrder:
             return .put
         case .deleteDraftOrder, .deleteAddress:
             return .delete
@@ -59,7 +60,7 @@ enum APIRouter: URLRequestConvertible {
     
     var parameters: [String: Any]? {
         switch self {
-        case .getProducts,.getPopularProducts, .getBrands, .priceRules, .coupons, .getDraftOrderById, .deleteDraftOrder, .getAllCustomers, .getCustomerById, .getPriceRule, .getAllDraftOrders,  .getAddress, .getuserAddresses, .markAddressDefault, .deleteAddress:
+        case .getProducts,.getPopularProducts, .getBrands, .priceRules, .coupons, .getDraftOrderById, .deleteDraftOrder, .getAllCustomers, .getCustomerById, .getPriceRule, .getAllDraftOrders,  .getAddress, .getuserAddresses, .markAddressDefault, .deleteAddress, .completeOrder:
             return nil
         case .getProductsByIds(let ids):
             return ["ids": ids.joined(separator: ",")]
@@ -94,8 +95,6 @@ enum APIRouter: URLRequestConvertible {
         case .updateDraftOrder(_, let draftOrderId), .getDraftOrderById(let draftOrderId),.deleteDraftOrder(let draftOrderId):
             return "\(Support.apiVersion)\(ShopifyResource.updateDraftOrder.endpoint)/\(draftOrderId)"
             
-            
-            
         case .createCustomer(customer: _):
             return "\(Support.apiVersion)customers"
         case .getCustomerById(id: let id):
@@ -111,13 +110,15 @@ enum APIRouter: URLRequestConvertible {
         case .markAddressDefault(let customerId, let addressId):
             
             return "\(Support.apiVersion)\(ShopifyResource.customers.endpoint)/\(customerId)/\(ShopifyResource.getAddress.endpoint)/\(addressId)/\(ShopifyResource.markAddressDefault.endpoint)"
+        case .completeOrder(let draftOrderId):
+            return "\(Support.apiVersion)\(ShopifyResource.createDraftOrder.endpoint)/\(draftOrderId)/\(ShopifyResource.completOrder.endpoint)"
             
         }
     }
     
     var authorizationHeader: HTTPHeaderField? {
         switch self {
-        case .getProducts, .getProductsByIds,.getPopularProducts,.getBrands, .priceRules, .coupons, .getDraftOrderById, .deleteDraftOrder, .getAllCustomers, .getPriceRule, .getAllDraftOrders,  .getuserAddresses, .getAddress, .markAddressDefault, .deleteAddress:
+        case .getProducts, .getProductsByIds,.getPopularProducts,.getBrands, .priceRules, .coupons, .getDraftOrderById, .deleteDraftOrder, .getAllCustomers, .getPriceRule, .getAllDraftOrders,  .getuserAddresses, .getAddress, .markAddressDefault, .deleteAddress, .completeOrder:
             return .authorization
         case .createDraftOrder, .updateDraftOrder, .createCustomer,.getCustomerById, .updateCustomer,
                 .createAddress, .updateAddress:
@@ -127,7 +128,7 @@ enum APIRouter: URLRequestConvertible {
     
     var authorizationType: AuthorizationType {
         switch self {
-        case .getProducts, .getProductsByIds,.getPopularProducts,.getBrands, .priceRules, .coupons, .getDraftOrderById, .deleteDraftOrder, .getPriceRule, .getAllDraftOrders, .getuserAddresses, .getAddress, .markAddressDefault, .deleteAddress:
+        case .getProducts, .getProductsByIds,.getPopularProducts,.getBrands, .priceRules, .coupons, .getDraftOrderById, .deleteDraftOrder, .getPriceRule, .getAllDraftOrders, .getuserAddresses, .getAddress, .markAddressDefault, .deleteAddress, .completeOrder:
             return .basic
         case .createDraftOrder, .updateDraftOrder, .createCustomer, .getCustomerById, .getAllCustomers, .updateCustomer, .createAddress, .updateAddress:
             return .apiKey

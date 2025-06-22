@@ -81,11 +81,11 @@ struct ProductItemView: View {
     func productPriceView() -> some View {
         if let variant = product.variants?.first,
            let priceStr = variant.price,
-           let priceValue = Double(priceStr),
-           let rateStr = UserDefaultManager.shared.currencyRate,
-           let rate = Double(rateStr),
-           let currency = UserDefaultManager.shared.currency {
-
+           let priceValue = Double(priceStr)
+            {
+            let rateStr = UserDefaultManager.shared.currencyRate ?? "1.0"
+            let rate = Double(rateStr) ?? 1.0
+            let currency = UserDefaultManager.shared.currency ?? "USD"
             let price = priceValue * rate
             let formattedPrice = String(format: "%.2f", price)
 

@@ -34,6 +34,8 @@ protocol APIClientType {
     static func deleteAddresse(customerId: Int, addressId:Int, completion: @escaping (Result<EmptyResponse, NetworkError>) -> Void)
     static func getEgyptCities(completion: @escaping(Result<Cities, NetworkError>)->Void)
     static func getCurrencies(completion: @escaping(Result<CurrencyExChange, NetworkError>)->Void)
+    static func completeOrder(draftOrderId: Int, completion: @escaping(Result<DraftOrderItem, NetworkError>)->Void)
+
 }
 
 class APIClient: APIClientType {
@@ -172,6 +174,10 @@ class APIClient: APIClientType {
                             completion(.failure(.serverError(error.localizedDescription)))
                         }
                     }
+    }
+    static func completeOrder(draftOrderId: Int, completion: @escaping(Result<DraftOrderItem, NetworkError>)->Void)
+    {
+        performRequest(route: .completeOrder(draftOrderId: draftOrderId), completion: completion)
     }
 }
 
