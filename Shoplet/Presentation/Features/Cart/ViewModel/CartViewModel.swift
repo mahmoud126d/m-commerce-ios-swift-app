@@ -203,4 +203,17 @@ class CartViewModel : ObservableObject{
         }
         
     }
+    func completeOrder(){
+        draftOrderUseCase.completeOrder(draftOrderId: userDefault.draftOrderId) { [weak self] res in
+            switch res{
+            case .success(_):
+                DispatchQueue.main.async{
+                    print("completed")
+                    self?.deleteDraftOrder()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
 }

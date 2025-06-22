@@ -30,5 +30,9 @@ class DraftOrderUseCase{
     {
         repo.getDraftOrders(completion:completion)
     }
+    func completeOrder(draftOrderId: Int, completion: @escaping(Result<DraftOrderItem, NetworkError>)->Void)
+    {
+        repo.completeOrder(draftOrderId: draftOrderId, completion: completion)
+    }
 
 }

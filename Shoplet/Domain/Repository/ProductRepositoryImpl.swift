@@ -158,5 +158,9 @@ final class ProductRepositoryImpl: ProductRepository {
         }
         
     }
+     func completeOrder(draftOrderId: Int, completion: @escaping(Result<DraftOrderItem, NetworkError>)->Void)
+    {
+        APIClient.completeOrder(draftOrderId: draftOrderId, completion: completion)
+    }
 
 }
