@@ -85,14 +85,11 @@ struct CheckoutPage: View {
                         .stroke(Color.primaryColor)
                 }.padding(.horizontal, 24)
             
-            Button {
+            ApplePayButton(action: {
                 guard let draft_order = cartViewModel.draftOrder else {return}
                 let applePay = ApplePay(draftOrder: draft_order )
                 applePay.startPayment(draftOrder: draft_order)
-
-            } label: {
-                Text("Buy with apple pay")
-            }.frame(maxWidth: .infinity, maxHeight: 40)
+            }).frame(maxWidth: .infinity, maxHeight: 40)
                 .padding(.horizontal, 24)
 
             Spacer()

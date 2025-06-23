@@ -12,10 +12,14 @@ struct AddAddress: View {
     @State private var city = ""
     @State private var country = "Egypt"
     @State private var zip = ""
+    @State private var phoneNumber = ""
     @StateObject var locationViewMode: LocationViewModel = LocationViewModel()
     @StateObject var addressViewModel: AddressViewModel = AddressViewModel()
     @State var selectedLocation: CLLocationCoordinate2D?
     @State var showCities = false
+    @State var isError = false
+    @State private var addressLabel: String? = nil
+    let addressLabels = ["Home", "Office"]
     var onSaved: (_ address: AddressRequest)->Void
     
     var body: some View {
@@ -42,11 +46,11 @@ struct AddAddress: View {
                     .padding(.bottom)
                     
                     if locationViewMode.isLocationEnabled{
+                
                         CustomTextField(placeholder: "Enter Address", text: $locationViewMode.address)
                         CustomTextField(placeholder: "Enter City", text: $locationViewMode.city)
                         CustomTextField(placeholder: "Enter Country", text: $locationViewMode.country)
                             .disabled(true)
-                        CustomTextField(placeholder: "Enter Zip code", text: $zip)
                     }else{
                         CustomTextField(placeholder: "Enter Address", text: $address)
                         CustomTextField(placeholder: "Please click to choose City", text: $city)
@@ -63,18 +67,48 @@ struct AddAddress: View {
                                 addressViewModel.getEgyptCities()
                             }
                         CustomTextField(placeholder: "Enter Country", text: $country)
-                        CustomTextField(placeholder: "Enter Zip code", text: $zip)
                     }
-                    
+                    CustomTextField(placeholder: "Enter Zip code", text: $zip)
+                    CustomTextField(placeholder: "Enter Phone Number", text: $phoneNumber)
+                    Text("Address Label (Optional)")
+                        .font(.subheadline)
+                        .bold()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.top, 16)
+
+                    Picker("Address Label", selection: Binding(
+                        get: { addressLabel ?? "None" },
+                        set: { newValue in
+                            addressLabel = newValue == "None" ? nil : newValue
+                        }
+                    )) {
+                        ForEach(addressLabels, id: \.self) { label in
+                            Text(label).tag(label)
+                        }
+                    }
+                    .pickerStyle(SegmentedPickerStyle())
+                    .padding(.vertical)
+
                     PrimaryButton(title: "Save") {
-                        let address = AddressRequest(
-                            customer_address: AddressDetails(id: nil,
-                                                             customer_id: UserDefaultManager.shared.customerId, first_name: nil, last_name: nil, company: nil, address1: address, address2: nil, city: city, province: nil, country: country, zip: zip, phone: nil, name: nil, province_code: nil, country_code: "EG", country_name: country,
-                                                             default: false))
-                        onSaved(address)
+                        if validateFields(){
                         
-                    }.padding(.bottom, 100)
-                        .padding(.top, 32)
+                            let address = AddressRequest(
+                                customer_address: AddressDetails(id: nil,
+                                                                 customer_id: UserDefaultManager.shared.customerId, first_name: nil, last_name: nil, company: addressLabel, address1: address == "" ? locationViewMode.address : address, address2: nil, city: city == "" ? locationViewMode.city : city, province: nil, country: country == "" ? locationViewMode.country : country, zip: zip, phone: phoneNumber, name: nil, province_code: nil, country_code: "EG", country_name: country,
+                                                                 default: false))
+                             onSaved(address)
+                        }else{
+                            isError = true
+                        }
+                    }
+                    .padding(.top, 32)
+                    if isError{
+                        Text("All fields are required")
+                               .foregroundColor(.red)
+                               .font(.headline)
+                               .padding(.bottom, 50)
+                    }
+                    Spacer().frame(height: 100)
                 }.padding(.bottom)
                     .padding(.horizontal)
                     .onAppear{
@@ -97,9 +131,20 @@ struct AddAddress: View {
                 locationViewMode.address = placemark.thoroughfare ?? ""
                 locationViewMode.city = placemark.locality ?? ""
                 locationViewMode.country = placemark.country ?? ""
+                address = placemark.thoroughfare ?? "No Specific Address"
+                city = placemark.locality ?? ""
+                country = placemark.country ?? ""
             }
         }
     }
+    func validateFields() -> Bool {
+        if locationViewMode.isLocationEnabled {
+            return !locationViewMode.address.isEmpty && !locationViewMode.city.isEmpty && !locationViewMode.country.isEmpty && !zip.isEmpty && !phoneNumber.isEmpty
+        } else {
+            return !address.isEmpty && !city.isEmpty && !country.isEmpty && !zip.isEmpty && !phoneNumber.isEmpty
+        }
+    }
+
 }
 
 /*#Preview {

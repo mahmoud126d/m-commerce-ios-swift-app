@@ -206,9 +206,10 @@ class CartViewModel : ObservableObject{
     func completeOrder(){
         draftOrderUseCase.completeOrder(draftOrderId: userDefault.draftOrderId) { [weak self] res in
             switch res{
-            case .success(_):
+            case .success(let draft_order):
                 DispatchQueue.main.async{
-                    print("completed")
+                    print("completed \(draft_order.draft_order?.id)")
+                    
                     self?.deleteDraftOrder()
                 }
             case .failure(let error):
