@@ -53,6 +53,9 @@ struct Variant: Codable {
     let inventoryQuantity: Int?
     let oldInventoryQuantity: Int?
     let imageId: Int?
+    let option1: String?
+    let option2: String?
+    let option3: String?
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -66,6 +69,7 @@ struct Variant: Codable {
         case oldInventoryQuantity = "old_inventory_quantity"
         case imageId = "image_id"
         case compareAtPrice = "compare_at_price"
+        case option1, option2, option3
 
     }
 }
@@ -141,23 +145,54 @@ extension CDProduct {
                 variantIds: []
             )
         } ?? []
+        let variantList: [Variant] = (self.variants as? Set<CDVariant>)?.compactMap { cdVariant in
+            // dummy default values
+            let defaultVariant = Variant(
+                id: 0,
+                productId: 0,
+                title: "Unknown",
+                price: "0.0",
+                sku: "N/A",
+                position: 0,
+                compareAtPrice: nil,
+                inventoryItemId: 0,
+                inventoryQuantity: 0,
+                oldInventoryQuantity: 0,
+                imageId: nil,
+                option1: nil,
+                option2: nil,
+                option3: nil
+            )
 
-        let variantList: [Variant] = (self.variants as? Set<CDVariant>)?.compactMap {
-            guard let price = $0.price else { return nil }
+            guard let price = cdVariant.price else {
+                return defaultVariant
+            }
+
+            let imageIdInt: Int? = {
+                if let imageIdStr = cdVariant.imageId {
+                    return Int(imageIdStr)
+                }
+                return nil
+            }()
+
             return Variant(
-                id: Int($0.id),
-                productId: Int($0.productId),
-                title: $0.title,
+                id: Int(cdVariant.id),
+                productId: Int(cdVariant.productId),
+                title: cdVariant.title ?? "Untitled",
                 price: price,
-                sku: $0.sku,
-                position: Int($0.position),
-                compareAtPrice: $0.compareAtPrice,
-                inventoryItemId: Int($0.inventoryItemId),
-                inventoryQuantity: Int($0.inventoryQuantity),
-                oldInventoryQuantity: Int($0.oldInventoryQuantity),
-                imageId: Int($0.imageId ?? "")
+                sku: cdVariant.sku ?? "N/A",
+                position: Int(cdVariant.position),
+                compareAtPrice: cdVariant.compareAtPrice,
+                inventoryItemId: Int(cdVariant.inventoryItemId),
+                inventoryQuantity: Int(cdVariant.inventoryQuantity),
+                oldInventoryQuantity: Int(cdVariant.oldInventoryQuantity),
+                imageId: imageIdInt,
+                option1: "",
+                option2: "",
+                option3: ""
             )
         } ?? []
+
 
 
         return ProductModel(

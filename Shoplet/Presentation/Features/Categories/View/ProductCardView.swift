@@ -128,7 +128,10 @@ struct ProductCardView: View {
                         inventoryItemId: 201,
                         inventoryQuantity: 10,
                         oldInventoryQuantity: 15,
-                        imageId: 301
+                        imageId: 301,
+                        option1: "",
+                        option2: "",
+                        option3: ""
                     )
                 ],
                 options: [],

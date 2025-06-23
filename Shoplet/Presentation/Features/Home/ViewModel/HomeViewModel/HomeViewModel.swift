@@ -21,11 +21,31 @@ final class HomeViewModel: ObservableObject {
     @Published var bestSellers: [ProductModel] = []
     @Published var errorMessage: String?
     @Published var cartCount : Int = UserDefaultManager.shared.getNumOfCartItems()
+    @Published var customerName: String = ""
+
+    private let getCustomerByIdUseCase: GetCustomerByIdUseCase
 
     init(repository: ProductRepository = ProductRepositoryImpl(), cusRepo: CustomerRepository = CustomerRepositoryImpl()) {
         self.getAllBrandsUseCase = GetAllBrandsUseCase(repository: repository)
         self.getBestSellersUseCase = GetBestSellersUseCase(repository: repository)
         self.draftOrderUseCase = DraftOrderUseCase(repo: repository)
+        self.getCustomerByIdUseCase = DefaultGetCustomerByIdUseCase(repository: cusRepo)
+    }
+    
+    
+    
+    func fetchCustomerName() {
+        guard let id = userDefault.customerId else { return }
+        getCustomerByIdUseCase.execute(id: id) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let response):
+                    self?.customerName = response.customer?.first_name ?? "User"
+                case .failure(_):
+                    self?.customerName = "User"
+                }
+            }
+        }
     }
 
     func fetchBrands() {
@@ -80,7 +100,7 @@ final class HomeViewModel: ObservableObject {
             }
 
             print("logged")
-        print(userDefault.customerId)
+        print(userDefault.customerId ?? -1)
     }
 
 

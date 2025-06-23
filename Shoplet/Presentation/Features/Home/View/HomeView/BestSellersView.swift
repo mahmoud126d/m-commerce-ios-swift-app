@@ -57,7 +57,10 @@ struct BestSellersView: View {
                     inventoryItemId: 201,
                     inventoryQuantity: 10,
                     oldInventoryQuantity: 15,
-                    imageId: 301
+                    imageId: 301,
+                    option1: "",
+                    option2: "",
+                    option3: ""
                 )
             ],
             options: [],
@@ -95,7 +98,10 @@ struct BestSellersView: View {
                     inventoryItemId: 202,
                     inventoryQuantity: 5,
                     oldInventoryQuantity: 8,
-                    imageId: 302
+                    imageId: 302,
+                    option1: "",
+                    option2: "",
+                    option3: ""
                 )
             ],
             options: [],

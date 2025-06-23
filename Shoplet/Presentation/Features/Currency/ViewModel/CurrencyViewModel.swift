@@ -8,33 +8,56 @@
 import Foundation
 
 class CurrencyViewModel: ObservableObject{
-    @Published var currencies: [String:String]?
-    @Published var isLoading = true
-    private let currencyUseCase: CurrencyUseCase
-    init(repo: CurrencyRepository = CurrencyRepositoryImpl()){
-        self.currencyUseCase = CurrencyUseCase(repo: repo)
-    }
-    func getCurrencies(){
-        isLoading = true
-        currencyUseCase.excute {[weak self] res in
-            switch res{
-            case .success(let currency):
-                DispatchQueue.main.async{
-                    self?.isLoading = false
-                    self?.currencies = currency.rates
-                    var fetchedRates = currency.rates
+    @Published var currencies: [String: String]?
+        @Published var isLoading = true
+        @Published var searchText: String = ""
+        @Published var showToast: Bool = false
+        @Published var selectedCurrencyName: String = ""
 
-                                   if fetchedRates["USD"] == nil {
-                                       fetchedRates["USD"] = "1.0"
-                                   }
+        private let currencyUseCase: CurrencyUseCase
 
-                                   self?.currencies = fetchedRates
+        init(repo: CurrencyRepository = CurrencyRepositoryImpl()) {
+            self.currencyUseCase = CurrencyUseCase(repo: repo)
+        }
+
+        func getCurrencies() {
+            isLoading = true
+            currencyUseCase.excute { [weak self] res in
+                switch res {
+                case .success(let currency):
+                    DispatchQueue.main.async {
+                        self?.isLoading = false
+                        var fetchedRates = currency.rates
+
+                        if fetchedRates["USD"] == nil {
+                            fetchedRates["USD"] = "1.0"
+                        }
+
+                        self?.currencies = fetchedRates
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
                 }
-            case .failure(let error):
-                print(error.localizedDescription)
             }
         }
-    }
+
+        func filteredCurrencies() -> [(key: String, value: String)] {
+            guard let allCurrencies = currencies else { return [] }
+
+            return allCurrencies.filter { key, _ in
+                let fullName = currencyNames[key] ?? ""
+                return searchText.isEmpty ||
+                       key.localizedCaseInsensitiveContains(searchText) ||
+                       fullName.localizedCaseInsensitiveContains(searchText)
+            }.sorted(by: { $0.key < $1.key })
+        }
+
+        func selectCurrency(code: String, rate: String) {
+            UserDefaultManager.shared.currency = code
+            UserDefaultManager.shared.currencyRate = rate
+            selectedCurrencyName = currencyNames[code] ?? code
+            showToast = true
+        }
     let currencyNames: [String: String] = [
             "USD": "United States Dollar",
             "AED": "United Arab Emirates Dirham",
