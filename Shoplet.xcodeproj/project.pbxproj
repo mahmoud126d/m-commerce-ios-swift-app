@@ -668,7 +668,6 @@
 		22FE271B2DF45B5200442B9D /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				221746F62DF996320075F63C /* ProductDetails */,
 				75B306C62DF7A33400AB1965 /* Features */,
 				22FE271D2DF45BCC00442B9D /* SplashScreen */,
 				22FE271C2DF45B6500442B9D /* Onboarding */,
@@ -715,6 +714,7 @@
 		75B306C62DF7A33400AB1965 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				221746F62DF996320075F63C /* ProductDetails */,
 				226ABB922E05E29800A8BA8B /* Currency */,
 				2296CA772E04BB110028F295 /* Adresses */,
 				22DB73B42DFDB9240021EF75 /* Authentication */,

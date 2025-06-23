@@ -14,11 +14,20 @@ struct ProductDetailsView: View {
     @ObservedObject private var favoriteVM = AppViewModels.sharedFavoriteVM
     @State private var selectedColor: String = ""
     @State private var selectedSize: String = ""
+    @State private var toastMessage: String = ""
     @State private var showFullDescription: Bool = false
     @State private var quantity: Int = 1
     @State private var showDeleteAlert = false
     @State private var showToast = false
-
+    var maxQuantity: Int {
+        selectedVariant?.inventoryQuantity ?? 10
+    }
+    var selectedVariant: Variant? {
+        product.variants?.first(where: { variant in
+            variant.option1?.lowercased() == selectedSize.lowercased() &&
+            variant.option2?.lowercased() == selectedColor.lowercased()
+        })
+    }
 
     var colorOptions: [String] {
         product.options?.first(where: { $0.name.lowercased() == "color" })?.values ?? []
@@ -37,9 +46,11 @@ struct ProductDetailsView: View {
                 productImagesSection
 
                 VStack(alignment: .leading, spacing: 16) {
-                    productTitleAndQuantity
+                    productTitleOnly
 
                     productRatings
+
+                    quantityStepper
 
                     colorSelector
 
@@ -57,6 +68,20 @@ struct ProductDetailsView: View {
             .onAppear {
                 isFavorite = favoriteVM.isFavorite(productId: product.id ?? 0)
             }
+            .onChange(of: selectedSize) { _ in
+                if let selectedVariant = selectedVariant {
+                    quantity = 1
+                    viewModel.selectedQuantity = quantity
+                }
+            }
+
+            .onChange(of: selectedColor) { _ in
+                if let selectedVariant = selectedVariant {
+                    quantity = 1
+                    viewModel.selectedQuantity = quantity
+                }
+            }
+
 
         }
         .background(Color(.systemGroupedBackground))
@@ -64,9 +89,10 @@ struct ProductDetailsView: View {
         .overlay(
             Group {
                 if showToast {
-                    Text("Added to favorites")
+                    Text(toastMessage)
                         .font(.subheadline)
-                        .padding()
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 10)
                         .background(Color.black.opacity(0.8))
                         .foregroundColor(.white)
                         .cornerRadius(10)
@@ -152,46 +178,12 @@ struct ProductDetailsView: View {
         }
     }
 
-    private var productTitleAndQuantity: some View {
-        HStack {
-            Text(product.title ?? "No Title")
-                .font(.title2)
-                .bold()
-
-            Spacer()
-
-            HStack(spacing: 12) {
-                Button {
-                    if quantity > 1 {
-                        quantity -= 1
-                        viewModel.selectedQuantity = quantity
-                    }
-                } label: {
-                    Image(systemName: "minus")
-                        .frame(width: 30, height: 30)
-                        .background(Circle().fill(Color.primaryColor))
-                        .foregroundColor(.white)
-                }
-
-                Text("\(quantity)")
-                    .font(.headline)
-                    .frame(width: 24)
-
-                Button {
-                    quantity += 1
-                    viewModel.selectedQuantity = quantity
-                } label: {
-                    Image(systemName: "plus")
-                        .frame(width: 30, height: 30)
-                        .background(Circle().fill(Color.primaryColor))
-                        .foregroundColor(.white)
-                }
-            }
-            .padding(.horizontal, 6)
-            .background(Color.primaryColor.opacity(0.1))
-            .cornerRadius(20)
-        }
+    private var productTitleOnly: some View {
+        Text(product.title ?? "No Title")
+            .font(.title2)
+            .bold()
     }
+
 
     private var productRatings: some View {
         HStack {
@@ -217,16 +209,78 @@ struct ProductDetailsView: View {
                         .frame(width: 30, height: 30)
                         .overlay(
                             Circle()
-                                .stroke(selectedColor == color ? Color.primaryColor : Color.clear, lineWidth: 3)
+                                .stroke(
+                                    selectedColor == color ? Color.primaryColor : Color.gray.opacity(0.5),
+                                    lineWidth: 2
+                                )
                         )
                         .onTapGesture {
                             selectedColor = color
                             viewModel.selectedColor = selectedColor
+                            quantity = 1
                         }
                 }
             }
         }
     }
+
+    private var quantityStepper: some View {
+        Group {
+            if selectedVariant != nil {
+                HStack {
+                    Text("Quantity")
+                        .font(.headline)
+
+                    Spacer()
+
+                    HStack(spacing: 12) {
+                        Button {
+                            if quantity > 1 {
+                                quantity -= 1
+                                viewModel.selectedQuantity = quantity
+                            }
+                        } label: {
+                            Image(systemName: "minus")
+                                .frame(width: 30, height: 30)
+                                .background(Circle().fill(Color.primaryColor))
+                                .foregroundColor(.white)
+                        }
+
+                        Text("\(quantity)")
+                            .font(.headline)
+                            .frame(width: 24)
+
+                        Button {
+                            if quantity < maxQuantity {
+                                quantity += 1
+                                viewModel.selectedQuantity = quantity
+                            } else {
+                                toastMessage = "Only \(maxQuantity) item(s) available in stock"
+                                showToast = true
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                    showToast = false
+                                }
+                            }
+                        } label: {
+                            Image(systemName: "plus")
+                                .frame(width: 30, height: 30)
+                                .background(Circle().fill(Color.primaryColor))
+                                .foregroundColor(.white)
+                        }
+
+                    }
+                    .padding(.horizontal, 6)
+                    .background(Color.primaryColor.opacity(0.1))
+                    .cornerRadius(20)
+                }
+            } else {
+                Text("Please select size and color first")
+                    .foregroundColor(.red)
+                    .font(.footnote)
+            }
+        }
+    }
+
 
     private var sizeSelector: some View {
         VStack(alignment: .leading) {
@@ -245,6 +299,7 @@ struct ProductDetailsView: View {
                             .onTapGesture {
                                 selectedSize = size
                                 viewModel.selectedSize = Int(selectedSize) ?? 0
+                                quantity = 1
                             }
                     }
                 }
@@ -281,8 +336,23 @@ struct ProductDetailsView: View {
             Spacer()
 
             Button(action: {
+                guard selectedVariant != nil else {
+                    toastMessage = "Please select size and color first"
+                    showToast = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        showToast = false
+                    }
+                    return
+                }
+
                 viewModel.addToCart(product: product)
-            }) {
+                toastMessage = "Added to cart successfully"
+                showToast = true
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    showToast = false
+                }
+            }){
                 HStack(spacing: 8) {
                     Image(systemName: "cart.fill")
                     Text("Add to Cart")
@@ -297,7 +367,10 @@ struct ProductDetailsView: View {
     }
 
     private func getPrice() -> Double {
-        let basePrice = (Double(product.variants?.first?.price ?? "1") ?? 1.0) * (Double(UserDefaultManager.shared.currencyRate ?? "1") ?? 1.0)
-        return (Double(basePrice)) * Double(quantity)
+        let priceString = selectedVariant?.price ?? product.variants?.first?.price ?? "1"
+        let rate = Double(UserDefaultManager.shared.currencyRate ?? "1") ?? 1.0
+        let basePrice = (Double(priceString) ?? 1.0) * rate
+        return basePrice * Double(quantity)
     }
+
 }

@@ -17,6 +17,28 @@ struct HomeView: View {
                ScrollView {
                    VStack(alignment: .leading, spacing: 10) {
                        
+                       HStack(spacing: 12) {
+                                           Image("app_logo")
+                                               .resizable()
+                                               .frame(width: 60, height: 60)
+                                               .clipShape(RoundedRectangle(cornerRadius: 8))
+
+                                           HStack() {
+                                               Text("Hello,")
+                                                   .font(.subheadline)
+                                                   .foregroundColor(.gray)
+                                               Text(viewModel.customerName)
+                                                   .font(.title3)
+                                                   .fontWeight(.semibold)
+                                                   .foregroundColor(.primaryColor)
+                                           }
+
+                                           Spacer()
+                                       }
+                                       .padding(.horizontal)
+                                       .padding(.top, 8)
+
+                       
                        CouponsView()
                            .padding(.vertical)
                        
@@ -103,12 +125,11 @@ struct HomeView: View {
                    }
                    .padding(.top)
                }
-               .navigationTitle("Home")
-               .navigationBarTitleDisplayMode(.inline)
                .onAppear {
                    viewModel.fetchBrands()
                    viewModel.fetchBestSellers()
                    viewModel.getAllDraftOrders()
+                   viewModel.fetchCustomerName()
                }
                .sheet(item: $selectedProduct) { product in
                    ProductDetailsView(product: product, viewModel: ProductViewModel())

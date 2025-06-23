@@ -8,26 +8,50 @@
 import SwiftUI
 
 struct Coupons: View {
-    var PriceRuleId : Int
+    var PriceRuleId: Int
     @StateObject var viewModel = CouponViewModel()
-    var backgroundColor: Color = .blue
+    @State private var showToast: Bool = false
+    @State private var toastMessage: String = ""
+
     var body: some View {
-        ScrollView(showsIndicators: false){
-            ForEach(viewModel.coupons, id: \.id){
-                item in
-                CouponCard(coupon: item.code)
-                    .onTapGesture {
-                        UIPasteboard.general.string = item.code
-                        UserDefaultManager.shared.priceRuleId = viewModel.priceRuleId
-                    }
+        ZStack {
+            ScrollView(showsIndicators: false) {
+                ForEach(viewModel.coupons, id: \.id) { item in
+                    CouponCard(coupon: item.code)
+                        .onTapGesture {
+                            UIPasteboard.general.string = item.code
+                            UserDefaultManager.shared.priceRuleId = viewModel.priceRuleId
+                            toastMessage = "\(item.code) copied!"
+                            showToast = true
+
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                showToast = false
+                            }
+                        }
+                }
             }
-                
-        }
-       .onAppear {
-            viewModel.getCoupons(id: PriceRuleId)
+            .onAppear {
+                viewModel.getCoupons(id: PriceRuleId)
+            }
+
+            if showToast {
+                VStack {
+                    Spacer()
+                    Text(toastMessage)
+                        .font(.subheadline)
+                        .padding()
+                        .background(Color.black.opacity(0.8))
+                        .foregroundColor(.white)
+                        .cornerRadius(12)
+                        .padding(.bottom, 100)
+                        .transition(.opacity)
+                }
+                .animation(.easeInOut, value: showToast)
+            }
         }
     }
 }
+
 
 struct CouponCard: View {
     let coupon: String

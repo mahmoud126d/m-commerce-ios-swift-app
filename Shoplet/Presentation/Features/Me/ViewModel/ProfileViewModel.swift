@@ -22,7 +22,7 @@ class ProfileViewModel: ObservableObject{
                 case .success(let customerRes):
                     DispatchQueue.main.async{
                         self?.customer = customerRes.customer
-                        print(customerRes.customer?.first_name)
+                        print(customerRes.customer?.first_name ?? "Unknown")
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
