@@ -11,7 +11,6 @@ struct FavoriteView: View {
     @ObservedObject private var viewModel = AppViewModels.sharedFavoriteVM
     @State private var selectedProduct: CDProduct? = nil
 
-
     var body: some View {
         NavigationView {
             VStack {
@@ -23,17 +22,10 @@ struct FavoriteView: View {
                     ScrollView {
                         LazyVStack(spacing: 20) {
                             ForEach(viewModel.favoriteProducts, id: \.productId) { product in
-                                FavoriteProductCard(
-                                    product: product,
-                                    onDelete: {
-                                        withAnimation {
-                                            viewModel.removeFromFavorites(productId: Int(product.productId))
-                                        }
+                                FavoriteProductCard(product: product)
+                                    .onTapGesture {
+                                        selectedProduct = product
                                     }
-                                )
-                                .onTapGesture {
-                                    selectedProduct = product
-                                }
                             }
                         }
                         .padding(.vertical)
@@ -53,7 +45,6 @@ struct FavoriteView: View {
                 print("FavoriteView appeared")
                 viewModel.fetchFavorites()
             }
-
         }
     }
 }

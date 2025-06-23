@@ -135,10 +135,15 @@ struct ProductDetailsView: View {
                         } else {
                             favoriteVM.toggleFavorite(product: product)
                             isFavorite = true
-                            showToast = true
+                            toastMessage = "Added to favorites"
+                            withAnimation {
+                                showToast = true
+                            }
 
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                                showToast = false
+                                withAnimation {
+                                    showToast = false
+                                }
                             }
                         }
                     } label: {
@@ -149,6 +154,26 @@ struct ProductDetailsView: View {
                             .clipShape(Circle())
                             .shadow(radius: 3)
                             .animation(.easeInOut, value: isFavorite)
+                    }
+                    .alert(isPresented: $showDeleteAlert) {
+                        Alert(
+                            title: Text("Remove from Favorites"),
+                            message: Text("Are you sure you want to remove this product from your favorites?"),
+                            primaryButton: .destructive(Text("Remove")) {
+                                favoriteVM.toggleFavorite(product: product)
+                                isFavorite = false
+                                toastMessage = "Removed from favorites"
+                                withAnimation {
+                                    showToast = true
+                                }
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                    withAnimation {
+                                        showToast = false
+                                    }
+                                }
+                            },
+                            secondaryButton: .cancel()
+                        )
                     }
                     .padding(15)
                     .alert(isPresented: $showDeleteAlert) {
