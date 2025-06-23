@@ -11,6 +11,7 @@ struct CheckoutPage: View {
     @State private var coupon = ""
     @StateObject  var cartViewModel : CartViewModel
     @State var discountValue = "0.0"
+    @State private var applePay: ApplePay?
     var body: some View {
         VStack{
             Text("Checkout")
@@ -87,8 +88,8 @@ struct CheckoutPage: View {
             
             ApplePayButton(action: {
                 guard let draft_order = cartViewModel.draftOrder else {return}
-                let applePay = ApplePay(draftOrder: draft_order )
-                applePay.startPayment(draftOrder: draft_order)
+                applePay = ApplePay(draftOrder: draft_order)
+                applePay?.startPayment(draftOrder: draft_order)
             }).frame(maxWidth: .infinity, maxHeight: 40)
                 .padding(.horizontal, 24)
 
