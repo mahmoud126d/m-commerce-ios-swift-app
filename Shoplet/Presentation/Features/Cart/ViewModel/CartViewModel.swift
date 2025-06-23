@@ -20,6 +20,7 @@ class CartViewModel : ObservableObject{
     @Published var discountValue: String?
     @Published var shippingAddress: AddressDetails?
     @Published var address: AddressDetails?
+    @Published var isOrderCompleted: Bool = false
 
     init(repo :ProductRepository = ProductRepositoryImpl(), cusRepo: CustomerRepository = CustomerRepositoryImpl()) {
         self.draftOrderUseCase = DraftOrderUseCase(repo: repo)
@@ -208,7 +209,7 @@ class CartViewModel : ObservableObject{
             switch res{
             case .success(_):
                 DispatchQueue.main.async{
-                    print("completed")
+                    self?.isOrderCompleted = true  
                     self?.deleteDraftOrder()
                 }
             case .failure(let error):
