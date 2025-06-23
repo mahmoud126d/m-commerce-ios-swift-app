@@ -9,7 +9,10 @@ import SwiftUI
 
 struct FavoriteProductCard: View {
     var product: CDProduct
-    var onDelete: () -> Void
+
+    @ObservedObject private var favoriteVM = AppViewModels.sharedFavoriteVM
+    @State private var showDeleteAlert = false
+    @State private var isFavorite = true 
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -18,12 +21,11 @@ struct FavoriteProductCard: View {
                    let firstImage = images.sorted(by: { $0.position < $1.position }).first,
                    let imageUrl = firstImage.src,
                    let url = URL(string: imageUrl) {
-                    
+
                     AsyncImage(url: url) { phase in
                         switch phase {
                         case .empty:
-                            ProgressView()
-                                .frame(height: 180)
+                            ProgressView().frame(height: 180)
                         case .success(let image):
                             image
                                 .resizable()
@@ -41,7 +43,7 @@ struct FavoriteProductCard: View {
                             EmptyView()
                         }
                     }
-                    
+
                 } else {
                     Image(systemName: "photo")
                         .resizable()
@@ -50,13 +52,27 @@ struct FavoriteProductCard: View {
                         .foregroundColor(.gray)
                 }
 
-                Button(action: onDelete) {
-                    Image(systemName: "trash")
-                        .foregroundColor(.red)
+                Button(action: {
+                    if isFavorite {
+                        showDeleteAlert = true
+                    }
+                }) {
+                    Image(systemName: isFavorite ? "heart.fill" : "heart")
+                        .foregroundColor(.primaryColor)
                         .padding(8)
-                        .background(Color.white.opacity(0.8))
+                        .background(Color.white.opacity(0.9))
                         .clipShape(Circle())
-                        .padding([.top, .trailing], 10)
+                        .shadow(radius: 3)
+                }
+                .padding([.top, .trailing], 10)
+                .alert("Remove from Favorites", isPresented: $showDeleteAlert) {
+                    Button("Remove", role: .destructive) {
+                        favoriteVM.removeFromFavorites(productId: Int(product.productId))
+                        isFavorite = false
+                    }
+                    Button("Cancel", role: .cancel) {}
+                } message: {
+                    Text("Are you sure you want to remove this product from your favorites?")
                 }
             }
 
@@ -83,5 +99,8 @@ struct FavoriteProductCard: View {
         .cornerRadius(16)
         .shadow(radius: 4)
         .padding(.horizontal)
+        .onAppear {
+            isFavorite = favoriteVM.isFavorite(productId: Int(product.productId))
+        }
     }
 }
