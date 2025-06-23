@@ -47,7 +47,7 @@ struct CartShippingAddress: View {
                 Button {
                     navActive = true
                 } label: {
-                    Text("chooose anothor Address ")
+                    Text("choose another Address ")
                         .foregroundColor(.white)
                 }
                 .frame(maxWidth: .infinity)

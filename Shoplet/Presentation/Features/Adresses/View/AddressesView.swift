@@ -82,9 +82,17 @@ struct AddresseItem: View {
     var deleteAddress: (_ id: Int)-> Void
     var setDefault: (_ id: Int)-> Void
     var isSelected: Bool
+    @State var showAlert = false
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack{
+                Image(.address)
+                    .resizable()
+                    .frame(width: 24, height: 24)
+                    
+                Text((address.company == "None" ? "" : address.company) ?? "")
+                    .bold()
+                    .padding(.trailing, 16)
                 if address.default ?? false{
                     Text("default")
                         .padding(.horizontal, 8)
@@ -111,7 +119,7 @@ struct AddresseItem: View {
                 if address.default == false{
                     Spacer()
                     Button {
-                        deleteAddress(address.id ?? -1)
+                        showAlert = true
                     } label: {
                         Image(systemName: "trash")
                             .foregroundColor(.black)
@@ -122,6 +130,7 @@ struct AddresseItem: View {
             }.padding(.vertical)
             AddressRow(title: "Address: ", value: address.address1 ?? "")
             AddressRow(title: "City:", value: address.city ?? "")
+            AddressRow(title: "Phone Number:", value: address.phone ?? "")
         }
         .frame(maxWidth: .infinity)
         .padding()
@@ -134,6 +143,16 @@ struct AddresseItem: View {
         .shadow(color: .black.opacity(0.1), radius: 6, x: 0, y: 4)
         .padding(.horizontal, 16)
         .padding(.vertical, 16)
+        .alert(isPresented: $showAlert) {
+            Alert(
+                title: Text("Delete Address"),
+                message: Text("Are you sure you want to delete this address?"),
+                primaryButton: .destructive(Text("Delete")) {
+                    deleteAddress(address.id ?? -1)
+                },
+                secondaryButton: .cancel()
+            )
+        }
         
     }
 }

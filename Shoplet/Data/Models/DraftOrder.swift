@@ -96,6 +96,7 @@ struct LineItem: Codable {
     var tax_lines: [TaxLine]?
     var applied_discount: AppliedDiscount?
     var admin_graphql_api_id: String?
+    var maxAvailableQuantity: Int? = nil
 }
 
 struct Property: Codable {

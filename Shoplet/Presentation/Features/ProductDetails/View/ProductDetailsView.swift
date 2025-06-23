@@ -20,7 +20,7 @@ struct ProductDetailsView: View {
     @State private var showDeleteAlert = false
     @State private var showToast = false
     var maxQuantity: Int {
-        selectedVariant?.inventoryQuantity ?? 10
+        selectedVariant?.inventoryQuantity  ?? 10
     }
     var selectedVariant: Variant? {
         product.variants?.first(where: { variant in
@@ -371,7 +371,11 @@ struct ProductDetailsView: View {
                 }
 
                 viewModel.addToCart(product: product)
-                toastMessage = "Added to cart successfully"
+                if viewModel.errorMessage != nil{
+                    toastMessage = "you exceeds your limit"
+                }else{
+                    toastMessage = "Added to cart successfully"
+                }
                 showToast = true
 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {

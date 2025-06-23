@@ -62,7 +62,7 @@ class BrandProductsViewModel: ObservableObject {
                                     Property(name: "Color", value: product.options?[1].values.first ?? "black"),
                                     Property(name: "Image", value: product.image?.src),
                                     Property(name: "Size", value: product.options?[0].values.first ?? "35")
-                                 ])
+                                 ], maxAvailableQuantity: product.variants?.first?.inventoryQuantity)
                     ]
                     
                 ))

@@ -12,7 +12,8 @@ struct CartItem: View {
     @StateObject var cartViewModel = CartViewModel()
     var onQuantityChange: (Int) -> Void
     var onDeleteLineItem: () -> Void
-
+    @State var showAlert = false
+    @State var showToast = false
     var body: some View {
         VStack(spacing: 12) {
             ZStack(alignment: .topTrailing) {
@@ -31,7 +32,7 @@ struct CartItem: View {
                 }
 
                 Button(action: {
-                    onDeleteLineItem()
+                showAlert = true
                 }) {
                     Image(systemName: "trash")
                         .foregroundColor(.red)
@@ -41,6 +42,8 @@ struct CartItem: View {
                 VStack {
                     Spacer()
                     HStack {
+                        let maxQuantity = lineItem.maxAvailableQuantity ?? 10
+                        let limitThreshold = maxQuantity / 3
                         HStack(spacing: 8) {
                             Button(action: {
                                 if let quantity = lineItem.quantity {
@@ -52,7 +55,7 @@ struct CartItem: View {
                                     .frame(width: 24, height: 24)
                                     .background(Circle().fill(Color.primaryColor))
                                     .foregroundColor(.white)
-                            }
+                            }.disabled( lineItem.quantity == 1)
 
                             Text("\(lineItem.quantity ?? 1)")
                                 .font(.subheadline)
@@ -61,7 +64,12 @@ struct CartItem: View {
 
                             Button(action: {
                                 let quantity = lineItem.quantity ?? 1
-                                onQuantityChange(quantity + 1)
+                               
+                                if lineItem.quantity ?? 1 > limitThreshold {
+                                    showToast = true
+                                }else{
+                                    onQuantityChange(quantity + 1)
+                                }
                             }) {
                                 Image(systemName: "plus")
                                     .font(.system(size: 12))
@@ -69,6 +77,7 @@ struct CartItem: View {
                                     .background(Circle().fill(Color.primaryColor))
                                     .foregroundColor(.white)
                             }
+                            
                         }
                         .padding(6)
                         .background(Color.primaryColor.opacity(0.1))
@@ -102,12 +111,42 @@ struct CartItem: View {
 
                 Spacer()
 
-                Text("\(String(format: "%@ %.2f", UserDefaultManager.shared.currency ?? "USD", (Double(lineItem.price ?? "0.00") ?? 0.00) * Double(lineItem.quantity ?? 1) * (Double(UserDefaultManager.shared.currencyRate ?? "1.0") ?? 1.0)))")
+                Text("\(String(format: "%.2f %@", (Double(lineItem.price ?? "0.00") ?? 0.00) * Double(lineItem.quantity ?? 1) * (Double(UserDefaultManager.shared.currencyRate ?? "1.0") ?? 1.0), UserDefaultManager.shared.currency ?? "USD"))")
                     .bold()
 
             }
             .padding()
+        }.alert(isPresented: $showAlert){
+            Alert(
+                title: Text("Delete Product"),
+                message: Text("Are you sure you want to delete this product from cart?"),
+                primaryButton: .destructive(Text("Delete")) {
+                    onDeleteLineItem()
+                },
+                secondaryButton: .cancel()
+            )
         }
+        .overlay(
+            Group {
+                if showToast {
+                    Text("You exceeds your limit")
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 10)
+                        .background(Color.black.opacity(0.8))
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                        .transition(.move(edge: .top))
+                        .onAppear {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                showToast = false
+                            }
+                        }
+                        .padding(.top, 50)
+                }
+            },
+            alignment: .top
+        )
+
     }
 }
 
