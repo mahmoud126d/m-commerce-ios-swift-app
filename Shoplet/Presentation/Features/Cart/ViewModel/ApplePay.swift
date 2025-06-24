@@ -10,7 +10,8 @@ import PassKit
 
 class ApplePay: NSObject, PKPaymentAuthorizationControllerDelegate{
     let draftOrder: DraftOrder
-  
+ //   var onSuccess: (() -> Void)? // ✅ Add this callback
+
     init(draftOrder: DraftOrder) {
         self.draftOrder = draftOrder
         super.init()
