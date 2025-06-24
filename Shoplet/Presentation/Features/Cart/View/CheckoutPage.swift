@@ -12,6 +12,11 @@ struct CheckoutPage: View {
     @StateObject  var cartViewModel : CartViewModel
     @State var discountValue = "0.0"
     @State private var applePay: ApplePay?
+    @State private var navigateToOrderConfirmation = false
+    @State private var confirmedTotalPrice = ""
+    @State private var confirmedCustomerName: String? = nil
+    @State private var confirmedItemsCount = 0
+
     var body: some View {
         VStack{
             Text("Checkout")
@@ -75,6 +80,9 @@ struct CheckoutPage: View {
             Button(
                 action: {
                     cartViewModel.completeOrder()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                      confirmOrderAndNavigate()
+                                  }
                 },
                    label: {
                        Text("Cash On Delivery").foregroundColor(.black)
@@ -90,8 +98,18 @@ struct CheckoutPage: View {
                 guard let draft_order = cartViewModel.draftOrder else {return}
                 applePay = ApplePay(draftOrder: draft_order)
                 applePay?.startPayment(draftOrder: draft_order)
+
             }).frame(maxWidth: .infinity, maxHeight: 40)
                 .padding(.horizontal, 24)
+            NavigationLink(
+                           destination: OrderConfirmationView(
+                               totalPrice: confirmedTotalPrice,
+                               customerName: confirmedCustomerName,
+                               itemsCount: confirmedItemsCount
+                           ),
+                           isActive: $navigateToOrderConfirmation,
+                           label: { EmptyView() }
+                       )
 
             Spacer()
 
@@ -101,7 +119,17 @@ struct CheckoutPage: View {
             : cartViewModel.getDraftOrderById()
         }
     }
+    
+    private func confirmOrderAndNavigate() {
+          confirmedTotalPrice = cartViewModel.total ?? "0.00"
+          confirmedCustomerName = cartViewModel.draftOrder?.customer?.first_name
+          confirmedItemsCount = cartViewModel.draftOrder?.line_items?.count ?? 0
+          navigateToOrderConfirmation = true
+      }
+  
 }
+
+
 
 struct PriceRow : View{
     var title: String
@@ -119,6 +147,7 @@ struct PriceRow : View{
             .padding(.vertical, 8)
     }
 }
+
 
 
 
