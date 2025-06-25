@@ -162,5 +162,26 @@ final class ProductRepositoryImpl: ProductRepository {
     {
         APIClient.completeOrder(draftOrderId: draftOrderId, completion: completion)
     }
-
+    
+    
+//    func getOrdersForCustomer(customerId: Int, completion: @escaping (Result<[ShopifyOrder], Error>) -> Void) {
+//        APIClient.getOrders(for: customerId) { result in
+//            switch result {
+//            case .success(let response):
+//                completion(.success(response.orders))
+//            case .failure(let error):
+//                completion(.failure(error))
+//            }
+//        }
+//    }
+//    func getOrdersForCustomer(customerId: Int, completion: @escaping (Result<[ShopifyOrder], Error>) -> Void) {
+//            APIClient.getOrders(for: customerId) { result in
+//                switch result {
+//                case .success(let response):
+//                    completion(.success(response.orders))
+//                case .failure(let error):
+//                    completion(.failure(error))
+//                }
+//            }
+//        }
 }

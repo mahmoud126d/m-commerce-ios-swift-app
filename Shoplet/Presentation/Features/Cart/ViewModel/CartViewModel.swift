@@ -203,6 +203,32 @@ class CartViewModel : ObservableObject{
         }
         
     }
+    
+    
+//    func completeOrder(completion: (() -> Void)? = nil) {
+//        draftOrderUseCase.completeOrder(draftOrderId: userDefault.draftOrderId) { [weak self] res in
+//            switch res {
+//            case .success(let draftOrderItem):
+//                DispatchQueue.main.async {
+//                    // Save completed order ID before deleting or clearing
+//                    if let id = draftOrderItem.draft_order?.id {
+//                        UserDefaults.standard.set(id, forKey: "lastCompletedOrderId")
+//                    }
+//                                        self?.deleteDraftOrder()
+//                    print("completed \(draftOrderItem.draft_order?.id)")
+//
+////                    self?.draftOrder = draftOrderItem.draft_order
+////                    self?.userDefault.hasDraftOrder = false
+////                    self?.userDefault.cartItems = 0
+////                    self?.userDefault.draftOrderId = 0
+////
+////                    completion?()
+//                }
+//            case .failure(let error):
+//                print("❌ completeOrder error: \(error)")
+//            }
+//        }
+//    }
     func completeOrder(){
         draftOrderUseCase.completeOrder(draftOrderId: userDefault.draftOrderId) { [weak self] res in
             switch res{
