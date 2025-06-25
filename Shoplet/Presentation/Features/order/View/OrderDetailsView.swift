@@ -44,57 +44,6 @@ struct OrderDetailsView: View {
     }
 }
 
-//struct OrderDetailsView: View {
-//    let order: DraftOrder
-//
-//    var body: some View {
-//        ScrollView {
-//            VStack(alignment: .leading, spacing: 12) {
-//                Text("Order #\(order.id ?? 0)")                    .font(.title2)
-//                    .bold()
-//
-//                Text("Placed on: \(formattedDate(order.created_at))")
-//                Text("Total Price: $\(order.total_price ?? "0.00")")
-//
-//                Divider()
-//
-//                Text("Items").font(.headline)
-//                ForEach(order.line_items ?? [], id: \.id) { item in
-//                    VStack(alignment: .leading) {
-//                        Text(item.title ?? "No title")
-//                            .bold()
-//                        Text("Quantity: \(item.quantity ?? 1)")
-//                    }
-//                    .padding(.vertical, 4)
-//                }
-//
-//                if let address = order.shipping_address {
-//                    Divider()
-//                    Text("Shipping Address").font(.headline)
-//                    Text(address.name ?? "")
-//                    Text(address.address1 ?? "")
-//                    Text(address.city ?? "")
-//                }
-//
-//                Spacer()
-//            }
-//            .padding()
-//        }
-//        .navigationTitle("Order Details")
-//    }
-//
-//    func formattedDate(_ dateString: String?) -> String {
-//        guard let dateString = dateString else { return "N/A" }
-//        let formatter = ISO8601DateFormatter()
-//        if let date = formatter.date(from: dateString) {
-//            let displayFormatter = DateFormatter()
-//            displayFormatter.dateStyle = .medium
-//            displayFormatter.timeStyle = .short
-//            return displayFormatter.string(from: date)
-//        }
-//        return "Invalid date"
-//    }
-//}
 
 //#Preview {
 //    OrderDetailsView(order: .mock)
