@@ -139,9 +139,26 @@ struct CategoryView: View {
                            .multilineTextAlignment(.center)
                            .padding()
                        Spacer()
-                   } else {
+                   }
+                   
+                   else if viewModel.filteredProducts.isEmpty {
+                                       Spacer()
+                                       LottieView(animationName: "empty", loopMode: .loop)
+                                           .frame(height: 250)
+                                       Text("No products found")
+                                           .font(.headline)
+                                           .foregroundColor(.gray)
+                                       Spacer()
+                                   }
+                   else {
                        ScrollView {
-                           LazyVGrid(columns: gridColumns, spacing: 16) {
+                           LazyVGrid(
+                               columns: [
+                                   GridItem(.flexible(), spacing: 30),
+                                   GridItem(.flexible(), spacing: 30)
+                               ],
+                               spacing: 30 // vertical spacing between rows
+                           )  {
                                ForEach(viewModel.filteredProducts, id: \.id) { product in
                                    Button {
                                        selectedProduct = product

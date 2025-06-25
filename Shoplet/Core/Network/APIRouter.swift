@@ -35,7 +35,8 @@ enum APIRouter: URLRequestConvertible {
     case markAddressDefault(customerId: Int, addressId: Int)
     case deleteAddress(customerId: Int, addressId: Int)
     case completeOrder(draftOrderId: Int)
-    
+    case getAllOrders
+
     var method: HTTPMethod {
         switch self {
         case .getProducts, .getProductsByIds , .getPopularProducts, .getBrands, .priceRules, .coupons, .getDraftOrderById,.getCustomerById, .getAllCustomers, .getPriceRule, .getAllDraftOrders,.getAddress, .getuserAddresses:
@@ -46,6 +47,8 @@ enum APIRouter: URLRequestConvertible {
             return .put
         case .deleteDraftOrder, .deleteAddress:
             return .delete
+        case .getAllOrders: return .get
+
         }
     }
     
@@ -73,6 +76,9 @@ enum APIRouter: URLRequestConvertible {
         case .createAddress(let address, _), .updateAddress(_, let address, _):
             return try? JSONSerialization.jsonObject(with: JSONEncoder().encode(address)) as? [String: Any]
             
+        case .getAllOrders:
+            return ["status": "any"]
+
         }
     }
     
@@ -112,13 +118,15 @@ enum APIRouter: URLRequestConvertible {
             return "\(Support.apiVersion)\(ShopifyResource.customers.endpoint)/\(customerId)/\(ShopifyResource.getAddress.endpoint)/\(addressId)/\(ShopifyResource.markAddressDefault.endpoint)"
         case .completeOrder(let draftOrderId):
             return "\(Support.apiVersion)\(ShopifyResource.createDraftOrder.endpoint)/\(draftOrderId)/\(ShopifyResource.completOrder.endpoint)"
-            
+        case .getAllOrders: return "\(Support.apiVersion)orders"
+
+
         }
     }
     
     var authorizationHeader: HTTPHeaderField? {
         switch self {
-        case .getProducts, .getProductsByIds,.getPopularProducts,.getBrands, .priceRules, .coupons, .getDraftOrderById, .deleteDraftOrder, .getAllCustomers, .getPriceRule, .getAllDraftOrders,  .getuserAddresses, .getAddress, .markAddressDefault, .deleteAddress, .completeOrder:
+        case .getProducts, .getProductsByIds,.getPopularProducts,.getBrands, .priceRules, .coupons, .getDraftOrderById, .deleteDraftOrder, .getAllCustomers, .getPriceRule, .getAllDraftOrders,  .getuserAddresses, .getAddress, .markAddressDefault, .deleteAddress,.getAllOrders, .completeOrder:
             return .authorization
         case .createDraftOrder, .updateDraftOrder, .createCustomer,.getCustomerById, .updateCustomer,
                 .createAddress, .updateAddress:
@@ -128,7 +136,7 @@ enum APIRouter: URLRequestConvertible {
     
     var authorizationType: AuthorizationType {
         switch self {
-        case .getProducts, .getProductsByIds,.getPopularProducts,.getBrands, .priceRules, .coupons, .getDraftOrderById, .deleteDraftOrder, .getPriceRule, .getAllDraftOrders, .getuserAddresses, .getAddress, .markAddressDefault, .deleteAddress, .completeOrder:
+        case .getProducts, .getProductsByIds,.getPopularProducts,.getBrands, .priceRules, .coupons, .getDraftOrderById, .deleteDraftOrder, .getPriceRule, .getAllDraftOrders, .getuserAddresses, .getAddress, .markAddressDefault, .deleteAddress, .getAllOrders,.completeOrder:
             return .basic
         case .createDraftOrder, .updateDraftOrder, .createCustomer, .getCustomerById, .getAllCustomers, .updateCustomer, .createAddress, .updateAddress:
             return .apiKey
@@ -142,7 +150,6 @@ enum APIRouter: URLRequestConvertible {
         switch self {
         case .getProductsByIds:
             url.appendPathComponent(ShopifyResource.products.endpoint)
-            
         default:
             url.appendPathComponent(path + ".json")
         }

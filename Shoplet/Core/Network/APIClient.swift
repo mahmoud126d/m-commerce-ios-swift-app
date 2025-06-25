@@ -14,8 +14,8 @@ protocol APIClientType {
     static func getProducts(completion: @escaping (Result<ProductResponse, NetworkError>) -> Void)
     static func getProductsByIds(ids: [String], completion: @escaping (Result<ProductResponse, NetworkError>) -> Void)
     static func getPopularProducts(completion: @escaping (Result<ProductResponse, NetworkError>) -> Void)
-       
-       static func getBrands(completion: @escaping (Result<BrandsResponse, NetworkError>) -> Void)
+    
+    static func getBrands(completion: @escaping (Result<BrandsResponse, NetworkError>) -> Void)
     static func getPriceRules(completion: @escaping (Result<PriceRuleResponse, NetworkError>) -> Void)
     static func getPriceRulesById(priceRuleId:Int, completion: @escaping (Result<SinglePriceRuleResponse, NetworkError>) -> Void)
     static func getCoupons(id: Int, completion: @escaping (Result<CouponResponse, NetworkError>) -> Void)
@@ -35,7 +35,8 @@ protocol APIClientType {
     static func getEgyptCities(completion: @escaping(Result<Cities, NetworkError>)->Void)
     static func getCurrencies(completion: @escaping(Result<CurrencyExChange, NetworkError>)->Void)
     static func completeOrder(draftOrderId: Int, completion: @escaping(Result<DraftOrderItem, NetworkError>)->Void)
-
+    
+    func fetchAllOrders(completion: @escaping (Result<[ShopifyOrder], Error>) -> Void)    
 }
 
 class APIClient: APIClientType {
@@ -179,5 +180,20 @@ class APIClient: APIClientType {
     {
         performRequest(route: .completeOrder(draftOrderId: draftOrderId), completion: completion)
     }
+    
+    func fetchAllOrders(completion: @escaping (Result<[ShopifyOrder], Error>) -> Void) {
+           AF.request(APIRouter.getAllOrders)
+               .validate()
+               .responseDecodable(of: ShopifyOrdersResponse.self) { response in
+                   switch response.result {
+                   case .success(let orderResponse):
+                       completion(.success(orderResponse.orders))
+                   case .failure(let error):
+                       completion(.failure(error))
+                   }
+               }
+       }
+      
+
 }
 
