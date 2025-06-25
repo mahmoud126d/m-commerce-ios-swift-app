@@ -355,7 +355,6 @@
 			isa = PBXGroup;
 			children = (
 				221747002DFA15470075F63C /* CartViewModel.swift */,
-				226631D32E07D95F00FF8554 /* ApplePay.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -875,6 +874,7 @@
 				221437602DFD5BF200DF3B93 /* CheckoutPage.swift */,
 				226ABB8D2E056C3B00A8BA8B /* CartShippingAddress.swift */,
 				22D70DA62E088B6700B6DD92 /* ApplePayButton.swift */,
+				226631D32E07D95F00FF8554 /* ApplePay.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";

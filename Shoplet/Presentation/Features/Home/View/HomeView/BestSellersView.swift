@@ -15,7 +15,13 @@ struct BestSellersView: View {
         var body: some View {
             NavigationView {
                 ScrollView {
-                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
+                    LazyVGrid(
+                        columns: [
+                            GridItem(.flexible(), spacing: 30),
+                            GridItem(.flexible(), spacing: 30)
+                        ],
+                        spacing: 30 // vertical spacing between rows
+                    ) {
                         ForEach(products, id: \.id) { product in
                             Button {
                                 selectedProduct = product

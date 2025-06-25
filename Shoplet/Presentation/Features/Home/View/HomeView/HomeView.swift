@@ -15,7 +15,7 @@ struct HomeView: View {
        var body: some View {
            NavigationView {
                ScrollView {
-                   VStack(alignment: .leading, spacing: 10) {
+                   VStack(alignment: .leading, spacing: 20) {
                        
                        HStack(spacing: 12) {
                                            Image("app_logo")
@@ -111,12 +111,22 @@ struct HomeView: View {
                        }
                        .padding(.horizontal)
                        
-                       LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
-                           ForEach(viewModel.bestSellers.prefix(4), id: \.id) { product in
+                       LazyVGrid(
+                           columns: [
+                               GridItem(.flexible(), spacing: 30),
+                               GridItem(.flexible(), spacing: 30)
+                           ],
+                           spacing: 30 // vertical spacing between rows
+                       ) {
+                           ForEach(viewModel.bestSellers.prefix(2), id: \.id) { product in
                                Button {
                                    selectedProduct = product
                                } label: {
                                    ProductItemView(product: product)
+                                     //  .padding()
+                                       //.background(Color.white)
+                                     //  .cornerRadius(12)
+                                     //  .shadow(radius: 4)
                                }
                            }
                        }

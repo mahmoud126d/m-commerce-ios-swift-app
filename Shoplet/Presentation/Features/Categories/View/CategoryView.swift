@@ -141,7 +141,13 @@ struct CategoryView: View {
                        Spacer()
                    } else {
                        ScrollView {
-                           LazyVGrid(columns: gridColumns, spacing: 16) {
+                           LazyVGrid(
+                               columns: [
+                                   GridItem(.flexible(), spacing: 30),
+                                   GridItem(.flexible(), spacing: 30)
+                               ],
+                               spacing: 30 // vertical spacing between rows
+                           )  {
                                ForEach(viewModel.filteredProducts, id: \.id) { product in
                                    Button {
                                        selectedProduct = product
