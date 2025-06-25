@@ -15,9 +15,14 @@ struct FavoriteView: View {
         NavigationView {
             VStack {
                 if viewModel.favoriteProducts.isEmpty {
-                    Text("No favorite products found.")
-                        .foregroundColor(.gray)
-                        .padding()
+                    VStack(spacing: 16) {
+                        LottieView(animationName: "empty", loopMode: .loop)
+                                                .frame(height: 200)
+                                            Text("No favorite products found.")
+                                                .foregroundColor(.gray)
+                                                .font(.subheadline)
+                                        }
+                                        .padding()
                 } else {
                     ScrollView {
                         LazyVStack(spacing: 20) {

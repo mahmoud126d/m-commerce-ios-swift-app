@@ -112,6 +112,10 @@
 		75651F022E0B540000EF06F1 /* GetOrdersForCustomerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75651F012E0B540000EF06F1 /* GetOrdersForCustomerUseCase.swift */; };
 		75651F042E0B657700EF06F1 /* OrdersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75651F032E0B657700EF06F1 /* OrdersRepository.swift */; };
 		75651F062E0B65A800EF06F1 /* OrdersRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75651F052E0B65A800EF06F1 /* OrdersRepositoryImpl.swift */; };
+		75656B9E2E0C933900AA13F8 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75656B9D2E0C933900AA13F8 /* LottieView.swift */; };
+		75656BA12E0C93A500AA13F8 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 75656BA02E0C93A500AA13F8 /* Lottie */; };
+		75656BA32E0C93A500AA13F8 /* Lottie-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 75656BA22E0C93A500AA13F8 /* Lottie-Dynamic */; };
+		75656BA52E0C9C5400AA13F8 /* empty.json in Resources */ = {isa = PBXBuildFile; fileRef = 75656BA42E0C9C5400AA13F8 /* empty.json */; };
 		7580B53E2DFF54B4001FD4BB /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7580B53D2DFF54B4001FD4BB /* CategoryViewModel.swift */; };
 		7580B5402DFF5525001FD4BB /* ProductCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7580B53F2DFF5525001FD4BB /* ProductCardView.swift */; };
 		7580B5422DFF55A3001FD4BB /* BestSellersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7580B5412DFF55A3001FD4BB /* BestSellersView.swift */; };
@@ -264,6 +268,8 @@
 		75651F012E0B540000EF06F1 /* GetOrdersForCustomerUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOrdersForCustomerUseCase.swift; sourceTree = "<group>"; };
 		75651F032E0B657700EF06F1 /* OrdersRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersRepository.swift; sourceTree = "<group>"; };
 		75651F052E0B65A800EF06F1 /* OrdersRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersRepositoryImpl.swift; sourceTree = "<group>"; };
+		75656B9D2E0C933900AA13F8 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
+		75656BA42E0C9C5400AA13F8 /* empty.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = empty.json; path = ../../../../Desktop/empty.json; sourceTree = "<group>"; };
 		7580B53D2DFF54B4001FD4BB /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
 		7580B53F2DFF5525001FD4BB /* ProductCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCardView.swift; sourceTree = "<group>"; };
 		7580B5412DFF55A3001FD4BB /* BestSellersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestSellersView.swift; sourceTree = "<group>"; };
@@ -292,8 +298,10 @@
 			files = (
 				227383D32DF0CF2B007C4B1C /* Alamofire in Frameworks */,
 				226D3B532DFDCD5E00F3BA58 /* FirebaseAuth in Frameworks */,
+				75656BA12E0C93A500AA13F8 /* Lottie in Frameworks */,
 				226D3B512DFDCD5E00F3BA58 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				227383E02DF0D7E5007C4B1C /* Reachability in Frameworks */,
+				75656BA32E0C93A500AA13F8 /* Lottie-Dynamic in Frameworks */,
 				226D3B4F2DFDCD5E00F3BA58 /* FirebaseAnalytics in Frameworks */,
 				227383D52DF0CF2B007C4B1C /* AlamofireDynamic in Frameworks */,
 				226D3B552DFDCD5E00F3BA58 /* FirebaseFirestore in Frameworks */,
@@ -426,6 +434,8 @@
 		227383982DF07FCC007C4B1C /* Shoplet */ = {
 			isa = PBXGroup;
 			children = (
+				75656BA42E0C9C5400AA13F8 /* empty.json */,
+				75656B9C2E0C92EB00AA13F8 /* Lottie */,
 				22DB73B22DFDB8EB0021EF75 /* GoogleService-Info.plist */,
 				22FE271B2DF45B5200442B9D /* Presentation */,
 				227383F02DF0DFEF007C4B1C /* Core */,
@@ -749,6 +759,14 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		75656B9C2E0C92EB00AA13F8 /* Lottie */ = {
+			isa = PBXGroup;
+			children = (
+				75656B9D2E0C933900AA13F8 /* LottieView.swift */,
+			);
+			path = Lottie;
+			sourceTree = "<group>";
+		};
 		7580B53C2DFF545E001FD4BB /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -948,6 +966,8 @@
 				226D3B522DFDCD5E00F3BA58 /* FirebaseAuth */,
 				226D3B542DFDCD5E00F3BA58 /* FirebaseFirestore */,
 				226D3B562DFDCD5E00F3BA58 /* FirebaseFirestoreSwift */,
+				75656BA02E0C93A500AA13F8 /* Lottie */,
+				75656BA22E0C93A500AA13F8 /* Lottie-Dynamic */,
 			);
 			productName = Shoplet;
 			productReference = 227383962DF07FCC007C4B1C /* Shoplet.app */;
@@ -1025,6 +1045,7 @@
 				227383D02DF0CEDC007C4B1C /* XCRemoteSwiftPackageReference "Alamofire" */,
 				227383DE2DF0D7E5007C4B1C /* XCRemoteSwiftPackageReference "Reachability" */,
 				226D3B4D2DFDCC9400F3BA58 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				75656B9F2E0C93A500AA13F8 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = 227383972DF07FCC007C4B1C /* Products */;
 			projectDirPath = "";
@@ -1043,6 +1064,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				227383A12DF07FCF007C4B1C /* Preview Assets.xcassets in Resources */,
+				75656BA52E0C9C5400AA13F8 /* empty.json in Resources */,
 				2273839E2DF07FCF007C4B1C /* Assets.xcassets in Resources */,
 				22DB73B32DFDB8EB0021EF75 /* GoogleService-Info.plist in Resources */,
 			);
@@ -1166,6 +1188,7 @@
 				75B306FC2DF7AAC700AB1965 /* FavoriteView.swift in Sources */,
 				221D33592DF89A3D00DEBE06 /* Coupon.swift in Sources */,
 				22DB73D12DFDBAB40021EF75 /* PrimaryButton.swift in Sources */,
+				75656B9E2E0C933900AA13F8 /* LottieView.swift in Sources */,
 				221746F52DF98ECD0075F63C /* DraftOrderUseCase.swift in Sources */,
 				2296CA842E04BBA40028F295 /* Map.swift in Sources */,
 				22DB73CB2DFDBA290021EF75 /* GetAllCustomerUseCase.swift in Sources */,
@@ -1529,6 +1552,14 @@
 				kind = branch;
 			};
 		};
+		75656B9F2E0C93A500AA13F8 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.5.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1571,6 +1602,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 227383DE2DF0D7E5007C4B1C /* XCRemoteSwiftPackageReference "Reachability" */;
 			productName = Reachability;
+		};
+		75656BA02E0C93A500AA13F8 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 75656B9F2E0C93A500AA13F8 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+		75656BA22E0C93A500AA13F8 /* Lottie-Dynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 75656B9F2E0C93A500AA13F8 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = "Lottie-Dynamic";
 		};
 /* End XCSwiftPackageProductDependency section */
 

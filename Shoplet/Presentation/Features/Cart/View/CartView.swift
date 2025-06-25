@@ -70,8 +70,14 @@ struct CartView: View {
                     
                            } else {
                                Spacer()
-                               Text("No Data in Cart")
-                                   .foregroundColor(.gray)
+                               VStack(spacing: 16) {
+                                   LottieView(animationName: "empty", loopMode: .loop)
+                                                           .frame(height: 200)
+                                                       Text("Your cart is empty.")
+                                                           .foregroundColor(.gray)
+                                                           .font(.subheadline)
+                                                   }
+                                                   .padding()
                                Spacer()
                            }
             }.onAppear{

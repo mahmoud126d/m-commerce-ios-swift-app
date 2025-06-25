@@ -139,7 +139,18 @@ struct CategoryView: View {
                            .multilineTextAlignment(.center)
                            .padding()
                        Spacer()
-                   } else {
+                   }
+                   
+                   else if viewModel.filteredProducts.isEmpty {
+                                       Spacer()
+                                       LottieView(animationName: "empty", loopMode: .loop)
+                                           .frame(height: 250)
+                                       Text("No products found")
+                                           .font(.headline)
+                                           .foregroundColor(.gray)
+                                       Spacer()
+                                   }
+                   else {
                        ScrollView {
                            LazyVGrid(
                                columns: [
