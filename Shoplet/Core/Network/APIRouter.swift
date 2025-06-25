@@ -35,7 +35,6 @@ enum APIRouter: URLRequestConvertible {
     case markAddressDefault(customerId: Int, addressId: Int)
     case deleteAddress(customerId: Int, addressId: Int)
     case completeOrder(draftOrderId: Int)
-    //case getOrdersForCustomer(customerId: Int)
     case getAllOrders
 
     var method: HTTPMethod {
@@ -79,12 +78,7 @@ enum APIRouter: URLRequestConvertible {
             
         case .getAllOrders:
             return ["status": "any"]
-//        case .getOrdersForCustomer(let customerId):
-//            return [
-//                "status": "any",
-//                "customer_id": customerId
-//            ]
-//            
+
         }
     }
     
@@ -126,9 +120,7 @@ enum APIRouter: URLRequestConvertible {
             return "\(Support.apiVersion)\(ShopifyResource.createDraftOrder.endpoint)/\(draftOrderId)/\(ShopifyResource.completOrder.endpoint)"
         case .getAllOrders: return "\(Support.apiVersion)orders"
 
-//        case .getOrdersForCustomer:
-//            return "\(Support.apiVersion)orders"
-            
+
         }
     }
     
@@ -158,8 +150,6 @@ enum APIRouter: URLRequestConvertible {
         switch self {
         case .getProductsByIds:
             url.appendPathComponent(ShopifyResource.products.endpoint)
-//        case .getAllOrders:
-//            url.appendPathComponent(path + ".json")
         default:
             url.appendPathComponent(path + ".json")
         }

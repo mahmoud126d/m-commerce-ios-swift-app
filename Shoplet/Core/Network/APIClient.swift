@@ -36,9 +36,7 @@ protocol APIClientType {
     static func getCurrencies(completion: @escaping(Result<CurrencyExChange, NetworkError>)->Void)
     static func completeOrder(draftOrderId: Int, completion: @escaping(Result<DraftOrderItem, NetworkError>)->Void)
     
-    func fetchAllOrders(completion: @escaping (Result<[ShopifyOrder], Error>) -> Void)    //static func getOrders(for customerId: Int, completion: @escaping (Result<OrderListResponse, NetworkError>) -> Void)
-//    static func getOrders(for customerId: Int, completion: @escaping (Result<ShopifyOrdersResponse, NetworkError>) -> Void)
-   // static func getOrders(for customerId: Int, completion: @escaping (Result<OrderListResponse, NetworkError>) -> Void)
+    func fetchAllOrders(completion: @escaping (Result<[ShopifyOrder], Error>) -> Void)    
 }
 
 class APIClient: APIClientType {
@@ -196,14 +194,6 @@ class APIClient: APIClientType {
                }
        }
       
-//    static func getOrders(for customerId: Int, completion: @escaping (Result<OrderListResponse, NetworkError>) -> Void) {
-//        performRequest(route: .getOrdersForCustomer(customerId: customerId), completion: completion)
-//    }
-//    static func getOrders(for customerId: Int, completion: @escaping (Result<ShopifyOrdersResponse, NetworkError>) -> Void) {
-//        performRequest(route: .getOrdersForCustomer(customerId: customerId), completion: completion)
-//    }
-//    static func getOrders(for customerId: Int, completion: @escaping (Result<OrderListResponse, NetworkError>) -> Void) {
-//        performRequest(route: .getOrdersForCustomer(customerId: customerId), completion: completion)
-//    }
+
 }
 

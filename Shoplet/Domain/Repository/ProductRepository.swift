@@ -21,6 +21,5 @@ protocol ProductRepository {
      func deleteDraftOrder(dtaftOrderId: Int, completion: @escaping () -> Void)
      func getDraftOrders(completion: @escaping (Result<[DraftOrder], NetworkError>) -> Void)
     func completeOrder(draftOrderId: Int, completion: @escaping(Result<DraftOrderItem, NetworkError>)->Void)
-   // func getOrdersForCustomer(customerId: Int, completion: @escaping (Result<[ShopifyOrder], Error>) -> Void)
-   // func getOrdersForCustomer(customerId: Int, completion: @escaping (Result<[ShopifyOrder], Error>) -> Void)
+   
 }
