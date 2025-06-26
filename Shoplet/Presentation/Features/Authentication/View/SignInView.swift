@@ -22,45 +22,56 @@ struct SignInView: View {
     )
 
     var body: some View {
-        VStack(spacing: 20) {
-            VStack(alignment: .leading, spacing: 8) {
-                Text("Sign In").font(.largeTitle).bold().foregroundColor(.primaryColor)
-                Text("Welcome back!").font(.subheadline).foregroundColor(.gray)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
+        VStack {
+            ScrollView {
+                VStack(spacing: 20) {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Sign In")
+                            .font(.largeTitle).bold()
+                            .foregroundColor(.primaryColor)
+                        Text("Welcome back!")
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
 
-            CustomTextField(placeholder: "Email", text: $email, keyboardType: .emailAddress)
-            CustomSecureField(placeholder: "Password", text: $password)
+                    CustomTextField(placeholder: "Email", text: $email, keyboardType: .emailAddress)
+                    CustomSecureField(placeholder: "Password", text: $password)
 
-            if viewModel.isLoading {
-                ProgressView()
-            }
+                    if viewModel.isLoading {
+                        ProgressView()
+                    }
 
-            if let errorMessage = viewModel.errorMessage {
-                Text(errorMessage)
-                    .foregroundColor(.red)
-                    .multilineTextAlignment(.center)
-            }
+                    if let errorMessage = viewModel.errorMessage {
+                        Text(errorMessage)
+                            .foregroundColor(.red)
+                            .multilineTextAlignment(.center)
+                    }
 
-            PrimaryButton(title: "Sign In") {
-                guard !email.isEmpty, !password.isEmpty else {
-                    viewModel.errorMessage = "Enter both email and password"
-                    return
-                }
+                    PrimaryButton(title: "Sign In") {
+                        guard !email.isEmpty, !password.isEmpty else {
+                            viewModel.errorMessage = "Enter both email and password"
+                            return
+                        }
 
-                viewModel.signInWithFirebaseAndShopify(email: email, password: password) { success in
-                    if success {
-                        onSuccessfulLogin()
+                        viewModel.signInWithFirebaseAndShopify(email: email, password: password) { success in
+                            if success {
+                                onSuccessfulLogin()
+                            }
+                        }
+                    }
+
+                    HStack {
+                        Text("Don't have an account?").foregroundColor(.gray)
+                        Button(action: switchToCreateAccount) {
+                            Text("Create one").foregroundColor(.primaryColor).bold()
+                        }
                     }
                 }
+                .padding()
             }
 
-            HStack {
-                Text("Don't have an account?").foregroundColor(.gray)
-                Button(action: switchToCreateAccount) {
-                    Text("Create one").foregroundColor(.primaryColor).bold()
-                }
-            }
+            Spacer()
 
             Button(action: {
                 onExploreAsGuest()
@@ -74,14 +85,42 @@ struct SignInView: View {
                             .stroke(Color.primaryColor, lineWidth: 2)
                     )
             }
-            .background(Color.clear)
+            .background(Color.white)
             .cornerRadius(18)
             .padding(.horizontal, 30)
-            .padding(.top, 10)
-
-
-            Spacer()
+            .padding(.bottom, 20)
         }
-        .padding()
+        .ignoresSafeArea(.keyboard)
+    }
+}
+
+struct SignInWrapperView: View {
+    @Environment(\.dismiss) var dismiss
+    @State private var navigateToCreateAccount = false
+
+    var body: some View {
+        VStack {
+            SignInView(
+                switchToCreateAccount: {
+                    navigateToCreateAccount = true
+                },
+                onSuccessfulLogin: {
+                },
+                onExploreAsGuest: {
+                    dismiss()
+                }
+            )
+            .navigationBarBackButtonHidden(true)
+
+            NavigationLink(
+                destination: CreateAccountView(
+                    switchToSignIn: {},
+                    onSuccessfulCreation: {}
+                ),
+                isActive: $navigateToCreateAccount
+            ) {
+                EmptyView()
+            }
+        }
     }
 }

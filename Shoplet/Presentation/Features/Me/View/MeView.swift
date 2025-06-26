@@ -67,6 +67,12 @@ struct MeView: View {
                     }
 
                     Section(header: Text("Settings")) {
+                        if let customerId = profileViewModel.customer?.id {
+                            NavigationLink(destination: OrdersListView(customerId: customerId)) {
+                                Text("Orders")
+                            }
+                        
+                           }
                         NavigationLink(destination: AddressesView(isCheckout: false)) {
                             Text("Addresses")
                         }

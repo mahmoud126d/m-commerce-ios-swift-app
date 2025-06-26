@@ -11,11 +11,23 @@ struct OnboardingScreen: View {
     @Binding var hasCompletedOnboarding: Bool
     
     let onboardingItems = [
-        OnboardingItem(imageName: "bag1", title: "Various Collections Of The Latest Products", subtitle: "Urna amet, suspendisse ullamcorper ac elit diam facilisis cursus vestibulum."),
-        OnboardingItem(imageName: "bag2", title: "Complete Collection Of Colors And Sizes", subtitle: "Urna amet, suspendisse ullamcorper ac elit diam facilisis cursus vestibulum."),
-        OnboardingItem(imageName: "bag3", title: "Find The Most Suitable Outfit For You", subtitle: "Urna amet, suspendisse ullamcorper ac elit diam facilisis cursus vestibulum.")
+        OnboardingItem(
+            imageName: "bag1",
+            title: "Various Collections Of The Latest Products",
+            subtitle: "Discover new arrivals from trusted global brands\nand shop with confidence every day."
+        ),
+        OnboardingItem(
+            imageName: "bag2",
+            title: "Complete Collection Of Colors And Sizes",
+            subtitle: "Choose from a full range of colors and sizes that fit\nyour unique style and needs."
+        ),
+        OnboardingItem(
+            imageName: "bag3",
+            title: "Find The Most Suitable Outfit For You",
+            subtitle: "Let your wardrobe speak with outfits made just for you\nfrom casual to classy looks."
+        )
     ]
-    
+
     @State private var currentIndex = 0
 
     var body: some View {

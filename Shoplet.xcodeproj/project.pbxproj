@@ -97,10 +97,10 @@
 		22DB73CC2DFDBA290021EF75 /* GetCustomerByIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB73C92DFDBA290021EF75 /* GetCustomerByIdUseCase.swift */; };
 		22DB73D02DFDBAB40021EF75 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB73CE2DFDBAB40021EF75 /* CustomTextField.swift */; };
 		22DB73D12DFDBAB40021EF75 /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DB73CF2DFDBAB40021EF75 /* PrimaryButton.swift */; };
-		22FAE3A82E0D5485005E7270 /* empty.json in Resources */ = {isa = PBXBuildFile; fileRef = 22FAE3A72E0D5485005E7270 /* empty.json */; };
 		22FAE3AA2E0D585B005E7270 /* AuthRestrictionAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FAE3A92E0D585B005E7270 /* AuthRestrictionAlert.swift */; };
 		22FAE3AC2E0D5A7A005E7270 /* GuestModeProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FAE3AB2E0D5A7A005E7270 /* GuestModeProfileView.swift */; };
 		22FAE3AF2E0D5ADB005E7270 /* profile-lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 22FAE3AE2E0D5ADB005E7270 /* profile-lottie.json */; };
+		22FAE3B12E0D7F6F005E7270 /* empty.json in Resources */ = {isa = PBXBuildFile; fileRef = 22FAE3B02E0D7F6F005E7270 /* empty.json */; };
 		22FE271F2DF45BFC00442B9D /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FE271E2DF45BFC00442B9D /* SplashScreen.swift */; };
 		22FE27212DF45C3A00442B9D /* OnboardingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FE27202DF45C3A00442B9D /* OnboardingScreen.swift */; };
 		22FE27232DF45C6300442B9D /* OnboardingPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FE27222DF45C6300442B9D /* OnboardingPageView.swift */; };
@@ -259,10 +259,10 @@
 		22DB73C92DFDBA290021EF75 /* GetCustomerByIdUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetCustomerByIdUseCase.swift; sourceTree = "<group>"; };
 		22DB73CE2DFDBAB40021EF75 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		22DB73CF2DFDBAB40021EF75 /* PrimaryButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
-		22FAE3A72E0D5485005E7270 /* empty.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = empty.json; sourceTree = "<group>"; };
 		22FAE3A92E0D585B005E7270 /* AuthRestrictionAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRestrictionAlert.swift; sourceTree = "<group>"; };
 		22FAE3AB2E0D5A7A005E7270 /* GuestModeProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestModeProfileView.swift; sourceTree = "<group>"; };
 		22FAE3AE2E0D5ADB005E7270 /* profile-lottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "profile-lottie.json"; sourceTree = "<group>"; };
+		22FAE3B02E0D7F6F005E7270 /* empty.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = empty.json; sourceTree = "<group>"; };
 		22FE271E2DF45BFC00442B9D /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		22FE27202DF45C3A00442B9D /* OnboardingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingScreen.swift; sourceTree = "<group>"; };
 		22FE27222DF45C6300442B9D /* OnboardingPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageView.swift; sourceTree = "<group>"; };
@@ -721,7 +721,7 @@
 		22FAE3AD2E0D5AC8005E7270 /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
-				22FAE3A72E0D5485005E7270 /* empty.json */,
+				22FAE3B02E0D7F6F005E7270 /* empty.json */,
 				22FAE3AE2E0D5ADB005E7270 /* profile-lottie.json */,
 			);
 			path = Lottie;
@@ -1090,8 +1090,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				22FAE3AF2E0D5ADB005E7270 /* profile-lottie.json in Resources */,
+				22FAE3B12E0D7F6F005E7270 /* empty.json in Resources */,
 				227383A12DF07FCF007C4B1C /* Preview Assets.xcassets in Resources */,
-				22FAE3A82E0D5485005E7270 /* empty.json in Resources */,
 				2273839E2DF07FCF007C4B1C /* Assets.xcassets in Resources */,
 				22DB73B32DFDB8EB0021EF75 /* GoogleService-Info.plist in Resources */,
 			);
