@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct GuestModeProfileView: View {
-    @State private var navigateToSignUp = false
     var body: some View {
         VStack(spacing: 40) {
             Spacer()
@@ -21,15 +20,8 @@ struct GuestModeProfileView: View {
                 .foregroundColor(.gray)
                 .multilineTextAlignment(.center)
 
-            NavigationLink(
-                destination: CreateAccountView(
-                    switchToSignIn: {},
-                    onSuccessfulCreation: {}
-                )
-                .navigationBarBackButtonHidden(true),
-                isActive: $navigateToSignUp
-            ){
-                Text("Create Account")
+            NavigationLink(destination: SignInWrapperView()) {
+                Text("Sign In")
                     .foregroundColor(.white)
                     .fontWeight(.semibold)
                     .padding()
@@ -38,7 +30,6 @@ struct GuestModeProfileView: View {
                     .cornerRadius(12)
                     .padding(.horizontal, 40)
             }
-
 
             Spacer()
         }
