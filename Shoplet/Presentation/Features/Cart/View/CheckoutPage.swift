@@ -16,6 +16,9 @@ struct CheckoutPage: View {
     @State private var confirmedTotalPrice = ""
     @State private var confirmedCustomerName: String? = nil
     @State private var confirmedItemsCount = 0
+    @State private var isLoading = false
+    @State private var isCopunValid = true
+    @State private var isUsedBefore = false
 
     var body: some View {
         VStack{
@@ -39,43 +42,69 @@ struct CheckoutPage: View {
                             )
                 
                 Button {
-                    cartViewModel.getPriceRuleById()
-                    discountValue = cartViewModel.discountValue ?? "5.0"
-                    
+                    cartViewModel.validateDiscount(discount: coupon) { isValid in
+                        if isValid {
+                            cartViewModel.checkCouponsUsedLater(copuns: coupon) { isUsed in
+                                if isUsed {
+                                    print("Coupon already used before.")
+                                    isUsedBefore = true
+                                } else {
+                                    discountValue = cartViewModel.discountValue ?? "5.0"
+                                    cartViewModel.applayDiscount(discount: coupon)
+                                    UserDefaultManager.shared.isUsedACopuns = true
+                                    isCopunValid = true
+                                }
+                            }
+                        } else {
+                            print("Coupon is not valid.")
+                            isCopunValid = false
+                        }
+                    }
                 } label: {
                     Text("Validate")
                         .foregroundColor(.white)
-                }.padding()
-                 .background(Color.primaryColor)
-                 .cornerRadius(12)
+                }
+                .padding()
+                .background(UserDefaultManager.shared.isUsedACopuns ? Color.primaryColor.opacity(0.9) : Color.primaryColor)
+                .cornerRadius(12)
+                .disabled(UserDefaultManager.shared.isUsedACopuns)
+
 
             }.padding()
+            if !isCopunValid{
+                Text("This Copun is Wrong")
+                    .font(.headline)
+                    .foregroundColor(.red)
+            }
+            
             
             let currency = UserDefaultManager.shared.currency ?? "USD"
             let rate = Double(UserDefaultManager.shared.currencyRate ?? "1.0") ?? 1.0
 
             PriceRow(
                 title: "Discounts",
-                desc:  "\(currency) \(String(format: "%.2f", Double(discountValue)! * rate))" ,
+                desc:  "\(String(format: "%.2f", Double(discountValue)! * rate)) \(currency) " ,
                 color: .red
             )
             .padding(.trailing, 8)
 
             PriceRow(
                 title: "SubPrice",
-                desc: "\(currency) \(String(format: "%.2f", (Double(cartViewModel.subTotal ?? "0.0") ?? 0.0) * rate))"
+                desc: "\(String(format: "%.2f", (Double(cartViewModel.subTotal ?? "0.0") ?? 0.0) * rate)) \(currency)"
             )
 
             PriceRow(
                 title: "Tax",
-                desc: "\(currency) \(String(format: "%.2f", (Double(cartViewModel.tax ?? "0.0") ?? 0.0) * rate))"
+                desc: "\(String(format: "%.2f", (Double(cartViewModel.tax ?? "0.0") ?? 0.0) * rate))\(currency)"
             )
 
             PriceRow(
                 title: "TotalPrice",
-                desc: "\(currency) \(String(format: "%.2f", (Double(cartViewModel.total ?? "0.0") ?? 0.0) * rate))"
+                desc: "\(String(format: "%.2f", (Double(cartViewModel.total ?? "0.0") ?? 0.0) * rate)) \(currency)"
             )
-            
+            if isLoading{
+                ProgressView()
+            }
             Spacer().frame(height: 20)
             Button(
                 action: {
@@ -95,8 +124,14 @@ struct CheckoutPage: View {
                 }.padding(.horizontal, 24)
             
             ApplePayButton(action: {
+                isLoading = true
                 guard let draft_order = cartViewModel.draftOrder else {return}
-                applePay = ApplePay(draftOrder: draft_order)
+                applePay = ApplePay(draftOrder: draft_order){
+                        isLoading = true
+                        cartViewModel.completeOrder()
+                    
+
+                }
                 applePay?.startPayment(draftOrder: draft_order)
 
             }).frame(maxWidth: .infinity, maxHeight: 40)
@@ -112,8 +147,13 @@ struct CheckoutPage: View {
                        )
 
             Spacer()
-
+                .alert("Coupn Already Used", isPresented: $isUsedBefore) {
+                    Button("OK", role: .cancel) {}
+                } message: {
+                    Text("you used this coupon Already please select another one.")
+                }
         }.onAppear{
+            cartViewModel.getAllPriceRules()
             (UserDefaultManager.shared.isNotDefaultAddress == false)  ?
             cartViewModel.getCustomerShippingAddress()
             : cartViewModel.getDraftOrderById()

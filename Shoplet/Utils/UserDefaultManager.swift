@@ -107,5 +107,24 @@ class UserDefaultManager:ObservableObject{
             currency = nil
             currencyRate = nil
             isNotDefaultAddress = false
+            isUsedACopuns = false
         }
+    
+    var isUsedACopuns:Bool{
+        get {
+            return UserDefaults.standard.bool(forKey: "isUsedACopuns")
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: "isUsedACopuns")
+        }
+    }
+    
+    var isUsedLater: [String : Any]?{
+        get{
+            return UserDefaults.standard.dictionary(forKey: "isUsedLater")
+        }
+        set{
+            UserDefaults.standard.setValue(newValue, forKey: "isUsedLater")
+        }
+    }
 }

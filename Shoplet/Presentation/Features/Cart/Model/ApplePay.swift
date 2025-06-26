@@ -10,12 +10,14 @@ import PassKit
 
 class ApplePay: NSObject, PKPaymentAuthorizationControllerDelegate{
     let draftOrder: DraftOrder
- //   var onSuccess: (() -> Void)? // ✅ Add this callback
+    var onSuccess: () -> Void
 
-    init(draftOrder: DraftOrder) {
+    init(draftOrder: DraftOrder, onSuccess: @escaping () -> Void) {
         self.draftOrder = draftOrder
+        self.onSuccess = onSuccess
         super.init()
     }
+    
     func startPayment(draftOrder: DraftOrder){
         var paymentSummary = [PKPaymentSummaryItem]()
         var paymentController :PKPaymentAuthorizationController?
@@ -76,9 +78,10 @@ class ApplePay: NSObject, PKPaymentAuthorizationControllerDelegate{
     }
      
     func paymentAuthorizationControllerDidFinish(_ controller: PKPaymentAuthorizationController) {
-        controller.dismiss{
-            print("apple pay finish")
-        }
+        self.onSuccess()
+        print("apple pay finish")
+        controller.dismiss()
+        
     }
     
     

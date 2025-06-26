@@ -50,6 +50,13 @@ struct ShopifyOrder: Codable ,Identifiable {
             return "Draft"
         }
     }
+    let discount_codes: [Discounts]
+}
+
+struct Discounts: Codable{
+    let code: String
+    let amount: String
+    let type: String
 }
 
 struct ShopifyLineItem: Codable {
