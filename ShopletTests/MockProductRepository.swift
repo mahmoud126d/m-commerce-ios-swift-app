@@ -112,7 +112,6 @@ class MockProductRepository: ProductRepository {
         }
     }
 
-    // Stub other methods if needed (empty implementations)
     func getProductById(_ id: String, completion: @escaping (Result<ProductModel, Error>) -> Void) {}
    // func getAllProducts(completion: @escaping (Result<[ProductModel], Error>) -> Void) {}
     func getPriceRules(completion: @escaping (Result<[PriceRule], NetworkError>) -> Void) {}

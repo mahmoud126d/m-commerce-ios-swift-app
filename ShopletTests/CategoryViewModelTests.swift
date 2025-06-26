@@ -172,7 +172,6 @@ final class CategoryViewModelTests: XCTestCase {
         waitForExpectations(timeout: 2.0)
     }
 }
-    // In your test target
     extension Variant {
         init(price: String) {
             self.init(

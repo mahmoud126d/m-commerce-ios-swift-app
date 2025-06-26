@@ -53,7 +53,7 @@ struct OrderDetailsView: View {
 //        DraftOrder(
 //            id: 101,
 //            name: "Order #101",
-//            email: "john@example.com",
+//            email: "@example.com",
 //            currency: "USD",
 //            line_items: [
 //                LineItem(
