@@ -23,7 +23,7 @@ struct CouponsView: View {
                 }
             }
             .tabViewStyle(.page(indexDisplayMode: .automatic))
-            .frame(height: 200)
+            .frame(height: 150)
             .onAppear {
                 viewModel.getPriceRules()
             }
