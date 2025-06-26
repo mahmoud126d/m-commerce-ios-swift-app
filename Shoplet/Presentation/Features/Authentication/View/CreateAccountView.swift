@@ -12,6 +12,8 @@ struct CreateAccountView: View {
     @State private var lastName = ""
     @State private var password = ""
     @State private var confirmPassword = ""
+    @State private var showVerificationScreen = false
+
 
     @StateObject private var viewModel = CustomerViewModel(
         createCustomerUseCase: DefaultCreateCustomerUseCase(repository: CustomerRepositoryImpl()),
@@ -112,12 +114,55 @@ struct CreateAccountView: View {
                 .padding()
                 .frame(width: geometry.size.width, height: geometry.size.height, alignment: .center)
             }
+            NavigationLink(
+                destination: EmailVerificationView(email: email),
+                isActive: $showVerificationScreen
+            ) {
+                EmptyView()
+            }
+
         }
         .onReceive(viewModel.$customer) { customer in
             if customer != nil {
                 onSuccessfulCreation()
+                showVerificationScreen = true
             }
         }
     }
 }
 
+struct EmailVerificationView: View {
+    let email: String
+    
+    var body: some View {
+        VStack(spacing: 30) {
+            Image(systemName: "envelope.badge")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 100, height: 100)
+                .foregroundColor(.primaryColor)
+            
+            Text("Verify Your Email")
+                .font(.title).bold()
+                .foregroundColor(.primaryColor)
+            
+            Text("We’ve sent a verification link to:")
+                .foregroundColor(.gray)
+                .multilineTextAlignment(.center)
+
+            Text(email)
+                .font(.headline)
+                .multilineTextAlignment(.center)
+            
+            Text("Please check your inbox and verify your email before signing in.")
+                .font(.footnote)
+                .foregroundColor(.gray)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
+
+            Spacer()
+        }
+        .padding()
+        .navigationBarBackButtonHidden(true)
+    }
+}

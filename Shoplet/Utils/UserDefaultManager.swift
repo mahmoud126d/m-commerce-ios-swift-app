@@ -96,4 +96,16 @@ class UserDefaultManager:ObservableObject{
 
         }
     }
+    
+    func clearUserDefaults() {
+            customerId = nil
+            isUserLoggedIn = false
+            hasDraftOrder = false
+            draftOrderId = 0
+            cartItems = 0
+            priceRuleId = nil
+            currency = nil
+            currencyRate = nil
+            isNotDefaultAddress = false
+        }
 }

@@ -66,10 +66,19 @@ struct SignInView: View {
                 onExploreAsGuest()
             }) {
                 Text("Explore as Guest")
-                    .font(.footnote)
-                    .foregroundColor(.blue)
-                    .padding(.top)
+                    .font(.headline)
+                    .foregroundColor(.primaryColor)
+                    .frame(maxWidth: .infinity, minHeight: 50)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 18)
+                            .stroke(Color.primaryColor, lineWidth: 2)
+                    )
             }
+            .background(Color.clear)
+            .cornerRadius(18)
+            .padding(.horizontal, 30)
+            .padding(.top, 10)
+
 
             Spacer()
         }
