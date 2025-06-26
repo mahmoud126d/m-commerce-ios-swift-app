@@ -67,36 +67,51 @@ struct ProductItemView: View {
 
     @ViewBuilder
     func productPriceView() -> some View {
-        if let variant = product.variants?.first,
-           let priceStr = variant.price,
-           let price = Double(priceStr) {
+            if let variant = product.variants?.first,
+               let priceStr = variant.price,
+               let priceValue = Double(priceStr)
+                {
+                let rateStr = UserDefaultManager.shared.currencyRate ?? "1.0"
+                let rate = Double(rateStr) ?? 1.0
+                let currency = UserDefaultManager.shared.currency ?? "USD"
+                let price = priceValue * rate
+                let formattedPrice = String(format: "%.2f", price)
 
-            if let compareAt = variant.compareAtPrice,
-               !compareAt.isEmpty,
-               compareAt != priceStr {
-                HStack(spacing: 6) {
-                    Text("$\(priceStr)")
-                        .foregroundColor(.red)
-                        .fontWeight(.bold)
+                if let compareAt = variant.compareAtPrice,
+                   let compareAtValue = Double(compareAt),
+                   compareAtValue != priceValue {
 
-                    Text("$\(compareAt)")
-                        .strikethrough()
-                        .foregroundColor(.gray)
+                    let convertedCompareAt = compareAtValue * rate
+                    let formattedCompareAt = String(format: "%.2f", convertedCompareAt)
+
+                    HStack(spacing: 6) {
+                        Text("\(formattedPrice) \(currency)")
+                            .foregroundColor(.red)
+                            .font(.footnote)
+                            .fontWeight(.bold)
+
+                        Text("\(formattedCompareAt) \(currency)")
+                            .strikethrough()
+                            .foregroundColor(.gray)
+                            .font(.footnote)
+                    }
+                } else {
+                    let originalPrice = price * 1.10
+                    let formattedOriginal = String(format: "%.2f", originalPrice)
+
+                    HStack(spacing: 6) {
+                        Text("\(formattedPrice) \(currency)")
+                            .foregroundColor(.red)
+                            .font(.footnote)
+                            .fontWeight(.bold)
+
+                        Text("\(formattedOriginal) \(currency)")
+                            .strikethrough()
+                            .foregroundColor(.gray)
+                            .font(.footnote)
+                    }
                 }
-                .font(.subheadline)
-            } else {
-                let originalPrice = price * 1.10
-                HStack(spacing: 6) {
-                    Text(String(format: "$%.2f", price))
-                        .foregroundColor(.red)
-                        .fontWeight(.bold)
-
-                    Text(String(format: "$%.2f", originalPrice))
-                        .strikethrough()
-                        .foregroundColor(.gray)
-                }
-                .font(.subheadline)
             }
         }
+
     }
-}
