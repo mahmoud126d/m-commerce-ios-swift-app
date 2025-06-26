@@ -654,6 +654,14 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		22A674782E0D6CC100C8005A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				226631D32E07D95F00FF8554 /* ApplePay.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		22C8C0BE2E020961001711BA /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -821,6 +829,7 @@
 		75B306C82DF7A34600AB1965 /* Cart */ = {
 			isa = PBXGroup;
 			children = (
+				22A674782E0D6CC100C8005A /* Model */,
 				221747022DFA16D40075F63C /* ViewModel */,
 				75B306D52DF7A76F00AB1965 /* View */,
 			);
@@ -910,7 +919,6 @@
 				221437602DFD5BF200DF3B93 /* CheckoutPage.swift */,
 				226ABB8D2E056C3B00A8BA8B /* CartShippingAddress.swift */,
 				22D70DA62E088B6700B6DD92 /* ApplePayButton.swift */,
-				226631D32E07D95F00FF8554 /* ApplePay.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";

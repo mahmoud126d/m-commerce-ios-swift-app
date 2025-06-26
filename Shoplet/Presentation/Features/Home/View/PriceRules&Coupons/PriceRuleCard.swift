@@ -7,15 +7,19 @@
 
 import SwiftUI
 
-struct PriceRuleCard: View{
-    var priceRule : String
+struct PriceRuleCard: View {
+    var priceRule: String
+    var imageName: String
+
     var body: some View {
         let discount = abs(Int(Double(priceRule) ?? 0))
         ZStack {
-            RoundedRectangle(cornerRadius: 20)
-                .fill(Color.primaryColor.opacity(0.5))
-                .frame(height: 100)
-                .shadow(radius: 4)
+            Image(imageName)
+                .resizable()
+                .scaledToFill()
+                .frame(height: 150)
+                .clipped()
+                .cornerRadius(20)
             
             HStack {
                 VStack(alignment: .leading, spacing: 5) {
@@ -38,11 +42,12 @@ struct PriceRuleCard: View{
             }
             .padding(.horizontal)
         }
+        .frame(height: 200)
         .padding(.horizontal)
+        .shadow(radius: 4)
     }
 }
 
-
 #Preview {
-    PriceRuleCard(priceRule: "5")
+    PriceRuleCard(priceRule: "5", imageName: "")
 }

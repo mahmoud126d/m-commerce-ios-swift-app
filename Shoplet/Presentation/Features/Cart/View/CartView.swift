@@ -11,6 +11,8 @@ struct CartView: View {
     @StateObject var cartViewModel = CartViewModel()
     @State private var isActive = false
     @State private var showAddressAlert = false
+    @State private var cartSubTotal = 0
+
     var body: some View {
         NavigationView{
             VStack{
@@ -40,12 +42,13 @@ struct CartView: View {
                                }
                     HStack{
                         
-                        Text("SubTotal: \(String(format: "%.2f", (Double(cartViewModel.subTotal ?? "0.0") ?? 0.0) * (Double(UserDefaultManager.shared.currencyRate ?? "1.0") ?? 1.0))) \(UserDefaultManager.shared.currency ?? "USD")")
+                        Text("SubTotal: \(String(format: "%.2f", cartViewModel.calcCartSubTotal() * (Double(UserDefaultManager.shared.currencyRate ?? "1.0") ?? 1.0))) \(UserDefaultManager.shared.currency ?? "USD")")
                             .bold()
+
 
                         NavigationLink(destination: CheckoutPage(cartViewModel: cartViewModel), isActive: $isActive) {
                             Button(action: {
-                                if cartViewModel.address == nil{
+                                if cartViewModel.address?.city == nil{
                                     showAddressAlert = true
                                 }
                                 else {

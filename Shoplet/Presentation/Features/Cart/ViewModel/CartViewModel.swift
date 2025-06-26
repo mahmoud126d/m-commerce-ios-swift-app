@@ -11,20 +11,28 @@ class CartViewModel : ObservableObject{
     private var draftOrderUseCase : DraftOrderUseCase
     private var priceRuleUseCase : PriceRulesUseCase
     private var getCustomerUseCase: GetCustomerByIdUseCase
+    private var ordersUseCase: GetCustomerOrdersUseCase
+    private var copunsUseCase: CouponsUseCase
     private var userDefault = UserDefaultManager.shared
     @Published var draftOrder : DraftOrder?
     @Published var subTotal : String?
+    @Published var cartSubTotal : String?
     @Published var tax: String?
     @Published var total: String?
     @Published var selectedPriceRule: PriceRule?
     @Published var discountValue: String?
     @Published var shippingAddress: AddressDetails?
     @Published var address: AddressDetails?
+    @Published var allPriceRules: [PriceRule]?
+    @Published var isOrderFinishCompleted: Bool = true
+    private var isCopunsPerCustomer: Bool?
 
-    init(repo :ProductRepository = ProductRepositoryImpl(), cusRepo: CustomerRepository = CustomerRepositoryImpl()) {
+    init(repo :ProductRepository = ProductRepositoryImpl(), cusRepo: CustomerRepository = CustomerRepositoryImpl(), orderRepo: OrdersRepository = OrdersRepositoryImpl()) {
         self.draftOrderUseCase = DraftOrderUseCase(repo: repo)
         self.priceRuleUseCase = PriceRulesUseCase(repo: repo)
+        self.copunsUseCase = CouponsUseCase(repo: repo)
         self.getCustomerUseCase = DefaultGetCustomerByIdUseCase(repository: cusRepo)
+        self.ordersUseCase = DefaultGetCustomerOrdersUseCase(repository: orderRepo)
     }
     
     func getDraftOrderById(){
@@ -65,7 +73,7 @@ class CartViewModel : ObservableObject{
     func deleteItemLine(lineItem : LineItem){
         draftOrder?.line_items?.removeAll(where: {
             $0.product_id == lineItem.product_id &&
-           ( $0.properties?[0].value == lineItem.properties?[0].value ||
+           ( $0.properties?[0].value == lineItem.properties?[0].value &&
              $0.properties?[2].value == lineItem.properties?[2].value)
             
         })
@@ -89,6 +97,7 @@ class CartViewModel : ObservableObject{
                     self?.subTotal = draftOrder.subtotal_price
                     self?.tax = draftOrder.total_tax
                     self?.total = draftOrder.total_price
+                    self?.draftOrder = draftOrder
                 case .failure(let error):
                     print(error)
                 }
@@ -102,28 +111,72 @@ class CartViewModel : ObservableObject{
             self.userDefault.draftOrderId = 0
             self.userDefault.cartItems =  0
             self.userDefault.isNotDefaultAddress = false
+            self.userDefault.isUsedACopuns = false
             self.getDraftOrderById()
         }
     }
     
-    func applayDiscount(priceRule: PriceRule){
-        let rawValue = priceRule.value 
-        let cleanedValue = rawValue.replacingOccurrences(of: "-", with: "")
+    func applayDiscount(discount: String){
+        let rawValue = selectedPriceRule?.value
+        let cleanedValue = rawValue?.replacingOccurrences(of: "-", with: "")
 
-        let amount = calculateDiscountAmount(value: cleanedValue, type: priceRule.value_type)
+        let amount = calculateDiscountAmount(value: cleanedValue ?? "0.0", type: selectedPriceRule?.value_type)
 
         let applied_discount = AppliedDiscount(
-            description: priceRule.title ?? "Discount",
+            title: discount,
+            description: selectedPriceRule?.title ?? "Discount",
             value: cleanedValue,
-            value_type: priceRule.value_type ,
+            value_type: selectedPriceRule?.value_type ,
             amount: amount
         )
+        print("discount \(discount)")
 
         draftOrder?.applied_discount = applied_discount
         print(applied_discount)
         let draftOrderItem = DraftOrderItem(draft_order: draftOrder)
         updateDraftOrder(draftOrderItem: draftOrderItem)
     }
+    
+    
+    func validateDiscount(discount: String, completion: @escaping (Bool) -> Void) {
+        guard let priceRules = allPriceRules, !priceRules.isEmpty else {
+            completion(false)
+            return
+        }
+
+        let group = DispatchGroup()
+        var isFound = false
+
+        for priceRule in priceRules {
+            group.enter()
+            copunsUseCase.excute(id: priceRule.id) { res in
+                defer { group.leave() }
+
+                switch res {
+                case .success(let coupons):
+                    if coupons.contains(where: { $0.code == discount }) {
+                        if !isFound {
+                            isFound = true
+                            self.selectedPriceRule = priceRule
+                            self.discountValue = priceRule.value
+                            self.isCopunsPerCustomer = priceRule.once_per_customer
+                            completion(true)
+                        }
+                    }
+                case .failure:
+                    break
+                }
+            }
+        }
+
+        group.notify(queue: .main) {
+            if !isFound {
+                completion(false)
+            }
+        }
+    }
+
+
     func calculateDiscountAmount(value: String, type: String?) -> String {
         guard let value = Double(value),
               let subtotalStr = draftOrder?.subtotal_price,
@@ -143,16 +196,13 @@ class CartViewModel : ObservableObject{
         return String(format: "%.2f", discountAmount)
     }
 
-    func getPriceRuleById(){
-        guard let priceRuleId = userDefault.priceRuleId else {return}
-        priceRuleUseCase.getPriceRulesById(priceRuleId: priceRuleId) {[weak self] res in
+  
+    
+    func getAllPriceRules(){
+        priceRuleUseCase.repo.getPriceRules {[weak self] res in
             switch res{
-            case .success(let priceRule):
-                DispatchQueue.main.async{
-                    self?.selectedPriceRule = priceRule
-                    self?.discountValue = priceRule.value
-                    self?.applayDiscount(priceRule: priceRule)
-                }
+            case .success(let priceRules):
+                self?.allPriceRules = priceRules
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -172,13 +222,13 @@ class CartViewModel : ObservableObject{
                 let customerDefaultAddress = customer.customer?.default_address
                 
                 let shipping_address = AddressDetails(id: customerDefaultAddress?.id, customer_id: customerDefaultAddress?.customer_id, first_name: customerDefaultAddress?.first_name, last_name: customerDefaultAddress?.last_name, company: customerDefaultAddress?.company, address1: customerDefaultAddress?.address1, address2: customerDefaultAddress?.address2, city: customerDefaultAddress?.city, province: customerDefaultAddress?.province, country: customerDefaultAddress?.country, zip: customerDefaultAddress?.zip, phone: customerDefaultAddress?.phone, name: customerDefaultAddress?.name, province_code: customerDefaultAddress?.province_code, country_code: customerDefaultAddress?.country_code, country_name: customerDefaultAddress?.country_name, default: customerDefaultAddress?.default)
-                    
-                                self?.shippingAddress = shipping_address
+                
+                self?.shippingAddress = shipping_address
                 self?.address = self?.shippingAddress
-                                self?.draftOrder?.shipping_address = shipping_address
-                                    /*let draftOrderItem = DraftOrderItem(draft_order: self?.draftOrder)
-                                    self?.updateDraftOrder(draftOrderItem: draftOrderItem)*/
-                                
+                self?.draftOrder?.shipping_address = shipping_address
+                /*let draftOrderItem = DraftOrderItem(draft_order: self?.draftOrder)
+                 self?.updateDraftOrder(draftOrderItem: draftOrderItem)*/
+                
                 print(self?.shippingAddress as Any)
                 
             case .failure(let error):
@@ -204,10 +254,12 @@ class CartViewModel : ObservableObject{
         
     }
     func completeOrder(){
+        isOrderFinishCompleted = false
         draftOrderUseCase.completeOrder(draftOrderId: userDefault.draftOrderId) { [weak self] res in
             switch res{
             case .success(let draft_order):
                 DispatchQueue.main.async{
+                    self?.isOrderFinishCompleted = true
                     print("completed \(draft_order.draft_order?.id)")
                     
                     self?.deleteDraftOrder()
@@ -217,4 +269,37 @@ class CartViewModel : ObservableObject{
             }
         }
     }
+    func calcCartSubTotal()->Double{
+            guard let items = draftOrder?.line_items else { return 0 }
+
+            var total: Double = 0
+
+            for item in items {
+                let price = Double(item.price ?? "0") ?? 0
+                let quantity = Double(item.quantity ?? 0)
+                total += price * quantity
+            }
+
+            return total
+    }
+    
+    func checkCouponsUsedLater(copuns: String, completion: @escaping (Bool) -> Void) {
+        ordersUseCase.execute(customerId: userDefault.customerId ?? -1) { res in
+            switch res {
+            case .success(let orders):
+                for order in orders {
+                    if order.discount_codes.contains(where: { $0.code == copuns }) {
+                        completion(true)
+                        return
+                    }
+                }
+                completion(false)
+
+            case .failure(let error):
+                print(error.localizedDescription)
+                completion(false)
+            }
+        }
+    }
+
 }

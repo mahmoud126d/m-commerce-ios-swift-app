@@ -19,12 +19,6 @@ struct CartShippingAddress: View {
                 Image(.location)
                     .resizable()
                     .frame(width: 30, height: 30)
-                //                            .offset(y: moveUp ? -2 : 0)
-                //                            .animation(Animation.easeInOut(duration: 0.6).repeatForever(autoreverses: true), value: moveUp)
-                //                            .onAppear {
-                //                                    moveUp.toggle()
-                //                                }
-                //                            .frame(height: 20)
                 
                 VStack(alignment: .leading){
                     Text("Deliver to")
