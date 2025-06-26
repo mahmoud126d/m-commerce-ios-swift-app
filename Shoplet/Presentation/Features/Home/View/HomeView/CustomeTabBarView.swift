@@ -22,7 +22,12 @@ struct CustomeTabBarView: View {
                         case .home: HomeView()
                         case .category: CategoryView()
                         case .favorite: FavoriteView()
-                        case .profile:  MeView()
+                        case .profile:
+                            if userDefaultManager.isUserLoggedIn {
+                                MeView()
+                            } else {
+                                GuestModeProfileView()
+                            }
                         case .cart: CartView()
                         }
                     }
@@ -39,7 +44,7 @@ struct CustomeTabBarView: View {
                             TabButton(icon: "house", title: "Home", tab: .home, selectedTab: $selectedTab)
                             TabButton(icon: "square.grid.2x2", title: "Category", tab: .category, selectedTab: $selectedTab)
 
-                            Spacer(minLength: 60) // Space for floating cart
+                            Spacer(minLength: 60)
 
                             TabButton(icon: "heart", title: "Favorite", tab: .favorite, selectedTab: $selectedTab)
                             TabButton(icon: "person", title: "Profile", tab: .profile, selectedTab: $selectedTab)
@@ -101,6 +106,7 @@ struct TabButton: View {
         }
     }
 }
+
 #Preview {
     CustomeTabBarView(homeViewModel: HomeViewModel(), userDefaultManager: UserDefaultManager.shared)
 }

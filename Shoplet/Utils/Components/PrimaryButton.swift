@@ -26,6 +26,31 @@ struct PrimaryButton: View {
     }
 }
 
+struct TransparentBorderButton: View {
+    var title: String
+    var action: () -> Void
+    var cornerRadius: CGFloat = 18
+    var height: CGFloat = 50
+    var font: Font = .headline
+
+    var body: some View {
+        Button(action: action) {
+            Text(title)
+                .font(font)
+                .foregroundColor(.primaryColor)
+                .frame(maxWidth: .infinity, minHeight: height)
+                .overlay(
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                        .stroke(Color.primaryColor, lineWidth: 2)
+                )
+        }
+        .background(Color.clear)
+        .cornerRadius(cornerRadius)
+        .padding(.horizontal, 30)
+    }
+}
+
+
 #Preview {
     PrimaryButton(title: "Continue", action: {})
 }

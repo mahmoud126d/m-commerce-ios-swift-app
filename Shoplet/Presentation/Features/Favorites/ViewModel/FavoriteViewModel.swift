@@ -97,7 +97,13 @@ class FavoriteViewModel: ObservableObject {
 
     // MARK: - Add Favorite
     func addToFavorites(product: ProductModel) {
+        guard UserDefaultManager.shared.isUserLoggedIn else {
+            print("User must be logged in to add favorites.")
+            return
+        }
+
         guard !isFavorite(productId: product.id ?? 0) else { return }
+
         FirestoreManager.shared.addFavorite(product: product, userId: userId) { [weak self] error in
             if let error = error {
                 print("Firestore add failed: \(error)")
@@ -106,6 +112,7 @@ class FavoriteViewModel: ObservableObject {
             self?.saveToCoreData(product: product)
         }
     }
+
 
     private func saveToCoreData(product: ProductModel) {
         let cdProduct = CDProduct(context: context)

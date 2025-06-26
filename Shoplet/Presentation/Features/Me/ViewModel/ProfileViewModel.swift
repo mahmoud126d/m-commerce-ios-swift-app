@@ -15,7 +15,7 @@ class ProfileViewModel: ObservableObject{
         self.getCustomerUseCase = DefaultGetCustomerByIdUseCase(repository: customerRepo)
     }
     
-    func getCustomer(){
+    func getCustomer(){ 
         if userDefault.isUserLoggedIn{
             getCustomerUseCase.execute(id: userDefault.customerId ?? 0) {[weak self] res in
                 switch res{

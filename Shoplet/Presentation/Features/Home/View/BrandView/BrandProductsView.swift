@@ -16,6 +16,9 @@ struct BrandProductsView: View {
     @State private var showToast = false
     @State private var showDeleteAlert = false
     @State private var favorites: Set<Int> = []
+    @State private var showAuthAlert = false
+    @State private var showAuthRestrictionAlert = false
+
 
     var body: some View {
         ScrollView {
@@ -29,6 +32,11 @@ struct BrandProductsView: View {
                                 ImageCarouselView(imageURLs: product.images?.compactMap { $0.src } ?? [])
 
                                 Button(action: {
+                                    if !UserDefaultManager.shared.isUserLoggedIn {
+                                        viewModel.onGuestUserAction?()
+                                        return
+                                    }
+
                                     if favoriteVM.isFavorite(productId: product.id ?? 0) {
                                         selectedFavoriteProduct = product
                                         showDeleteAlert = true
@@ -61,7 +69,6 @@ struct BrandProductsView: View {
                                 }
 
                             }
-
                             Text(product.title ?? "")
                                 .font(.headline)
                                 .foregroundColor(.primaryColor)
@@ -83,9 +90,7 @@ struct BrandProductsView: View {
                                     Spacer()
 
                                     Button(action: {
-                                        // TODO: Handle add to cart logic
                                         viewModel.addToCart(product: product)
-
                                         print("Add to cart tapped for \(product.title ?? "")")
                                     }) {
                                         Label("Add to Cart", systemImage: "cart.badge.plus")
@@ -96,6 +101,8 @@ struct BrandProductsView: View {
                                             .background(Color.primaryColor)
                                             .cornerRadius(8)
                                     }
+
+
                                 }
                                 .padding(.top, 8)
                             }
@@ -129,11 +136,33 @@ struct BrandProductsView: View {
         .navigationTitle(brandName)
         .onAppear {
             viewModel.fetchProducts(for: brandName)
+            viewModel.onGuestUserAction = {
+                showAuthRestrictionAlert = true
+            }
         }
         .sheet(item: $selectedProduct) { product in
             ProductDetailsView(product: product, viewModel: ProductViewModel())
                 .presentationDetents([.medium, .large])
         }
+        .overlay(
+            Group {
+                if showAuthRestrictionAlert {
+                    ZStack {
+                        Color.black.opacity(0.4)
+                            .edgesIgnoringSafeArea(.all)
+
+                        AuthRestrictionAlert {
+                            showAuthRestrictionAlert = false
+                        }
+                        .padding(.horizontal, 16)
+                    }
+                    .transition(.opacity)
+                    .animation(.easeInOut, value: showAuthRestrictionAlert)
+                }
+            }
+        )
+
+
     }
 
     private func toggleFavorite(productId: Int) {

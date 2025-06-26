@@ -21,7 +21,7 @@ final class HomeViewModel: ObservableObject {
     @Published var bestSellers: [ProductModel] = []
     @Published var errorMessage: String?
     @Published var cartCount : Int = UserDefaultManager.shared.getNumOfCartItems()
-    @Published var customerName: String = ""
+    @Published var customerName: String = "Guest"
 
     private let getCustomerByIdUseCase: GetCustomerByIdUseCase
 
@@ -126,7 +126,6 @@ final class HomeViewModel: ObservableObject {
                     switch res{
                     case .success(let draftOrder):
                         UserDefaultManager.shared.cartItems = draftOrder.line_items?.count ?? 0
-                     //   self.cartCount = draftOrder.line_items?.count ?? 0
                     case .failure(let error):
                         print(error.localizedDescription)
                     }
