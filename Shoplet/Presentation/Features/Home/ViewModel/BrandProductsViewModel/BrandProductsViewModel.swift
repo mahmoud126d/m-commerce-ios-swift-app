@@ -13,6 +13,7 @@ class BrandProductsViewModel: ObservableObject {
     private let userDefault = UserDefaultManager.shared
     private var draftOrderLineItem : [LineItem]?
     private var draftOrder : DraftOrder?
+    var onGuestUserAction: (() -> Void)?
 
 
     @Published var products: [ProductModel] = []
@@ -128,7 +129,7 @@ class BrandProductsViewModel: ObservableObject {
                 
             }
         }else{
-            print("guest")
+            onGuestUserAction?()
         }
     }
     func getDraftOrderById(completion: @escaping () -> Void){

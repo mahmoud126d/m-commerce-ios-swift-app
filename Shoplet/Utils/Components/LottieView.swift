@@ -9,9 +9,6 @@ import SwiftUI
 
 import Lottie
 
-
-
-
 struct LottieView: UIViewRepresentable {
     var animationName: String
     var loopMode: LottieLoopMode = .playOnce

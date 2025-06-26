@@ -2,18 +2,20 @@ import SwiftUI
 
 struct MeView: View {
     @StateObject var profileViewModel: ProfileViewModel
+    @State private var showLogoutAlert = false
+    @State private var navigateToSignUp = false
 
     init(profileViewModel: ProfileViewModel = ProfileViewModel()) {
         _profileViewModel = StateObject(wrappedValue: profileViewModel)
     }
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 0) {
-                
-                // MARK: - Custom Colored Header
+
+                // MARK: - Header
                 VStack(alignment: .leading, spacing: 16) {
-                    HStack(alignment: .center, spacing: 16) {
+                    HStack(spacing: 16) {
                         Image("avatar")
                             .resizable()
                             .scaledToFill()
@@ -28,8 +30,7 @@ struct MeView: View {
                                 .foregroundColor(.white.opacity(0.9))
 
                             Text("\(profileViewModel.customer?.first_name ?? "") \(profileViewModel.customer?.last_name ?? "")")
-                                .font(.title2)
-                                .bold()
+                                .font(.title2).bold()
                                 .foregroundColor(.white)
 
                             Text(profileViewModel.customer?.email ?? "")
@@ -39,7 +40,7 @@ struct MeView: View {
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.top, 60) 
+                .padding(.top, 60)
                 .padding(.horizontal)
                 .padding(.bottom, 24)
                 .background(
@@ -66,16 +67,9 @@ struct MeView: View {
                     }
 
                     Section(header: Text("Settings")) {
-                        if let customerId = profileViewModel.customer?.id {
-                            NavigationLink(destination: OrdersListView(customerId: customerId)) {
-                                Text("Orders")
-                            }
-                        
-                           }
                         NavigationLink(destination: AddressesView(isCheckout: false)) {
                             Text("Addresses")
                         }
-
                         NavigationLink(destination: CurrencyView()) {
                             Text("Currency")
                         }
@@ -88,16 +82,38 @@ struct MeView: View {
 
                     Section {
                         Button(action: {
-                            print("Logout tapped")
+                            showLogoutAlert = true
                         }) {
                             Text("Logout")
                                 .foregroundColor(.red)
+                        }
+                        .alert(isPresented: $showLogoutAlert) {
+                            Alert(
+                                title: Text("Confirm Logout"),
+                                message: Text("Are you sure you want to logout?"),
+                                primaryButton: .destructive(Text("Logout")) {
+                                    UserDefaultManager.shared.clearUserDefaults()
+                                    navigateToSignUp = true
+                                },
+                                secondaryButton: .cancel()
+                            )
                         }
                     }
                 }
                 .listStyle(InsetGroupedListStyle())
 
                 Spacer()
+
+                NavigationLink(
+                    destination: CreateAccountView(
+                        switchToSignIn: {},
+                        onSuccessfulCreation: {}
+                    )
+                    .navigationBarBackButtonHidden(true),
+                    isActive: $navigateToSignUp
+                ) {
+                    EmptyView()
+                }
             }
             .edgesIgnoringSafeArea(.top)
             .onAppear {
@@ -106,7 +122,6 @@ struct MeView: View {
         }
     }
 }
-
 
 
 struct RoundedCorner: Shape {

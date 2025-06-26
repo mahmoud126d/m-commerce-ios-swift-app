@@ -24,21 +24,30 @@ class CustomerViewModel: ObservableObject {
        }
     
     func registerUserWithFirebaseAndShopify(email: String, password: String, customerRequest: CustomerRequest) {
-            isLoading = true
-            errorMessage = nil
+        isLoading = true
+        errorMessage = nil
 
-            Auth.auth().createUser(withEmail: email, password: password) { [weak self] authResult, error in
-                if let error = error {
-                    DispatchQueue.main.async {
-                        self?.isLoading = false
-                        self?.errorMessage = "Firebase Error: \(error.localizedDescription)"
-                    }
-                    return
+        Auth.auth().createUser(withEmail: email, password: password) { [weak self] authResult, error in
+            if let error = error {
+                DispatchQueue.main.async {
+                    self?.isLoading = false
+                    self?.errorMessage = "Firebase Error: \(error.localizedDescription)"
                 }
-
-                self?.createCustomer(customerRequest)
+                return
             }
+
+            authResult?.user.sendEmailVerification(completion: { error in
+                if let error = error {
+                    print("Verification email failed: \(error.localizedDescription)")
+                } else {
+                    print("Verification email sent.")
+                }
+            })
+
+            self?.createCustomer(customerRequest)
         }
+    }
+
 
     func createCustomer(_ request: CustomerRequest) {
         isLoading = true

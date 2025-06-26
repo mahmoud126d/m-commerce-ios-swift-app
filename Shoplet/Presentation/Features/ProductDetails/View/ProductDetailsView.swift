@@ -19,6 +19,9 @@ struct ProductDetailsView: View {
     @State private var quantity: Int = 1
     @State private var showDeleteAlert = false
     @State private var showToast = false
+    @State private var showAuthAlert = false
+    @State private var navigateToSignUp = false
+
     var maxQuantity: Int {
         selectedVariant?.inventoryQuantity  ?? 10
     }
@@ -87,21 +90,39 @@ struct ProductDetailsView: View {
         .background(Color(.systemGroupedBackground))
         .edgesIgnoringSafeArea(.top)
         .overlay(
-            Group {
+            ZStack {
                 if showToast {
-                    Text(toastMessage)
-                        .font(.subheadline)
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 10)
-                        .background(Color.black.opacity(0.8))
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                        .padding(.top, 50)
-                        .transition(.move(edge: .top))
-                        .animation(.easeInOut, value: showToast)
+                    VStack {
+                        Text(toastMessage)
+                            .font(.subheadline)
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 10)
+                            .background(Color.black.opacity(0.8))
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                            .transition(.move(edge: .top))
+                            .animation(.easeInOut, value: showToast)
+                        Spacer()
+                    }
+                    .padding(.top, 50)
                 }
-            },
-            alignment: .top
+
+                if showAuthAlert {
+                    ZStack {
+                        Color.black.opacity(0.4)
+                            .edgesIgnoringSafeArea(.all)
+
+                        AuthRestrictionAlert(
+                            onDismiss: {
+                                showAuthAlert = false
+                            }
+                        )
+                        .padding(.horizontal, 16)
+                    }
+                    .transition(.opacity)
+                    .animation(.easeInOut, value: showAuthAlert)
+                }
+            }
         )
         .navigationTitle("Detail Product")
         .navigationBarTitleDisplayMode(.inline)
@@ -130,22 +151,22 @@ struct ProductDetailsView: View {
                     .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
 
                     Button {
-                        if isFavorite {
-                            showDeleteAlert = true
-                        } else {
-                            favoriteVM.toggleFavorite(product: product)
-                            isFavorite = true
-                            toastMessage = "Added to favorites"
-                            withAnimation {
-                                showToast = true
+                        if !UserDefaultManager.shared.isUserLoggedIn {
+                                showAuthAlert = true
+                                return
                             }
 
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                                withAnimation {
-                                    showToast = false
+                            if isFavorite {
+                                showDeleteAlert = true
+                            } else {
+                                favoriteVM.toggleFavorite(product: product)
+                                isFavorite = true
+                                toastMessage = "Added to favorites"
+                                withAnimation { showToast = true }
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                    withAnimation { showToast = false }
                                 }
                             }
-                        }
                     } label: {
                         Image(systemName: isFavorite ? "heart.fill" : "heart")
                             .foregroundColor(.primaryColor)
@@ -361,6 +382,10 @@ struct ProductDetailsView: View {
             Spacer()
 
             Button(action: {
+                if !UserDefaultManager.shared.isUserLoggedIn {
+                    showAuthAlert = true
+                    return
+                }
                 guard selectedVariant != nil else {
                     toastMessage = "Please select size and color first"
                     showToast = true

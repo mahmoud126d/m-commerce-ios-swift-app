@@ -21,7 +21,7 @@ final class HomeViewModel: ObservableObject {
     @Published var bestSellers: [ProductModel] = []
     @Published var errorMessage: String?
     @Published var cartCount : Int = UserDefaultManager.shared.getNumOfCartItems()
-    @Published var customerName: String = ""
+    @Published var customerName: String = "Guest"
 
     private let getCustomerByIdUseCase: GetCustomerByIdUseCase
 
