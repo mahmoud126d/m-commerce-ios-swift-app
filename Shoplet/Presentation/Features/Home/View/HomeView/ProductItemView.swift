@@ -67,16 +67,26 @@ struct ProductItemView: View {
 
     @ViewBuilder
     func productPriceView() -> some View {
-            if let variant = product.variants?.first,
-               let priceStr = variant.price,
-               let priceValue = Double(priceStr)
-                {
-                let rateStr = UserDefaultManager.shared.currencyRate ?? "1.0"
-                let rate = Double(rateStr) ?? 1.0
-                let currency = UserDefaultManager.shared.currency ?? "USD"
-                let price = priceValue * rate
-                let formattedPrice = String(format: "%.2f", price)
+        if let variant = product.variants?.first,
+           let priceStr = variant.price,
+           let priceValue = Double(priceStr)
+        {
+            let rateStr = UserDefaultManager.shared.currencyRate ?? "1.0"
+            let rate = Double(rateStr) ?? 1.0
+            let currency = UserDefaultManager.shared.currency ?? "USD"
+            let price = priceValue * rate
+            let formattedPrice = String(format: "%.2f", price)
 
+            HStack(spacing: 6) {
+                // Final price
+                Text("\(formattedPrice) \(currency)")
+                    .foregroundColor(.red)
+                    .font(.system(size: 10)) // Smaller font
+                    .fontWeight(.bold)
+                    .lineLimit(1)
+                    .layoutPriority(1)
+
+                // Original price with strikethrough
                 if let compareAt = variant.compareAtPrice,
                    let compareAtValue = Double(compareAt),
                    compareAtValue != priceValue {
@@ -84,34 +94,29 @@ struct ProductItemView: View {
                     let convertedCompareAt = compareAtValue * rate
                     let formattedCompareAt = String(format: "%.2f", convertedCompareAt)
 
-                    HStack(spacing: 6) {
-                        Text("\(formattedPrice) \(currency)")
-                            .foregroundColor(.red)
-                            .font(.footnote)
-                            .fontWeight(.bold)
+                    Text("\(formattedCompareAt) \(currency)")
+                        .strikethrough()
+                        .foregroundColor(.gray)
+                        .fontWeight(.bold)
 
-                        Text("\(formattedCompareAt) \(currency)")
-                            .strikethrough()
-                            .foregroundColor(.gray)
-                            .font(.footnote)
-                    }
+                        .font(.system(size: 10))
+                    // Same small font
+                        .lineLimit(1)
+
                 } else {
                     let originalPrice = price * 1.10
                     let formattedOriginal = String(format: "%.2f", originalPrice)
 
-                    HStack(spacing: 6) {
-                        Text("\(formattedPrice) \(currency)")
-                            .foregroundColor(.red)
-                            .font(.footnote)
-                            .fontWeight(.bold)
+                    Text("\(formattedOriginal) \(currency)")
+                        .strikethrough()
+                        .foregroundColor(.gray)
+                        .fontWeight(.bold)
 
-                        Text("\(formattedOriginal) \(currency)")
-                            .strikethrough()
-                            .foregroundColor(.gray)
-                            .font(.footnote)
-                    }
+                        .font(.system(size: 10)) // Same small font
+                        .lineLimit(1)
                 }
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
-
+    }
     }

@@ -412,6 +412,43 @@ final class NetworkManagerTest: XCTestCase{
         }
         waitForExpectations(timeout: 5)
     }
+    func testGetPopularProducts_returnNotNil() {
+        let expectation = expectation(description: "Loading Best Sellers")
+
+        APIClient.getPopularProducts { res in
+            switch res {
+            case .success(let response):
+                XCTAssertNotNil(response.products)
+                XCTAssertTrue(response.products.count >= 0)
+            case .failure(let error):
+                XCTFail("Error... : \(error)")
+            }
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 5)
+    }
+    
+    func testGetBrands_returnNotNil() {
+        let expectation = expectation(description: "Loading Brands")
+
+        APIClient.getBrands { res in
+            switch res {
+            case .success(let response):
+                XCTAssertNotNil(response.smart_collections)
+                if let brands = response.smart_collections {
+                    XCTAssertTrue(brands.count >= 0)
+                } else {
+                    XCTFail("smart_collections is nil")
+                }
+            case .failure(let error):
+                XCTFail("Error... : \(error)")
+            }
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 5)
+    }
     
     func testOrders(){
         APIClient().fetchAllOrders { res in
@@ -423,5 +460,8 @@ final class NetworkManagerTest: XCTestCase{
                 }
             }
         }
+    
+    
+    
     }
 
