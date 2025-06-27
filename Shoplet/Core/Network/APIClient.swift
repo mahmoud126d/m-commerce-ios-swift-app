@@ -41,7 +41,7 @@ protocol APIClientType {
 
 class APIClient: APIClientType {
 
-    private static func performRequest<T: Decodable>(route: APIRouter, completion: @escaping (Result<T, NetworkError>) -> Void) {
+     static func performRequest<T: Decodable>(route: APIRouter, completion: @escaping (Result<T, NetworkError>) -> Void) {
         guard AppCommon.shared.isNetworkReachable() else {
             completion(.failure(.networkUnreachable))
             return
