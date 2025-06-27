@@ -9,12 +9,13 @@ import XCTest
 
 final class MockAPIClientTest: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    var mockAPI : MockAPIClient?
+    override func setUp() {
+        mockAPI = MockAPIClient()
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    override func tearDown()  {
+       mockAPI = nil
     }
 
     func testExample() throws {
@@ -29,6 +30,17 @@ final class MockAPIClientTest: XCTestCase {
         // This is an example of a performance test case.
         self.measure {
             // Put the code you want to measure the time of here.
+        }
+    }
+    func testMockGetProducts(){
+        MockAPIClient.getProducts { res in
+            switch res{
+            case .success(let res):
+             XCTAssertNotNil(res)
+            case .failure(_):
+                XCTFail()
+            }
+        
         }
     }
 
