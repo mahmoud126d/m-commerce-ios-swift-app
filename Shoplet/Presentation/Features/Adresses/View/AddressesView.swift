@@ -24,8 +24,8 @@ struct AddressesView: View {
                     Text("Adresses")
                         Spacer()
                     NavigationLink(destination: AddAddress(){
-                        address in
-                        addressViewModel.createAddress(address: address)
+                        
+                       // addressViewModel.createAddress(address: address)
                     }, isActive: $isActive) {
                         Button(action: {
                             isActive = true

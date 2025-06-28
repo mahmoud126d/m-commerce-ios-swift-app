@@ -20,7 +20,7 @@ struct AddAddress: View {
     @State var isError = false
     @State private var addressLabel: String? = nil
     let addressLabels = ["Home", "Office"]
-    var onSaved: (_ address: AddressRequest)->Void
+    var onSaved: ()->Void
     
     var body: some View {
         VStack{
@@ -96,7 +96,8 @@ struct AddAddress: View {
                                 customer_address: AddressDetails(id: nil,
                                                                  customer_id: UserDefaultManager.shared.customerId, first_name: nil, last_name: nil, company: addressLabel, address1: address == "" ? locationViewMode.address : address, address2: nil, city: city == "" ? locationViewMode.city : city, province: nil, country: country == "" ? locationViewMode.country : country, zip: zip, phone: phoneNumber, name: nil, province_code: nil, country_code: "EG", country_name: country,
                                                                  default: false))
-                             onSaved(address)
+                             onSaved()
+                            addressViewModel.createAddress(address: address)
                         }else{
                             isError = true
                         }
@@ -112,7 +113,7 @@ struct AddAddress: View {
                 }.padding(.bottom)
                     .padding(.horizontal)
                     .onAppear{
-                        locationViewMode.requestAccessLocation()
+                        //locationViewMode.requestAccessLocation()
                     }
             }
             Spacer()
